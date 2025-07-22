@@ -49,12 +49,6 @@ const Projects = () => {
         const formattedProjects = data?.map(project => {
           console.log('Projeto do Supabase:', project); // Debug
           
-          // Buscar URL do YouTube na descrição
-          const youtubeUrl = extractYouTubeUrl(project.description) ||
-                           extractYouTubeUrl(project.short_description);
-          
-          console.log('YouTube URL encontrada:', youtubeUrl); // Debug
-          
           return {
             id: project.id,
             title: project.title,
@@ -63,8 +57,8 @@ const Projects = () => {
             category: project.category,
             tags: project.tags || [],
             featured: project.featured,
-            // Procurar por links do YouTube na descrição
-            youtubeUrl: youtubeUrl,
+            // Usar o campo youtube_url da tabela
+            youtubeUrl: project.youtube_url,
             image: project.project_media?.find(media => media.is_cover)?.file_path || 
                    "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop"
           };
