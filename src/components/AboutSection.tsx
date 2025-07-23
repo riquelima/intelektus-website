@@ -59,7 +59,7 @@ const AboutSection = () => {
               <div className="flex justify-center mb-8">
                 <Avatar className="w-32 h-32">
                   <AvatarImage 
-                    src="https://raw.githubusercontent.com/riquelima/intelektus-website/refs/heads/main/1731344191512.jpg?token=GHSAT0AAAAAADE7J3YIQTFKVQNAVHFHPXW42CN32BQ" 
+                    src="/henrique-lima.jpg"
                     alt="Henrique Lima"
                   />
                   <AvatarFallback className="text-2xl">HL</AvatarFallback>

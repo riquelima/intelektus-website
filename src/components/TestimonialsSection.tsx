@@ -7,21 +7,21 @@ const testimonials = [
     quote: "O IntelekBot transformou completamente o atendimento da minha pizzaria. Agora nossos clientes conseguem fazer pedidos em qualquer horário, sem filas ou espera. As vendas aumentaram em 35% no primeiro mês!",
     author: "Roberto Almeida",
     position: "Proprietário, Pizzaria Bella Napoli",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80",
+    image: "/daniel-oliveira.jpg",
     rating: 5
   },
   {
     quote: "Como farmacêutica, estava preocupada se um robô conseguiria lidar com questões delicadas de saúde. O IntelekBot superou todas as expectativas, esclarecendo dúvidas básicas e encaminhando casos mais complexos para nossa equipe. Economizamos tempo e melhoramos o atendimento.",
     author: "Carla Moreira",
     position: "Proprietária, Farmácia Saúde & Bem-estar",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1522&q=80",
+    image: "/camila-santos.jpg",
     rating: 5
   },
   {
     quote: "Nossa clínica odontológica tinha problemas com faltas e cancelamentos de última hora. Com o IntelekBot, reduzimos em 80% esses problemas graças aos lembretes automáticos e confirmações. O investimento se pagou em apenas 2 meses!",
     author: "Dr. Paulo Ribeiro",
     position: "Diretor, Clínica Odontológica Sorriso Perfeito",
-    image: "https://images.unsplash.com/photo-1618077360395-f3068be8e001?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8bWFuJTIwZG9jdG9yfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    image: "/fernanda-costa.jpg",
     rating: 4
   },
 ];

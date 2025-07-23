@@ -22,6 +22,18 @@ const Navbar = () => {
     };
   }, []);
 
+  const scrollToSection = (e, sectionId) => {
+    e.preventDefault();
+    setIsOpen(false);
+    const section = document.querySelector(sectionId);
+    if (section) {
+      window.scrollTo({
+        top: section.offsetTop - 80, // Adjust offset for fixed navbar
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 shadow-md backdrop-blur-sm py-2' : 'bg-transparent py-4'}`}>
       <div className="container mx-auto px-4 md:px-6">
@@ -33,22 +45,22 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="/projetos" className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
+            <a href="#projects" onClick={(e) => scrollToSection(e, '#projects')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
               Projetos
             </a>
-            <a href="#features" className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
+            <a href="#features" onClick={(e) => scrollToSection(e, '#features')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
               Recursos
             </a>
-            <a href="#segments" className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
+            <a href="#segments" onClick={(e) => scrollToSection(e, '#segments')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
               Segmentos
             </a>
-            <a href="#how-it-works" className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
+            <a href="#how-it-works" onClick={(e) => scrollToSection(e, '#how-it-works')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
               Como Funciona
             </a>
-            <a href="#testimonials" className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
+            <a href="#testimonials" onClick={(e) => scrollToSection(e, '#testimonials')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
               Depoimentos
             </a>
-            <a href="#quem-somos" className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
+            <a href="#quem-somos" onClick={(e) => scrollToSection(e, '#quem-somos')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
               Quem Somos
             </a>
             <Button className="gradient-bg hover:opacity-90 transition-opacity" onClick={() => window.open('https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+%EF%BF%BD+Gostaria+de+saber+mais+sobre+os+servi%C3%A7os+oferecidos+pela+Intelektus.&type=phone_number&app_absent=0', '_blank')}>
@@ -71,22 +83,22 @@ const Navbar = () => {
         {isOpen && (
           <div className="md:hidden mt-4 pb-4 bg-white rounded-lg shadow-lg animate-fade-in">
             <div className="flex flex-col space-y-3 p-4">
-              <a href="/projetos" className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2" onClick={() => setIsOpen(false)}>
+              <a href="#projects" onClick={(e) => scrollToSection(e, '#projects')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2">
                 Projetos
               </a>
-              <a href="#features" className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2" onClick={() => setIsOpen(false)}>
+              <a href="#features" onClick={(e) => scrollToSection(e, '#features')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2">
                 Recursos
               </a>
-              <a href="#segments" className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2" onClick={() => setIsOpen(false)}>
+              <a href="#segments" onClick={(e) => scrollToSection(e, '#segments')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2">
                 Segmentos
               </a>
-              <a href="#how-it-works" className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2" onClick={() => setIsOpen(false)}>
+              <a href="#how-it-works" onClick={(e) => scrollToSection(e, '#how-it-works')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2">
                 Como Funciona
               </a>
-              <a href="#testimonials" className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2" onClick={() => setIsOpen(false)}>
+              <a href="#testimonials" onClick={(e) => scrollToSection(e, '#testimonials')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2">
                 Depoimentos
               </a>
-              <a href="#quem-somos" className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2" onClick={() => setIsOpen(false)}>
+              <a href="#quem-somos" onClick={(e) => scrollToSection(e, '#quem-somos')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2">
                 Quem Somos
               </a>
               <Button className="gradient-bg hover:opacity-90 transition-opacity w-full" onClick={() => window.open('https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+%EF%BF%BD+Gostaria+de+saber+mais+sobre+os+servi%C3%A7os+oferecidos+pela+Intelektus.&type=phone_number&app_absent=0', '_blank')}>
