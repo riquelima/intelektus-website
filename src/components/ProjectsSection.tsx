@@ -6,6 +6,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Filter, ExternalLink, Play } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
 
 const ProjectsSection = () => {
   const [selectedFilter, setSelectedFilter] = useState("Todos");
@@ -114,44 +121,57 @@ const ProjectsSection = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project) => (
-              <Card key={project.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border-0">
-                <div className="relative">
-                  <img 
-                    src={project.image} 
-                    alt={project.title}
-                    className="w-full h-64 object-cover"
-                  />
-                  {project.video_url && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-center justify-center">
-                        <Play 
-                          className="text-white w-16 h-16 cursor-pointer hover:scale-110 transition-transform" 
-                          onClick={() => handlePlayVideo(project.video_url)}
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {filteredProjects.map((project) => (
+                <CarouselItem key={project.id} className="md:basis-1/2 lg:basis-1/3 pl-4">
+                  <div className="p-1">
+                    <Card className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border-0">
+                      <div className="relative">
+                        <img 
+                          src={project.image} 
+                          alt={project.title}
+                          className="w-full h-64 object-cover"
                         />
+                        {project.video_url && (
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-center justify-center">
+                              <Play 
+                                className="text-white w-16 h-16 cursor-pointer hover:scale-110 transition-transform" 
+                                onClick={() => handlePlayVideo(project.video_url)}
+                              />
+                            </div>
+                        )}
                       </div>
-                  )}
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="font-heading text-xl font-bold text-intelektus-600 mb-4">{project.title}</h3>
-                  <p className="text-gray-600 text-sm mb-6 leading-relaxed">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.tags.map((tag: string) => <Badge key={tag} variant="secondary">{tag}</Badge>)}
+                      <CardContent className="p-6">
+                        <h3 className="font-heading text-xl font-bold text-intelektus-600 mb-4">{project.title}</h3>
+                        <p className="text-gray-600 text-sm mb-6 leading-relaxed max-h-24 overflow-y-auto pr-2">{project.description}</p>
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {project.tags.map((tag: string) => <Badge key={tag} variant="secondary">{tag}</Badge>)}
+                        </div>
+                        <div className="flex gap-3">
+                          <Button className="flex-1" onClick={() => openModal(project)}>Ver Detalhes</Button>
+                          {project.video_url && (
+                            <Button variant="outline" asChild>
+                              <a href={project.video_url} target="_blank" rel="noopener noreferrer">
+                                <ExternalLink className="h-4 w-4 mr-2" /> Demo
+                              </a>
+                            </Button>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
                   </div>
-                  <div className="flex gap-3">
-                    <Button className="flex-1" onClick={() => openModal(project)}>Ver Detalhes</Button>
-                    {project.video_url && (
-                      <Button variant="outline" asChild>
-                        <a href={project.video_url} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-4 w-4 mr-2" /> Demo
-                        </a>
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
       </section>
 
