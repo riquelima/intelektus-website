@@ -13,6 +13,7 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 const ProjectsSection = () => {
   const [selectedFilter, setSelectedFilter] = useState("Todos");
@@ -71,6 +72,23 @@ const ProjectsSection = () => {
 
   const filters = ["Todos", "IA", "Automação", "SaaS", "Mobile"];
 
+  const plugin = React.useRef(
+    Autoplay({
+      delay: 3000,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+    })
+  );
+
+  const tagColors = [
+    "bg-blue-500 text-white",
+    "bg-green-500 text-white",
+    "bg-yellow-500 text-white",
+    "bg-red-500 text-white",
+    "bg-purple-500 text-white",
+    "bg-pink-500 text-white",
+  ];
+
   return (
     <div className="bg-gray-50">
       <section id="projects-hero" className="pt-24 pb-16 bg-gradient-to-br from-intelektus-50 to-white relative">
@@ -87,7 +105,7 @@ const ProjectsSection = () => {
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
             Explore uma seleção de projetos desenvolvidos com IA e automações de ponta.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
             <Button size="lg" className="gradient-bg hover:opacity-90 transition-opacity">
               <ExternalLink className="mr-2 h-4 w-4" />
               Explorar Projetos
@@ -99,7 +117,7 @@ const ProjectsSection = () => {
         </div>
       </section>
 
-      <section className="py-16">
+      <section className="pt-8 pb-16">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-wrap items-center gap-4 mb-12">
             <div className="flex items-center gap-2 text-gray-700">
@@ -124,12 +142,14 @@ const ProjectsSection = () => {
           <Carousel
             opts={{
               align: "start",
+              loop: true, // Adiciona loop para rolagem infinita
             }}
+            plugins={[plugin.current]}
             className="w-full"
           >
-            <CarouselContent className="-ml-4">
+            <CarouselContent className="-ml-2">
               {filteredProjects.map((project) => (
-                <CarouselItem key={project.id} className="md:basis-1/2 lg:basis-1/3 pl-4">
+                <CarouselItem key={project.id} className="md:basis-1/2 lg:basis-1/3 pl-2">
                   <div className="p-1">
                     <Card className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border-0">
                       <div className="relative">
@@ -151,7 +171,10 @@ const ProjectsSection = () => {
                         <h3 className="font-heading text-xl font-bold text-intelektus-600 mb-4">{project.title}</h3>
                         <p className="text-gray-600 text-sm mb-6 leading-relaxed max-h-24 overflow-y-auto pr-2">{project.description}</p>
                         <div className="flex flex-wrap gap-2 mb-6">
-                          {project.tags.map((tag: string) => <Badge key={tag} variant="secondary">{tag}</Badge>)}
+                          {project.tags.map((tag: string, index: number) => {
+                            const colorClass = tagColors[index % tagColors.length];
+                            return <Badge key={tag} colorClass={colorClass}>{tag}</Badge>;
+                          })}
                         </div>
                         <div className="flex gap-3">
                           <Button className="flex-1" onClick={() => openModal(project)}>Ver Detalhes</Button>
@@ -204,7 +227,7 @@ const ProjectsSection = () => {
                 {selectedProject.video_url && (
                   <Button className="flex-1" asChild>
                     <a href={selectedProject.video_url} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="mr-2 h-4 w-4" /> Ver Demonstração
+                      <ExternalLink className="h-4 w-4 mr-2" /> Ver Demonstração
                     </a>
                   </Button>
                 )}
