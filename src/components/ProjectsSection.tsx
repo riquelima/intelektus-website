@@ -7,6 +7,25 @@ import { supabase } from "@/integrations/supabase/client";
 ═══════════════════════════════════ */
 const STATIC_PROJECTS = [
   {
+    id: "static-8",
+    title: "Meu Carro de Linha Salinas",
+    tagline: "Meu Carro de Linha Salinas — Transporte & Mobilidade",
+    category: "Mobile",
+    videoUrl: "/videos/carro-de-linha.gif",
+    isVideo: true,
+    color: "#00D4FF",
+    gradient: "linear-gradient(135deg, #00D4FF, #0072FF)",
+    tags: ["Mobilidade Urbana", "Caronas", "Transporte Local", "Mobile", "Gestão de Serviços"],
+    description:
+      "Plataforma de caronas e mobilidade inteligente para Salinas da Margarida.",
+    features: [
+      "📍 Geolocalização em Tempo Real: Solicite sua carona com poucos toques e acompanhe o trajeto do motorista pelo mapa até o ponto de encontro.",
+      "🤝 Foco na Comunidade Local: Desenvolvido especialmente para otimizar a mobilidade em Salinas da Margarida, conectando moradores e visitantes aos motoristas da região.",
+      "📱 Interface Intuitiva: Design limpo e focado na usabilidade, permitindo que qualquer pessoa consiga pedir um carro sem complicações.",
+      "📊 Gestão de Serviços: Sistema integrado para o gerenciamento de viagens, com cálculo de estimativa de preços prévia e histórico de corridas, oferecendo controle tanto para o passageiro quanto para o motorista parceiro.",
+    ],
+  },
+  {
     id: "static-7",
     title: "MatchFlix",
     tagline: "MatchFlix — Descoberta & Entretenimento",
