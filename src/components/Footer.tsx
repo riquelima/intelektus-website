@@ -104,19 +104,12 @@ const Footer = () => {
 
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2.5 mb-5">
-              <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #6C63FF, #FF3CAC)', boxShadow: '0 0 20px rgba(108,99,255,0.4)' }}
-              >
-                <Zap size={17} className="text-white" />
-              </div>
-              <span
-                className="font-bold text-xl"
-                style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}
-              >
-                Intelektus
-              </span>
+            <div className="flex items-center mb-5">
+              <img
+                src="/logoIntelektus.png"
+                alt="Intelektus"
+                className="h-10 w-auto object-contain"
+              />
             </div>
             <p className="text-sm leading-relaxed mb-6 max-w-xs" style={{ color: 'var(--text-secondary)' }}>
               Software House especializada em sistemas sob medida, automações, robôs de atendimento e IA

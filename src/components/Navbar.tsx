@@ -52,22 +52,12 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
 
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2.5 group">
-            <div
-              className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-              style={{
-                background: 'linear-gradient(135deg, #6C63FF, #FF3CAC)',
-                boxShadow: '0 0 20px rgba(108,99,255,0.5)',
-              }}
-            >
-              <Zap size={17} className="text-white" />
-            </div>
-            <span
-              className="font-bold text-xl text-white"
-              style={{ fontFamily: 'Syne, sans-serif', letterSpacing: '-0.02em' }}
-            >
-              Intelektus
-            </span>
+          <a href="/" className="flex items-center group">
+            <img
+              src="/logoIntelektus.png"
+              alt="Intelektus"
+              className="h-9 w-auto object-contain transition-all duration-300 group-hover:scale-105"
+            />
           </a>
 
           {/* Desktop Menu */}

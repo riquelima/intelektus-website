@@ -47,8 +47,7 @@ const Login = () => {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center mb-4">
-            <Brain size={40} className="text-intelektus-600 mr-2" />
-            <span className="font-heading font-bold text-2xl text-gray-900">Intelektus</span>
+            <img src="/logoIntelektus.png" alt="Intelektus" className="h-12 w-auto object-contain" />
           </div>
           <CardTitle className="text-xl font-bold text-gray-900">
             Painel Administrativo

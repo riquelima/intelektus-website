@@ -215,8 +215,8 @@ const Admin = () => {
       <header className="bg-white shadow-sm border-b">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Brain size={32} className="text-intelektus-600" />
-            <span className="font-heading font-bold text-xl text-gray-900">Intelektus Admin</span>
+            <img src="/logoIntelektus.png" alt="Intelektus" className="h-8 w-auto object-contain mr-1" />
+            <span className="font-heading font-bold text-lg text-gray-600 border-l pl-3 border-gray-200">Admin</span>
           </div>
           <Button onClick={handleLogout} variant="outline" size="sm">
             <LogOut className="mr-2 h-4 w-4" />
