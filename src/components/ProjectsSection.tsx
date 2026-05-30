@@ -431,26 +431,25 @@ const ProjectCard = ({
 
   return (
     <div
-      className="relative rounded-2xl overflow-hidden flex flex-col cursor-pointer group"
+      className="relative rounded-2xl overflow-hidden cursor-pointer group snap-center shrink-0 w-[275px] sm:w-[305px] aspect-[9/16]"
       style={{
-        background: "rgba(13,13,30,0.85)",
         border: `1px solid ${hovered ? project.color + "50" : "rgba(108,99,255,0.12)"}`,
-        boxShadow: hovered ? `0 0 40px ${project.color}18, 0 20px 50px rgba(0,0,0,0.4)` : "none",
-        transform: hovered ? "translateY(-5px)" : "translateY(0)",
-        transition: "all 0.35s ease",
+        boxShadow: hovered ? `0 0 40px ${project.color}22, 0 20px 50px rgba(0,0,0,0.5)` : "none",
+        transform: hovered ? "translateY(-6px)" : "translateY(0)",
+        transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
       onMouseEnter={handleHoverEnter}
       onMouseLeave={handleHoverLeave}
       onClick={() => onOpen(project)}
     >
-      {/* Thumbnail / Preview de vídeo/GIF em execução contínua */}
-      <div className="relative overflow-hidden w-full bg-[#04040D]" style={{ aspectRatio: "9/16", maxHeight: "330px" }}>
+      {/* Container de Vídeo/GIF em 100% da área do card */}
+      <div className="absolute inset-0 w-full h-full bg-[#04040D]">
         {project.videoUrl.endsWith(".gif") ? (
           <img
             src={project.videoUrl}
             alt={project.title}
-            className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
-            style={{ opacity: 1, transform: hovered ? "scale(1.05)" : "scale(1)" }}
+            className="absolute inset-0 w-full h-full object-cover transition-all duration-700"
+            style={{ transform: hovered ? "scale(1.06)" : "scale(1)" }}
           />
         ) : (
           <video
@@ -461,83 +460,74 @@ const ProjectCard = ({
             loop
             autoPlay
             preload="auto"
-            className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
-            style={{ opacity: 1, transform: hovered ? "scale(1.05)" : "scale(1)" }}
+            className="absolute inset-0 w-full h-full object-cover transition-all duration-700"
+            style={{ transform: hovered ? "scale(1.06)" : "scale(1)" }}
           />
         )}
-
-        {/* Badge de categoria */}
-        <div className="absolute top-3 left-3">
-          <span
-            className="text-xs font-bold uppercase tracking-widest px-2.5 py-1 rounded-lg"
-            style={{
-              background: `${project.color}25`,
-              border: `1px solid ${project.color}50`,
-              color: project.color,
-              backdropFilter: "blur(8px)",
-            }}
-          >
-            {project.category}
-          </span>
-        </div>
       </div>
 
-      {/* Conteúdo */}
-      <div className="p-5 flex flex-col gap-3 flex-1">
-        {/* Linha de cor no topo */}
-        <div
-          className="h-0.5 rounded-full -mt-5 mb-1 w-0 group-hover:w-full transition-all duration-500"
-          style={{ background: project.gradient }}
-        />
+      {/* Badge de categoria no topo esquerdo */}
+      <div className="absolute top-3 left-3 z-20">
+        <span
+          className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-lg"
+          style={{
+            background: `${project.color}25`,
+            border: `1px solid ${project.color}50`,
+            color: project.color,
+            backdropFilter: "blur(8px)",
+          }}
+        >
+          {project.category}
+        </span>
+      </div>
 
+      {/* Conteúdo flutuante na base inferior interna */}
+      <div
+        className="absolute bottom-0 left-0 right-0 p-5 pt-20 flex flex-col gap-2.5 z-10"
+        style={{
+          background: "linear-gradient(to top, rgba(4, 4, 13, 0.98) 0%, rgba(4, 4, 13, 0.8) 55%, rgba(4, 4, 13, 0.3) 80%, transparent 100%)",
+        }}
+      >
         <div>
           <h3
-            className="font-bold text-base mb-1 line-clamp-1"
-            style={{ fontFamily: "Syne, sans-serif", color: "var(--text-primary)" }}
+            className="font-bold text-base mb-0.5 line-clamp-1 text-white"
+            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
           >
             {project.title}
           </h3>
-          <p className="text-xs" style={{ color: project.color, fontWeight: 600 }}>
+          <p className="text-[11px] font-semibold" style={{ color: project.color }}>
             {project.tagline}
           </p>
         </div>
 
-        <p
-          className="text-xs leading-relaxed line-clamp-2"
-          style={{ color: "var(--text-secondary)" }}
-        >
+        <p className="text-[11px] leading-relaxed line-clamp-2 text-gray-300">
           {project.description}
         </p>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mt-auto">
-          {project.tags.slice(0, 3).map((tag) => (
+        <div className="flex flex-wrap gap-1.5 mt-1">
+          {project.tags.slice(0, 2).map((tag) => (
             <span
               key={tag}
-              className="text-xs px-2 py-0.5 rounded-md"
-              style={{
-                background: `${project.color}12`,
-                border: `1px solid ${project.color}25`,
-                color: "var(--text-secondary)",
-              }}
+              className="text-[9px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-300 font-medium"
             >
               {tag}
             </span>
           ))}
-          {project.tags.length > 3 && (
-            <span className="text-xs" style={{ color: "var(--text-muted)" }}>
-              +{project.tags.length - 3}
+          {project.tags.length > 2 && (
+            <span className="text-[9px] font-semibold text-gray-500 self-center">
+              +{project.tags.length - 2}
             </span>
           )}
         </div>
 
         {/* CTA */}
         <button
-          className="mt-1 flex items-center gap-1.5 text-xs font-semibold transition-all duration-200 group/btn"
+          className="mt-1 flex items-center gap-1 text-[11px] font-semibold transition-all duration-200 group/btn"
           style={{ color: project.color }}
         >
           Ver projeto
-          <ArrowRight size={12} className="group-hover/btn:translate-x-1 transition-transform" />
+          <ArrowRight size={11} className="group-hover/btn:translate-x-1 transition-transform" />
         </button>
       </div>
     </div>
@@ -707,6 +697,19 @@ const ProjectsSection = () => {
   const [selectedProject, setSelectedProject] = useState<typeof STATIC_PROJECTS[0] | null>(null);
   const [dbProjects, setDbProjects] = useState<any[]>([]);
   const sectionRef = useRef<HTMLElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const scrollLeft = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: -320, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: 320, behavior: "smooth" });
+    }
+  };
 
   // Carregar projetos do Supabase
   useEffect(() => {
@@ -819,33 +822,56 @@ const ProjectsSection = () => {
       {/* Grid de projetos */}
       <section className="pb-24 relative" style={{ background: "var(--bg-surface)" }}>
         <div className="container mx-auto px-4 md:px-6">
-          {/* Filtros */}
-          <div className="flex flex-wrap items-center gap-2 mb-10 reveal">
-            <span className="text-xs font-semibold uppercase tracking-widest mr-2" style={{ color: "var(--text-muted)" }}>
-              Filtrar:
-            </span>
-            {filters.map((f) => (
+          {/* Filtros + Setas de Navegação */}
+          <div className="flex items-center justify-between gap-4 mb-10 reveal">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-widest mr-2" style={{ color: "var(--text-muted)" }}>
+                Filtrar:
+              </span>
+              {filters.map((f) => (
+                <button
+                  key={f}
+                  onClick={() => setSelectedFilter(f)}
+                  className="px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer"
+                  style={
+                    selectedFilter === f
+                      ? { background: "rgba(108,99,255,0.18)", borderColor: "rgba(108,99,255,0.55)", color: "#A899FF" }
+                      : { background: "transparent", borderColor: "rgba(108,99,255,0.15)", color: "var(--text-muted)" }
+                  }
+                >
+                  {f}
+                </button>
+              ))}
+            </div>
+
+            {/* Setas de navegação lateral premium */}
+            <div className="hidden sm:flex items-center gap-2.5">
               <button
-                key={f}
-                onClick={() => setSelectedFilter(f)}
-                className="px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer"
-                style={
-                  selectedFilter === f
-                    ? { background: "rgba(108,99,255,0.18)", borderColor: "rgba(108,99,255,0.55)", color: "#A899FF" }
-                    : { background: "transparent", borderColor: "rgba(108,99,255,0.15)", color: "var(--text-muted)" }
-                }
+                onClick={scrollLeft}
+                className="w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-white transition-all cursor-pointer"
+                title="Projetos anteriores"
               >
-                {f}
+                <ChevronLeft size={18} />
               </button>
-            ))}
+              <button
+                onClick={scrollRight}
+                className="w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-white transition-all cursor-pointer"
+                title="Próximos projetos"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
           </div>
 
-          {/* Grid de cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {/* Carrossel Horizontal de Cards 9:16 */}
+          <div
+            ref={carouselRef}
+            className="flex flex-row overflow-x-auto gap-6 pb-8 snap-x snap-mandatory scroll-smooth no-scrollbar scrollbar-thin scrollbar-thumb-accent scrollbar-track-transparent"
+          >
             {filtered.map((project, i) => (
               <div
                 key={project.id}
-                className="reveal"
+                className="reveal snap-center shrink-0"
                 style={{ animationDelay: `${i * 0.08}s` }}
               >
                 <ProjectCard project={project} onOpen={setSelectedProject} />
