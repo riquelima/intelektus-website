@@ -685,11 +685,10 @@ const ProjectsSection = () => {
     : allProjects.filter((p) => p.category === selectedFilter);
 
   return (
-    <div style={{ background: "var(--bg-surface)" }}>
+    <div ref={sectionRef} style={{ background: "var(--bg-surface)" }}>
       {/* Hero da seção */}
       <section
         id="projects"
-        ref={sectionRef}
         className="pt-24 pb-10 relative overflow-hidden"
       >
         <div className="absolute inset-0 mesh-gradient pointer-events-none" />
