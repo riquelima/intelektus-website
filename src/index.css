@@ -77,10 +77,10 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Syne', 'Space Grotesk', sans-serif;
-    padding-bottom: 0.15em;
-    margin-bottom: -0.1em;
-    line-height: 1.2;
+    font-family: 'Space Grotesk', sans-serif;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.08em;
+    line-height: 1.25;
   }
 
   p, span, a, li, strong {

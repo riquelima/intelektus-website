@@ -235,9 +235,9 @@ const HeroSection = () => {
             <h1
               className="font-bold mb-6 animate-fade-up"
               style={{
-                fontFamily: 'Syne, sans-serif',
+                fontFamily: "'Space Grotesk', sans-serif",
                 fontSize: 'clamp(2.2rem, 5vw, 3.8rem)',
-                lineHeight: '1.3',
+                lineHeight: '1.25',
                 letterSpacing: '-0.03em',
                 color: 'var(--text-primary)',
                 animationDelay: '0.2s',
@@ -245,9 +245,9 @@ const HeroSection = () => {
               }}
             >
               Sistemas{' '}
-              <span className="gradient-text">Inteligentes</span>
-              {' '}para Pequenos Negócios{' '}
-              <span style={{ color: 'rgba(242,240,255,0.4)' }}>que Querem Crescer</span>
+              <span className="gradient-text">Personalizados</span>
+              {' '}que Transformam e{' '}
+              <span style={{ color: 'rgba(242,240,255,0.4)' }}>Aceleram sua Empresa</span>
             </h1>
 
             {/* Subtitle */}
@@ -255,8 +255,7 @@ const HeroSection = () => {
               className="text-lg md:text-xl leading-relaxed mb-9 animate-fade-up"
               style={{ color: 'var(--text-secondary)', animationDelay: '0.35s', opacity: 0 }}
             >
-              Petshop, restaurante, pizzaria, lanchonete, clínica — criamos o sistema certo para o seu negócio.
-              Com <strong style={{ color: 'var(--text-primary)' }}>automações, robôs de atendimento, captura de leads</strong> e disparos de marketing.
+              Chega de planilhas complexas ou programas genéricos que não resolvem seus gargalos. Desenvolvemos aplicativos de agendamento, robôs de WhatsApp e painéis de gestão sob medida para o seu petshop, lanchonete, clínica ou negócio local.
             </p>
 
             {/* CTAs */}
