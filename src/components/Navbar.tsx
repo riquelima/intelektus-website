@@ -52,12 +52,23 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
 
           {/* Logo */}
-          <a href="/" className="flex items-center group">
+          <a href="/" className="flex items-center gap-3.5 group select-none">
             <img
               src="/logobranca.png"
               alt="Intelektus"
               className="h-9 w-auto object-contain transition-all duration-300 group-hover:scale-105"
             />
+            {/* Texto animado com efeito digitando e fonte Anta */}
+            <div className="hidden sm:flex items-center border-l border-white/10 pl-3.5 h-6">
+              <span
+                className="text-[13px] font-bold tracking-[0.05em] text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/70 animate-typewriter"
+                style={{
+                  fontFamily: "'Anta', sans-serif",
+                }}
+              >
+                Intelektus - Onde as ideias decolam
+              </span>
+            </div>
           </a>
 
           {/* Desktop Menu */}
