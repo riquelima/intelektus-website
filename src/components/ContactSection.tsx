@@ -96,18 +96,7 @@ const ContactSection = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: 'rgba(108,99,255,0.12)', border: '1px solid rgba(108,99,255,0.3)' }}
-                  >
-                    <MapPin className="h-4 w-4" style={{ color: '#6C63FF' }} />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-semibold mb-0.5" style={{ color: 'var(--text-primary)' }}>Endereço</h3>
-                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Avenida Princesa Isabel, 476 - Salvador/BA</p>
-                  </div>
-                </div>
+
               </div>
               
               <div
