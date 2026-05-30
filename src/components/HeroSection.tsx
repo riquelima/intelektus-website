@@ -237,7 +237,7 @@ const HeroSection = () => {
               style={{
                 fontFamily: 'Syne, sans-serif',
                 fontSize: 'clamp(2.2rem, 5vw, 3.8rem)',
-                lineHeight: '1.08',
+                lineHeight: '1.3',
                 letterSpacing: '-0.03em',
                 color: 'var(--text-primary)',
                 animationDelay: '0.2s',
