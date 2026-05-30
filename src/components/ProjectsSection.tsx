@@ -579,7 +579,7 @@ const ProjectModal = ({
         <div className="absolute top-4 right-4 z-10">
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-xl flex items-center justify-center transition-all"
+            className="w-11 h-11 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center transition-all"
             style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--text-muted)" }}
           >
             <X size={16} />
@@ -587,10 +587,10 @@ const ProjectModal = ({
         </div>
 
         {/* Layout de duas colunas */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 p-6">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6 p-4 sm:p-6">
           {/* Coluna Esquerda: Player de vídeo em Smartphone Mockup */}
           <div className="md:col-span-5 flex flex-col items-center justify-center bg-[rgba(13,13,30,0.3)] p-4 rounded-2xl border border-white/5">
-            <div className="w-full max-w-[270px]">
+            <div className="w-full max-w-[190px] sm:max-w-[270px]">
               <VideoPlayer src={project.videoUrl} color={project.color} />
             </div>
             <p className="text-[11px] text-center mt-3" style={{ color: "var(--text-muted)" }}>
@@ -832,7 +832,7 @@ const ProjectsSection = () => {
                 <button
                   key={f}
                   onClick={() => setSelectedFilter(f)}
-                  className="px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer"
+                  className="px-4 py-2.5 sm:px-3.5 sm:py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer min-h-[44px] sm:min-h-0"
                   style={
                     selectedFilter === f
                       ? { background: "rgba(108,99,255,0.18)", borderColor: "rgba(108,99,255,0.55)", color: "#A899FF" }

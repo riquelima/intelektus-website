@@ -248,11 +248,11 @@ const TechStackSection = () => {
         <div className="relative reveal" style={{ overflow: 'hidden' }}>
           {/* Fade masks laterais */}
           <div
-            className="absolute left-0 top-0 bottom-0 w-28 z-10 pointer-events-none"
+            className="absolute left-0 top-0 bottom-0 w-12 sm:w-28 z-10 pointer-events-none"
             style={{ background: 'linear-gradient(to right, var(--bg-primary), transparent)' }}
           />
           <div
-            className="absolute right-0 top-0 bottom-0 w-28 z-10 pointer-events-none"
+            className="absolute right-0 top-0 bottom-0 w-12 sm:w-28 z-10 pointer-events-none"
             style={{ background: 'linear-gradient(to left, var(--bg-primary), transparent)' }}
           />
 

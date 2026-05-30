@@ -305,7 +305,7 @@ const SegmentsSection = () => {
           onClick={() => setActive(null)}
         >
           <div
-            className="relative rounded-2xl p-8 max-w-md w-full animate-scale-in"
+            className="relative rounded-2xl p-5 sm:p-8 max-w-md w-full animate-scale-in"
             style={{
               background: 'rgba(8,8,21,0.97)',
               border: `1px solid ${segments[active].color}40`,
@@ -320,7 +320,7 @@ const SegmentsSection = () => {
             />
 
             <button
-              className="absolute top-5 right-5 p-1.5 rounded-lg transition-colors cursor-pointer"
+              className="absolute top-5 right-5 p-2.5 sm:p-1.5 rounded-lg transition-colors cursor-pointer"
               style={{ color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)' }}
               onClick={() => setActive(null)}
             >

@@ -141,7 +141,7 @@ const Navbar = () => {
                   key={link.href}
                   href={link.href}
                   onClick={(e) => scrollToSection(e, link.href)}
-                  className="px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200"
+                  className="px-4 py-3.5 rounded-xl font-medium text-sm transition-all duration-200"
                   style={{ color: 'var(--text-secondary)', fontFamily: 'DM Sans, sans-serif' }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.color = 'var(--text-primary)';

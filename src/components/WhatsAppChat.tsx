@@ -62,7 +62,7 @@ const WhatsAppChat = ({ isOpen, onClose }: WhatsAppChatProps) => {
   };
 
   return (
-    <div className="fixed bottom-24 right-5 z-50 w-80 h-[450px] bg-white rounded-lg shadow-2xl flex flex-col font-sans border border-slate-300">
+    <div className="fixed bottom-20 sm:bottom-24 right-4 sm:right-5 z-50 w-[calc(100vw-32px)] sm:w-80 h-[360px] sm:h-[450px] bg-white rounded-lg shadow-2xl flex flex-col font-sans border border-slate-300">
       {/* Header */}
       <div className="flex justify-between items-center p-3 bg-slate-800 text-white rounded-t-lg">
         <div className='flex items-center gap-3'>

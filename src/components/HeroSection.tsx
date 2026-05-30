@@ -191,7 +191,7 @@ const HeroSection = () => {
 
   return (
     <section
-      className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden"
+      className="relative min-h-screen flex items-center pt-24 pb-12 sm:pt-28 sm:pb-16 overflow-hidden"
       style={{ background: 'transparent' }}
     >
 
@@ -331,7 +331,7 @@ const HeroSection = () => {
 
         {/* Stats bar */}
         <div
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-up"
+          className="mt-10 sm:mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 animate-fade-up"
           style={{ animationDelay: '0.8s', opacity: 0 }}
         >
           {[
