@@ -255,7 +255,7 @@ const HeroSection = () => {
               className="text-lg md:text-xl leading-relaxed mb-9 animate-fade-up"
               style={{ color: 'var(--text-secondary)', animationDelay: '0.35s', opacity: 0 }}
             >
-              Petshop, restaurante, pizzaria, anchonete, clínica — criamos o sistema certo para o seu negócio.
+              Petshop, restaurante, pizzaria, lanchonete, clínica — criamos o sistema certo para o seu negócio.
               Com <strong style={{ color: 'var(--text-primary)' }}>automações, robôs de atendimento, captura de leads</strong> e disparos de marketing.
             </p>
 
