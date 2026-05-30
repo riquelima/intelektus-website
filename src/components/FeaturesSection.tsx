@@ -120,7 +120,7 @@ const FeaturesSection = () => {
     <section
       id="solucoes"
       ref={sectionRef}
-      className="py-28 relative overflow-hidden"
+      className="py-16 relative overflow-hidden"
       style={{ background: 'var(--bg-surface)' }}
     >
       <div className="section-divider absolute top-0 left-0 right-0" />

@@ -49,7 +49,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contato" className="py-28 relative" style={{ background: 'var(--bg-surface)' }}>
+    <section id="contato" className="py-16 relative" style={{ background: 'var(--bg-surface)' }}>
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12">

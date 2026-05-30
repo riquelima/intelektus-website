@@ -165,7 +165,7 @@ const SegmentsSection = () => {
     <section
       id="segments"
       ref={sectionRef}
-      className="py-28 relative overflow-hidden"
+      className="py-16 relative overflow-hidden"
       style={{ background: 'var(--bg-surface)' }}
     >
       <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none" />

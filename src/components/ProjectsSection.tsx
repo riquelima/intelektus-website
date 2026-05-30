@@ -760,7 +760,7 @@ const ProjectsSection = () => {
       {/* Hero da seção */}
       <section
         id="projects"
-        className="pt-24 pb-10 relative overflow-hidden"
+        className="pt-16 pb-8 relative overflow-hidden"
       >
         <div className="absolute inset-0 mesh-gradient pointer-events-none" />
         <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none" />
@@ -820,7 +820,7 @@ const ProjectsSection = () => {
       </section>
 
       {/* Grid de projetos */}
-      <section className="pb-24 relative" style={{ background: "var(--bg-surface)" }}>
+      <section className="pb-16 relative" style={{ background: "var(--bg-surface)" }}>
         <div className="container mx-auto px-4 md:px-6">
           {/* Filtros + Setas de Navegação */}
           <div className="flex items-center justify-between gap-4 mb-10 reveal">

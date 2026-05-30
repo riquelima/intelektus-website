@@ -191,7 +191,7 @@ const TechStackSection = () => {
     <section
       id="tecnologias"
       ref={sectionRef}
-      className="py-24 relative overflow-hidden"
+      className="py-14 relative overflow-hidden"
       style={{ background: 'transparent' }}
     >
       <div className="section-divider absolute top-0 left-0 right-0" />
