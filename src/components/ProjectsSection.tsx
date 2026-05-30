@@ -7,6 +7,25 @@ import { supabase } from "@/integrations/supabase/client";
 ═══════════════════════════════════ */
 const STATIC_PROJECTS = [
   {
+    id: "static-7",
+    title: "MatchFlix",
+    tagline: "MatchFlix — Descoberta & Entretenimento",
+    category: "Mobile",
+    videoUrl: "/videos/matchflix.gif",
+    isVideo: true,
+    color: "#E50914",
+    gradient: "linear-gradient(135deg, #E50914, #B81D24)",
+    tags: ["Streaming", "Match de Filmes", "Entretenimento", "Mobile", "UI/UX Design"],
+    description:
+      "Plataforma inteligente para dar match e assistir aos melhores filmes.",
+    features: [
+      "🎬 Sistema de Match: Encontre 'um pra chamar de seu'. Mecânica interativa e divertida para descobrir, filtrar e favoritar filmes com base nas suas preferências reais.",
+      "🔥 Seção Em Alta (Trending): Fique por dentro do que é sucesso. Acompanhe os títulos mais populares e descubra exatamente o que o público está assistindo.",
+      "📱 Experiência Imersiva: Interface premium e moderna em dark mode, com navegação altamente visual focada em pôsteres de alta qualidade e rolagem fluida e intuitiva.",
+      "▶️ Streaming Integrado: Vá direto da tela de descoberta para o sofá. Assista aos filmes que você deu match diretamente pela plataforma, sem atritos.",
+    ],
+  },
+  {
     id: "static-6",
     title: "Sandy's Pet Shop",
     tagline: "Sandy's Pet Shop — Agendamento & Gestão",
@@ -129,6 +148,40 @@ const VideoPlayer = ({
   onClose?: () => void;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const isGif = src.endsWith(".gif");
+
+  if (isGif) {
+    return (
+      <div
+        className="relative w-full rounded-[2.5rem] border-[6px] border-[#1E1E2F] overflow-hidden group mx-auto shadow-2xl"
+        style={{ background: "#000", aspectRatio: "9/16", maxWidth: "280px" }}
+      >
+        <img
+          src={src}
+          alt="Demonstração GIF"
+          className="w-full h-full object-cover"
+        />
+        {/* Topo: fechar */}
+        {onClose && (
+          <div className="absolute top-3 right-3 z-20">
+            <button
+              onClick={(e) => { e.stopPropagation(); onClose(); }}
+              className="w-8 h-8 rounded-full flex items-center justify-center transition-all"
+              style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", color: "#fff" }}
+            >
+              <X size={14} />
+            </button>
+          </div>
+        )}
+        {/* Badge flutuante premium indicando que é um GIF animado */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
+          <span className="text-[10px] text-white/70 font-semibold tracking-wider uppercase font-sans">
+            Animado GIF 🔄
+          </span>
+        </div>
+      </div>
+    );
+  }
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -346,11 +399,13 @@ const ProjectCard = ({
 
   const handleHoverEnter = () => {
     setHovered(true);
-    previewRef.current?.play().catch(() => {});
+    if (!project.videoUrl.endsWith(".gif")) {
+      previewRef.current?.play().catch(() => {});
+    }
   };
   const handleHoverLeave = () => {
     setHovered(false);
-    if (previewRef.current) {
+    if (!project.videoUrl.endsWith(".gif") && previewRef.current) {
       previewRef.current.pause();
       previewRef.current.currentTime = 0;
     }
@@ -372,17 +427,26 @@ const ProjectCard = ({
     >
       {/* Thumbnail / Preview de vídeo no hover */}
       <div className="relative overflow-hidden w-full bg-[#04040D]" style={{ aspectRatio: "9/16", maxHeight: "330px" }}>
-        {/* Vídeo preview mudo no hover */}
-        <video
-          ref={previewRef}
-          src={project.videoUrl}
-          muted
-          playsInline
-          loop
-          preload="metadata"
-          className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
-          style={{ opacity: hovered ? 1 : 0, transform: hovered ? "scale(1.04)" : "scale(1)" }}
-        />
+        {/* Vídeo/GIF preview mudo no hover */}
+        {project.videoUrl.endsWith(".gif") ? (
+          <img
+            src={project.videoUrl}
+            alt={project.title}
+            className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
+            style={{ opacity: hovered ? 1 : 0, transform: hovered ? "scale(1.04)" : "scale(1)" }}
+          />
+        ) : (
+          <video
+            ref={previewRef}
+            src={project.videoUrl}
+            muted
+            playsInline
+            loop
+            preload="metadata"
+            className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
+            style={{ opacity: hovered ? 1 : 0, transform: hovered ? "scale(1.04)" : "scale(1)" }}
+          />
+        )}
 
         {/* Placeholder gradient quando não está em hover */}
         <div
