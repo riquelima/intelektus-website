@@ -7,6 +7,24 @@ import { supabase } from "@/integrations/supabase/client";
 ═══════════════════════════════════ */
 const STATIC_PROJECTS = [
   {
+    id: "static-6",
+    title: "Sandy's Pet Shop",
+    tagline: "Sandy's Pet Shop — Agendamento & Gestão",
+    category: "Sistemas",
+    videoUrl: "/videos/sandys-pet-shop.mp4",
+    isVideo: true,
+    color: "#EC4899",
+    gradient: "linear-gradient(135deg, #EC4899, #F43F5E)",
+    tags: ["Pet Shop", "Agendamento", "Gestão Financeira", "Mobile", "White-label"],
+    description:
+      "Plataforma de gestão inteligente e aplicativo exclusivo para o mercado pet.",
+    features: [
+      "📱 Aplicativo do Cliente com experiência intuitiva e tabela de preços dinâmica, calculando o valor exato na hora com base no peso do pet e nos serviços selecionados (Banho & Tosa, Pet Móvel, Creche).",
+      "💻 Painel Administrativo completo: Controle total de agendamentos, lista de clientes e dashboard detalhado com estatísticas de faturamento diário e semanal em tempo real.",
+      "🔄 Sistema Exclusivo (White-label): Aplicativo customizado com a sua identidade visual, escalável e desenhado para profissionalizar o atendimento de qualquer Pet Shop.",
+    ],
+  },
+  {
     id: "static-1",
     title: "Edy Cão — Banho & Tosa",
     tagline: "Plataforma end-to-end para o mercado pet",
