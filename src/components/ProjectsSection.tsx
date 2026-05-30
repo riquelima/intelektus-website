@@ -416,18 +416,17 @@ const ProjectCard = ({
   const [hovered, setHovered] = useState(false);
   const previewRef = useRef<HTMLVideoElement>(null);
 
-  const handleHoverEnter = () => {
-    setHovered(true);
+  useEffect(() => {
     if (!project.videoUrl.endsWith(".gif")) {
       previewRef.current?.play().catch(() => {});
     }
+  }, [project.videoUrl]);
+
+  const handleHoverEnter = () => {
+    setHovered(true);
   };
   const handleHoverLeave = () => {
     setHovered(false);
-    if (!project.videoUrl.endsWith(".gif") && previewRef.current) {
-      previewRef.current.pause();
-      previewRef.current.currentTime = 0;
-    }
   };
 
   return (
@@ -444,15 +443,14 @@ const ProjectCard = ({
       onMouseLeave={handleHoverLeave}
       onClick={() => onOpen(project)}
     >
-      {/* Thumbnail / Preview de vídeo no hover */}
+      {/* Thumbnail / Preview de vídeo/GIF em execução contínua */}
       <div className="relative overflow-hidden w-full bg-[#04040D]" style={{ aspectRatio: "9/16", maxHeight: "330px" }}>
-        {/* Vídeo/GIF preview mudo no hover */}
         {project.videoUrl.endsWith(".gif") ? (
           <img
             src={project.videoUrl}
             alt={project.title}
             className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
-            style={{ opacity: hovered ? 1 : 0, transform: hovered ? "scale(1.04)" : "scale(1)" }}
+            style={{ opacity: 1, transform: hovered ? "scale(1.05)" : "scale(1)" }}
           />
         ) : (
           <video
@@ -461,61 +459,12 @@ const ProjectCard = ({
             muted
             playsInline
             loop
-            preload="metadata"
+            autoPlay
+            preload="auto"
             className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
-            style={{ opacity: hovered ? 1 : 0, transform: hovered ? "scale(1.04)" : "scale(1)" }}
+            style={{ opacity: 1, transform: hovered ? "scale(1.05)" : "scale(1)" }}
           />
         )}
-
-        {/* Placeholder gradient quando não está em hover */}
-        <div
-          className="absolute inset-0 transition-opacity duration-500 flex flex-col items-center justify-center p-6 text-center"
-          style={{
-            background: `linear-gradient(to bottom, rgba(8,8,21,0.25) 0%, rgba(8,8,21,0.95) 90%), ${project.gradient}`,
-            opacity: hovered ? 0 : 0.85,
-          }}
-        >
-          {/* Smartphone outline vector mockup for visual depth */}
-          <div className="w-16 h-28 rounded-2xl border-2 border-white/20 flex flex-col items-center justify-between p-2 mb-2 relative">
-            <div className="w-6 h-1 rounded-full bg-white/20" />
-            <div className="w-7 h-7 rounded-full border border-white/25 flex items-center justify-center">
-              <Play size={10} fill="white" className="text-white ml-0.5" />
-            </div>
-            <div className="w-3 h-3 rounded-full border border-white/20" />
-          </div>
-        </div>
-
-        {/* Ícone centralizado */}
-        <div
-          className="absolute inset-0 flex items-center justify-center transition-all duration-300"
-          style={{ opacity: hovered ? 0 : 1 }}
-        >
-          <div
-            className="w-16 h-16 rounded-full flex items-center justify-center"
-            style={{ background: "rgba(0,0,0,0.35)", backdropFilter: "blur(8px)", border: `2px solid ${project.color}80` }}
-          >
-            <Play size={24} fill="white" className="text-white ml-1" />
-          </div>
-        </div>
-
-        {/* Overlay de play no hover */}
-        <div
-          className="absolute inset-0 flex items-center justify-center transition-all duration-300"
-          style={{
-            background: "rgba(0,0,0,0.3)",
-            opacity: hovered ? 1 : 0,
-          }}
-        >
-          <div
-            className="w-14 h-14 rounded-full flex items-center justify-center"
-            style={{
-              background: `linear-gradient(135deg, ${project.color}, ${project.color}99)`,
-              boxShadow: `0 0 24px ${project.color}60`,
-            }}
-          >
-            <Play size={20} fill="white" className="text-white ml-1" />
-          </div>
-        </div>
 
         {/* Badge de categoria */}
         <div className="absolute top-3 left-3">
