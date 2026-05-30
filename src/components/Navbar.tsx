@@ -54,7 +54,7 @@ const Navbar = () => {
           {/* Logo */}
           <a href="/" className="flex items-center group">
             <img
-              src="/logoIntelektus.png"
+              src="/logobranca.png"
               alt="Intelektus"
               className="h-9 w-auto object-contain transition-all duration-300 group-hover:scale-105"
             />
