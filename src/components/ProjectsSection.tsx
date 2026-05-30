@@ -178,8 +178,8 @@ const VideoPlayer = ({
 
   return (
     <div
-      className="relative w-full rounded-2xl overflow-hidden group"
-      style={{ background: "#000", aspectRatio: "16/9" }}
+      className="relative w-full rounded-[2.5rem] border-[6px] border-[#1E1E2F] overflow-hidden group mx-auto shadow-2xl"
+      style={{ background: "#000", aspectRatio: "9/16", maxWidth: "280px" }}
       onMouseMove={resetHide}
       onClick={togglePlay}
     >
@@ -353,7 +353,7 @@ const ProjectCard = ({
       onClick={() => onOpen(project)}
     >
       {/* Thumbnail / Preview de vídeo no hover */}
-      <div className="relative overflow-hidden" style={{ aspectRatio: "16/9" }}>
+      <div className="relative overflow-hidden w-full bg-[#04040D]" style={{ aspectRatio: "9/16", maxHeight: "330px" }}>
         {/* Vídeo preview mudo no hover */}
         <video
           ref={previewRef}
@@ -368,12 +368,21 @@ const ProjectCard = ({
 
         {/* Placeholder gradient quando não está em hover */}
         <div
-          className="absolute inset-0 transition-opacity duration-500"
+          className="absolute inset-0 transition-opacity duration-500 flex flex-col items-center justify-center p-6 text-center"
           style={{
-            background: project.gradient,
+            background: `linear-gradient(to bottom, rgba(8,8,21,0.25) 0%, rgba(8,8,21,0.95) 90%), ${project.gradient}`,
             opacity: hovered ? 0 : 0.85,
           }}
-        />
+        >
+          {/* Smartphone outline vector mockup for visual depth */}
+          <div className="w-16 h-28 rounded-2xl border-2 border-white/20 flex flex-col items-center justify-between p-2 mb-2 relative">
+            <div className="w-6 h-1 rounded-full bg-white/20" />
+            <div className="w-7 h-7 rounded-full border border-white/25 flex items-center justify-center">
+              <Play size={10} fill="white" className="text-white ml-0.5" />
+            </div>
+            <div className="w-3 h-3 rounded-full border border-white/20" />
+          </div>
+        </div>
 
         {/* Ícone centralizado */}
         <div
@@ -512,7 +521,7 @@ const ProjectModal = ({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl animate-scale-in"
+        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl animate-scale-in"
         style={{
           background: "rgba(8,8,21,0.98)",
           border: `1px solid ${project.color}35`,
@@ -526,105 +535,114 @@ const ProjectModal = ({
           style={{ background: project.gradient }}
         />
 
-        {/* Header */}
-        <div className="flex items-start justify-between p-6 pb-4">
-          <div className="flex-1 pr-4">
-            <span
-              className="text-xs font-bold uppercase tracking-widest px-2.5 py-1 rounded-lg inline-block mb-3"
-              style={{ background: `${project.color}18`, color: project.color }}
-            >
-              {project.category}
-            </span>
-            <h2
-              className="font-bold text-2xl"
-              style={{ fontFamily: "Syne, sans-serif", color: "var(--text-primary)", letterSpacing: "-0.02em" }}
-            >
-              {project.title}
-            </h2>
-            <p className="text-sm mt-1" style={{ color: project.color, fontWeight: 600 }}>
-              {project.tagline}
-            </p>
-          </div>
+        {/* Botão de Fechar Absoluto para o design de 2 colunas */}
+        <div className="absolute top-4 right-4 z-10">
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all"
+            className="w-9 h-9 rounded-xl flex items-center justify-center transition-all"
             style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--text-muted)" }}
           >
             <X size={16} />
           </button>
         </div>
 
-        {/* Player de vídeo */}
-        <div className="px-6">
-          <VideoPlayer src={project.videoUrl} color={project.color} />
-        </div>
-
-        {/* Conteúdo */}
-        <div className="p-6 space-y-5">
-          <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-            {project.description}
-          </p>
-
-          <div>
-            <h3
-              className="font-bold text-sm mb-3 uppercase tracking-widest"
-              style={{ color: "var(--text-muted)", fontFamily: "Syne, sans-serif" }}
-            >
-              Principais recursos
-            </h3>
-            <div className="space-y-2.5">
-              {project.features.map((f, i) => (
-                <div
-                  key={i}
-                  className="flex gap-3 p-3.5 rounded-xl text-sm leading-relaxed"
-                  style={{
-                    background: `${project.color}08`,
-                    border: `1px solid ${project.color}18`,
-                    color: "var(--text-secondary)",
-                  }}
-                >
-                  {f}
-                </div>
-              ))}
+        {/* Layout de duas colunas */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 p-6">
+          {/* Coluna Esquerda: Player de vídeo em Smartphone Mockup */}
+          <div className="md:col-span-5 flex flex-col items-center justify-center bg-[rgba(13,13,30,0.3)] p-4 rounded-2xl border border-white/5">
+            <div className="w-full max-w-[270px]">
+              <VideoPlayer src={project.videoUrl} color={project.color} />
             </div>
+            <p className="text-[11px] text-center mt-3" style={{ color: "var(--text-muted)" }}>
+              ✦ Toque no player para controlar o vídeo
+            </p>
           </div>
 
-          {/* Tags */}
-          <div>
-            <h3
-              className="font-bold text-sm mb-3 uppercase tracking-widest"
-              style={{ color: "var(--text-muted)", fontFamily: "Syne, sans-serif" }}
-            >
-              Tecnologias
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs px-3 py-1.5 rounded-lg font-medium"
-                  style={{
-                    background: `${project.color}12`,
-                    border: `1px solid ${project.color}30`,
-                    color: project.color,
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
+          {/* Coluna Direita: Informações */}
+          <div className="md:col-span-7 flex flex-col justify-between space-y-5">
+            <div>
+              <span
+                className="text-xs font-bold uppercase tracking-widest px-2.5 py-1 rounded-lg inline-block mb-3"
+                style={{ background: `${project.color}18`, color: project.color }}
+              >
+                {project.category}
+              </span>
+              <h2
+                className="font-bold text-2xl md:text-3xl"
+                style={{ fontFamily: "Syne, sans-serif", color: "var(--text-primary)", letterSpacing: "-0.02em" }}
+              >
+                {project.title}
+              </h2>
+              <p className="text-sm mt-1 font-semibold" style={{ color: project.color }}>
+                {project.tagline}
+              </p>
             </div>
-          </div>
 
-          {/* CTA */}
-          <a
-            href={`https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+Tenho+interesse+em+um+projeto+similar+ao+${encodeURIComponent(project.title)}.&type=phone_number&app_absent=0`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-glow w-full text-white font-bold py-3.5 rounded-xl text-sm flex items-center justify-center gap-2"
-            style={{ fontFamily: "Syne, sans-serif" }}
-          >
-            Quero um projeto similar
-            <ArrowRight size={16} />
-          </a>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+              {project.description}
+            </p>
+
+            <div>
+              <h3
+                className="font-bold text-xs mb-2.5 uppercase tracking-widest"
+                style={{ color: "var(--text-muted)", fontFamily: "Syne, sans-serif" }}
+              >
+                Principais recursos
+              </h3>
+              <div className="space-y-2">
+                {project.features.map((f, i) => (
+                  <div
+                    key={i}
+                    className="flex gap-2.5 p-3 rounded-xl text-xs leading-relaxed"
+                    style={{
+                      background: `${project.color}08`,
+                      border: `1px solid ${project.color}18`,
+                      color: "var(--text-secondary)",
+                    }}
+                  >
+                    {f}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Tags */}
+            <div>
+              <h3
+                className="font-bold text-xs mb-2.5 uppercase tracking-widest"
+                style={{ color: "var(--text-muted)", fontFamily: "Syne, sans-serif" }}
+              >
+                Tecnologias
+              </h3>
+              <div className="flex flex-wrap gap-1.5">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-[10px] px-2.5 py-1 rounded-lg font-medium"
+                    style={{
+                      background: `${project.color}12`,
+                      border: `1px solid ${project.color}30`,
+                      color: project.color,
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA */}
+            <a
+              href={`https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+Tenho+interesse+em+um+projeto+similar+ao+${encodeURIComponent(project.title)}.&type=phone_number&app_absent=0`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-glow w-full text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 mt-2"
+              style={{ fontFamily: "Syne, sans-serif" }}
+            >
+              Quero um projeto similar
+              <ArrowRight size={14} />
+            </a>
+          </div>
         </div>
       </div>
     </div>
