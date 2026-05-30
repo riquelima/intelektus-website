@@ -193,7 +193,7 @@ const AboutSection = () => {
               {/* Perfil */}
               <div className="flex items-center gap-4 relative z-10">
                 <Avatar className="w-16 h-16 flex-shrink-0" style={{ border: '2px solid rgba(108,99,255,0.4)' }}>
-                  <AvatarImage src="/henrique-lima.jpg" alt="Henrique Lima" />
+                  <AvatarImage src="/profile.png" alt="Henrique Lima" />
                   <AvatarFallback
                     className="font-bold text-lg"
                     style={{
