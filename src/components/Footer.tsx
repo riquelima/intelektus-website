@@ -33,7 +33,7 @@ const Footer = () => {
   return (
     <footer
       className="relative overflow-hidden"
-      style={{ background: 'var(--bg-primary)' }}
+      style={{ background: 'transparent' }}
     >
       {/* Gradient divider topo */}
       <div className="section-divider" />

@@ -93,7 +93,7 @@ const HowItWorksSection = () => {
       id="como-trabalhamos"
       ref={sectionRef}
       className="py-28 relative overflow-hidden"
-      style={{ background: 'var(--bg-primary)' }}
+      style={{ background: 'transparent' }}
     >
       {/* Background effects */}
       <div

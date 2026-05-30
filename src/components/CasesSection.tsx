@@ -125,7 +125,7 @@ const CasesSection = () => {
       id="cases"
       ref={sectionRef}
       className="py-28 relative overflow-hidden"
-      style={{ background: 'var(--bg-primary)' }}
+      style={{ background: 'transparent' }}
     >
       {/* Ambient glow */}
       <div

@@ -192,7 +192,7 @@ const HeroSection = () => {
   return (
     <section
       className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden"
-      style={{ background: 'var(--bg-primary)' }}
+      style={{ background: 'transparent' }}
     >
 
       {/* Mesh gradient de fundo */}

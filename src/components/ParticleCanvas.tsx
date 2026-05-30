@@ -110,7 +110,7 @@ const ParticleCanvas = () => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 w-full h-full pointer-events-none"
-      style={{ opacity: 0.35, zIndex: 0 }}
+      style={{ opacity: 0.55, zIndex: 1 }}
     />
   );
 };

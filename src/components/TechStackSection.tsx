@@ -192,7 +192,7 @@ const TechStackSection = () => {
       id="tecnologias"
       ref={sectionRef}
       className="py-24 relative overflow-hidden"
-      style={{ background: 'var(--bg-primary)' }}
+      style={{ background: 'transparent' }}
     >
       <div className="section-divider absolute top-0 left-0 right-0" />
 
