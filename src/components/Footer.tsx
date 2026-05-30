@@ -106,7 +106,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div className="flex items-center mb-5">
               <img
-                src="/logobranca.png"
+                src="/finalogo.png"
                 alt="Intelektus"
                 className="h-10 w-auto object-contain"
               />

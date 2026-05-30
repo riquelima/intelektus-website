@@ -47,7 +47,7 @@ const Login = () => {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center mb-4">
-            <img src="/logobranca.png" alt="Intelektus" className="h-12 w-auto object-contain brightness-0 opacity-85" />
+            <img src="/finalogo.png" alt="Intelektus" className="h-12 w-auto object-contain brightness-0 opacity-85" />
           </div>
           <CardTitle className="text-xl font-bold text-gray-900">
             Painel Administrativo

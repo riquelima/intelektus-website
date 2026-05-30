@@ -54,7 +54,7 @@ const Navbar = () => {
           {/* Logo */}
           <a href="/" className="flex items-center gap-3.5 group select-none">
             <img
-              src="/logobranca.png"
+              src="/finalogo.png"
               alt="Intelektus"
               className="h-9 w-auto object-contain transition-all duration-300 group-hover:scale-105"
             />
