@@ -1,135 +1,237 @@
 
-import { MessageSquare, Settings, Bot, ArrowRight, Lightbulb, BadgeCheck } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useRef, useState } from 'react';
+import { Search, Map, Code2, TestTube2, Server, Headphones, ArrowRight } from 'lucide-react';
 
 const steps = [
   {
-    icon: <MessageSquare className="h-6 w-6" />,
-    title: "Análise da sua empresa",
-    description: "Entendemos o funcionamento, necessidades e desafios específicos do seu negócio."
+    icon: Search,
+    number: '01',
+    title: 'Diagnóstico',
+    description: 'Entendemos seu negócio, mapeamos desafios e identificamos as maiores oportunidades de melhoria.',
+    color: '#6C63FF',
   },
   {
-    icon: <Settings className="h-6 w-6" />,
-    title: "Personalização do IntelekBot",
-    description: "Desenvolvemos e treinamos o agente virtual com o conhecimento do seu negócio."
+    icon: Map,
+    number: '02',
+    title: 'Planejamento',
+    description: 'Documentamos processos, definimos escopo, arquitetura e cronograma detalhado do projeto.',
+    color: '#A855F7',
   },
   {
-    icon: <Bot className="h-6 w-6" />,
-    title: "Implementação e testes",
-    description: "Integramos o IntelekBot aos seus canais de atendimento e realizamos testes."
+    icon: Code2,
+    number: '03',
+    title: 'Desenvolvimento',
+    description: 'Criamos sua solução com tecnologias modernas, código limpo e entregas em sprints contínuos.',
+    color: '#3B82F6',
   },
   {
-    icon: <Lightbulb className="h-6 w-6" />,
-    title: "Treinamento da equipe",
-    description: "Capacitamos sua equipe para gerenciar e extrair o máximo do seu agente virtual."
+    icon: TestTube2,
+    number: '04',
+    title: 'Testes Rigorosos',
+    description: 'Validamos cada funcionalidade com testes rigorosos para garantir estabilidade e qualidade.',
+    color: '#10B981',
   },
   {
-    icon: <BadgeCheck className="h-6 w-6" />,
-    title: "Monitoramento contínuo",
-    description: "Acompanhamos o desempenho, identificando oportunidades de melhoria."
-  }
+    icon: Server,
+    number: '05',
+    title: 'Implantação',
+    description: 'Colocamos o sistema em produção com segurança, monitoramento e treinamento da sua equipe.',
+    color: '#F59E0B',
+  },
+  {
+    icon: Headphones,
+    number: '06',
+    title: 'Suporte Contínuo',
+    description: 'Evoluímos a solução junto com sua empresa — novas funcionalidades, melhorias e suporte dedicado.',
+    color: '#FF3CAC',
+  },
 ];
 
 const HowItWorksSection = () => {
+  const WHATSAPP = 'https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+Gostaria+de+iniciar+um+projeto+com+a+Intelektus.&type=phone_number&app_absent=0';
+  const sectionRef = useRef<HTMLElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
+  const [lineHeight, setLineHeight] = useState(0);
+  const [visibleSteps, setVisibleSteps] = useState<Set<number>>(new Set());
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Animar linha da timeline
+            let h = 0;
+            const interval = setInterval(() => {
+              h += 2;
+              setLineHeight(Math.min(h, 100));
+              if (h >= 100) clearInterval(interval);
+            }, 20);
+
+            // Revelar steps um a um
+            steps.forEach((_, i) => {
+              setTimeout(() => {
+                setVisibleSteps(prev => new Set([...prev, i]));
+              }, i * 180);
+            });
+
+            // Revelar outros elementos
+            const reveals = entry.target.querySelectorAll('.reveal');
+            reveals.forEach((el, i) => {
+              setTimeout(() => el.classList.add('visible'), i * 100);
+            });
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="how-it-works" className="py-24 bg-white relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-intelektus-50/50 clip-path-diagonal"></div>
-      
+    <section
+      id="como-trabalhamos"
+      ref={sectionRef}
+      className="py-28 relative overflow-hidden"
+      style={{ background: 'var(--bg-primary)' }}
+    >
+      {/* Background effects */}
+      <div
+        className="absolute left-0 top-1/2 -translate-y-1/2 w-80 h-80 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(108,99,255,0.1) 0%, transparent 70%)',
+          filter: 'blur(50px)',
+        }}
+      />
+      <div className="absolute inset-0 grid-lines opacity-20 pointer-events-none" />
+
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div>
-            <div className="inline-flex items-center px-3 py-1 rounded-full border border-intelektus-200 bg-intelektus-50/50 text-intelektus-700 text-sm font-medium mb-6">
-              <Bot size={16} className="mr-2" />
-              Processo simplificado
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16 reveal">
+          <div className="badge-chip mb-5 mx-auto inline-flex">
+            <Code2 size={12} style={{ color: '#6C63FF' }} />
+            Processo
+          </div>
+          <h2
+            className="font-bold text-4xl md:text-5xl mb-5"
+            style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+          >
+            Como{' '}
+            <span className="gradient-text">trabalhamos</span>
+          </h2>
+          <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+            Um processo estruturado e transparente — do diagnóstico à entrega, com você em cada etapa.
+          </p>
+        </div>
+
+        {/* Timeline layout */}
+        <div className="max-w-4xl mx-auto">
+          <div className="relative">
+            {/* Linha vertical animada */}
+            <div
+              className="absolute left-5 top-0 bottom-0 w-0.5 md:left-1/2 md:-translate-x-1/2 pointer-events-none"
+              style={{ background: 'rgba(108,99,255,0.12)' }}
+            >
+              <div
+                ref={lineRef}
+                className="w-full rounded-full"
+                style={{
+                  height: `${lineHeight}%`,
+                  background: 'linear-gradient(180deg, #6C63FF 0%, #A855F7 50%, #FF3CAC 100%)',
+                  boxShadow: '0 0 12px rgba(108,99,255,0.5)',
+                  transition: 'none',
+                }}
+              />
             </div>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">
-              Como implementamos o <span className="gradient-text">IntelekBot</span> no seu negócio
-            </h2>
-            <p className="text-gray-600 text-lg mb-8">
-              Nossa equipe especializada garante uma implementação tranquila e eficiente do IntelekBot, 
-              adaptando-o perfeitamente às necessidades da sua empresa em um processo claro e estruturado.
-            </p>
-            
-            <div className="space-y-8">
-              {steps.map((step, index) => (
-                <div key={index} className="flex items-start">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg gradient-bg flex items-center justify-center text-white mr-4">
-                    {step.icon}
+
+            <div className="flex flex-col gap-8">
+              {steps.map((step, i) => {
+                const Icon = step.icon;
+                const isLeft = i % 2 === 0;
+                const isVisible = visibleSteps.has(i);
+
+                return (
+                  <div
+                    key={i}
+                    className="relative flex items-center gap-6 md:gap-0"
+                    style={{
+                      opacity: isVisible ? 1 : 0,
+                      transform: isVisible ? 'translateX(0)' : `translateX(${isLeft ? '-30px' : '30px'})`,
+                      transition: 'opacity 0.6s ease, transform 0.6s ease',
+                      flexDirection: 'row',
+                    }}
+                  >
+                    {/* Dot na linha */}
+                    <div
+                      className="absolute left-5 md:left-1/2 md:-translate-x-1/2 w-10 h-10 rounded-full flex items-center justify-center z-10 flex-shrink-0"
+                      style={{
+                        background: `linear-gradient(135deg, ${step.color}, ${step.color}88)`,
+                        boxShadow: `0 0 20px ${step.color}50`,
+                        border: `2px solid ${step.color}`,
+                      }}
+                    >
+                      <span
+                        className="font-bold text-xs text-white"
+                        style={{ fontFamily: 'Syne, sans-serif' }}
+                      >
+                        {step.number}
+                      </span>
+                    </div>
+
+                    {/* Card — alternando lado no desktop */}
+                    <div
+                      className="ml-16 md:ml-0 md:w-5/12 card-glass rounded-2xl p-6 group cursor-default"
+                      style={{
+                        marginLeft: undefined,
+                        ...(window.innerWidth >= 768
+                          ? isLeft
+                            ? { marginRight: 'auto', paddingRight: '24px' }
+                            : { marginLeft: 'auto', paddingLeft: '24px' }
+                          : { marginLeft: '64px' }
+                        ),
+                      }}
+                    >
+                      <div className="flex items-start gap-4">
+                        <div
+                          className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110"
+                          style={{
+                            background: `${step.color}18`,
+                            border: `1px solid ${step.color}35`,
+                          }}
+                        >
+                          <Icon size={18} style={{ color: step.color }} />
+                        </div>
+                        <div>
+                          <h3
+                            className="font-bold text-base mb-1.5"
+                            style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}
+                          >
+                            {step.title}
+                          </h3>
+                          <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                            {step.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-heading text-xl font-bold mb-2">{`${index + 1}. ${step.title}`}</h3>
-                    <p className="text-gray-600">{step.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            <div className="mt-10">
-              <Button 
-                className="gradient-bg hover:opacity-90 transition-opacity text-white px-6 py-6 text-lg"
-                onClick={() => window.open('https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+%EF%BF%BD+Gostaria+de+saber+mais+sobre+os+servi%C3%A7os+oferecidos+pela+Intelektus.&type=phone_number&app_absent=0', '_blank')}
-              >
-                Quero implementar o IntelekBot
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+                );
+              })}
             </div>
           </div>
-          
-          <div className="relative">
-            <div className="rounded-2xl bg-white shadow-2xl p-8 border border-gray-100 relative z-20">
-              <h3 className="font-heading text-2xl font-bold mb-6">Benefícios da implementação</h3>
-              
-              <div className="space-y-4">
-                <div className="flex items-center p-3 bg-green-50 rounded-lg border border-green-100">
-                  <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <p className="font-medium">Redução de até 70% no tempo de resposta</p>
-                </div>
-                
-                <div className="flex items-center p-3 bg-blue-50 rounded-lg border border-blue-100">
-                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <p className="font-medium">Atendimento 24/7, mesmo fora do horário comercial</p>
-                </div>
-                
-                <div className="flex items-center p-3 bg-purple-50 rounded-lg border border-purple-100">
-                  <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <p className="font-medium">Aumento médio de 40% nas conversões</p>
-                </div>
-                
-                <div className="flex items-center p-3 bg-amber-50 rounded-lg border border-amber-100">
-                  <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 mr-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <p className="font-medium">Economia de até 60% nos custos de atendimento</p>
-                </div>
-                
-                <div className="flex items-center p-3 bg-red-50 rounded-lg border border-red-100">
-                  <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600 mr-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <p className="font-medium">98% de satisfação dos clientes</p>
-                </div>
-              </div>
-            </div>
-            
-            {/* Background elements */}
-            <div className="absolute top-8 -left-8 w-full h-full bg-intelektus-100 rounded-2xl z-10 transform -rotate-3"></div>
-            <div className="absolute top-4 -left-4 w-full h-full bg-intelektus-200 rounded-2xl z-0 transform -rotate-6"></div>
+
+          {/* CTA */}
+          <div className="text-center mt-16 reveal">
+            <a
+              href={WHATSAPP}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 btn-glow text-white font-bold px-8 py-4 rounded-xl text-base"
+              style={{ fontFamily: 'Syne, sans-serif' }}
+            >
+              Iniciar meu projeto agora
+              <ArrowRight size={18} />
+            </a>
           </div>
         </div>
       </div>

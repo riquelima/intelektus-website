@@ -1,148 +1,477 @@
 
-import { Button } from "@/components/ui/button";
-import { MessageSquare, ArrowRight, Bot, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { ArrowRight, CheckCircle2, Zap, Star, MessageSquare } from 'lucide-react';
 
-const HeroSection = () => {
+/* ═══════════════════════════════════════════
+   CANVAS DE PARTÍCULAS INTERATIVAS (WebGL-like)
+═══════════════════════════════════════════ */
+const ParticleCanvas = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const animRef = useRef<number>(0);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    /* Partículas */
+    const count = window.innerWidth < 768 ? 60 : 130;
+    const particles = Array.from({ length: count }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      r: Math.random() * 1.8 + 0.4,
+      alpha: Math.random() * 0.5 + 0.2,
+      hue: Math.random() > 0.6 ? 310 : 247, // roxo ou plasma
+    }));
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const mx = mouseRef.current.x;
+      const my = mouseRef.current.y;
+
+      particles.forEach((p) => {
+        /* Movimento */
+        p.x += p.vx;
+        p.y += p.vy;
+
+        /* Atração suave ao mouse */
+        const dx = mx - p.x;
+        const dy = my - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 180) {
+          p.vx += (dx / dist) * 0.012;
+          p.vy += (dy / dist) * 0.012;
+        }
+
+        /* Limite de velocidade */
+        const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+        if (speed > 1.6) { p.vx = (p.vx / speed) * 1.6; p.vy = (p.vy / speed) * 1.6; }
+
+        /* Bounce */
+        if (p.x < 0) { p.x = 0; p.vx *= -1; }
+        if (p.x > canvas.width) { p.x = canvas.width; p.vx *= -1; }
+        if (p.y < 0) { p.y = 0; p.vy *= -1; }
+        if (p.y > canvas.height) { p.y = canvas.height; p.vy *= -1; }
+
+        /* Desenhar ponto */
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, ${p.alpha})`;
+        ctx.fill();
+      });
+
+      /* Linhas de conexão */
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d  = Math.sqrt(dx * dx + dy * dy);
+          if (d < 100) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            const alpha = (1 - d / 100) * 0.2;
+            ctx.strokeStyle = `rgba(108,99,255,${alpha})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+
+      animRef.current = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    };
+    canvas.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      window.removeEventListener('resize', resize);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
   return (
-    <section className="relative pt-24 overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 z-0 grid-pattern"></div>
-      <div className="absolute top-20 left-10 w-72 h-72 bg-blue-300/20 rounded-full filter blur-3xl"></div>
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-300/20 rounded-full filter blur-3xl"></div>
-      
-      <div className="container mx-auto px-4 pt-16 pb-24 md:py-32 relative z-10">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="max-w-xl">
-            <div className="inline-flex items-center px-3 py-1 rounded-full border border-intelektus-200 bg-intelektus-50/50 text-intelektus-700 text-sm font-medium mb-6">
-              <Sparkles size={16} className="mr-2" />
-              Automatização inteligente para o seu negócio
-            </div>
-            <h1 className="font-heading font-extrabold text-4xl md:text-5xl lg:text-6xl mb-6">
-              Transforme seu atendimento com <span className="gradient-text">Inteligência Artificial</span>
-            </h1>
-            <p className="text-lg md:text-xl text-gray-600 mb-8">
-              Democratizando o acesso à IA para pequenos e médios negócios. 
-              Conheça o IntelekBot, seu agente virtual personalizado que vai revolucionar o relacionamento com seus clientes.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                className="gradient-bg hover:opacity-90 transition-opacity text-white px-6 py-6 text-lg"
-                onClick={() => window.open('https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+%EF%BF%BD+Gostaria+de+saber+mais+sobre+os+servi%C3%A7os+oferecidos+pela+Intelektus.&type=phone_number&app_absent=0', '_blank')}
-              >
-                Quero conhecer o IntelekBot
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button 
-                variant="outline" 
-                className="border-intelektus-300 text-intelektus-700 hover:bg-intelektus-50 px-6 py-6 text-lg"
-                onClick={() => window.open('https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+%EF%BF%BD+Gostaria+de+saber+mais+sobre+os+servi%C3%A7os+oferecidos+pela+Intelektus.&type=phone_number&app_absent=0', '_blank')}
-              >
-                <MessageSquare className="mr-2 h-5 w-5" />
-                Fale com um especialista
-              </Button>
-            </div>
-            <div className="mt-8 flex items-center">
-              <div className="flex -space-x-2">
-                {[1, 2, 3, 4].map((item) => (
-                  <div key={item} className="w-8 h-8 rounded-full bg-gray-300 border-2 border-white overflow-hidden">
-                    <div className={`w-full h-full bg-intelektus-${100 + item * 100}`}></div>
-                  </div>
-                ))}
-              </div>
-              <p className="ml-4 text-sm text-gray-600">Mais de <span className="font-bold">500 empresas</span> atendidas em todo Brasil</p>
-            </div>
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full"
+      style={{ opacity: 0.8 }}
+    />
+  );
+};
+
+/* ═══════════════════════════════════════════
+   DASHBOARD MOCKUP 3D PREMIUM
+═══════════════════════════════════════════ */
+const DashboardMockup3D = () => {
+  const [activeCard, setActiveCard] = useState(0);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const metrics = [
+    { label: 'Receita Mensal',  value: 'R$ 284k', change: '+18%', up: true  },
+    { label: 'Clientes Ativos', value: '1.432',   change: '+24%', up: true  },
+    { label: 'Automações',      value: '3.891',   change: '+42%', up: true  },
+    { label: 'NPS Score',       value: '94',      change: '+12%', up: true  },
+  ];
+
+  const barData = [38, 52, 47, 70, 65, 85, 76, 92, 71, 84, 90, 100];
+  const months  = ['J','F','M','A','M','J','J','A','S','O','N','D'];
+
+  useEffect(() => {
+    const id = setInterval(() => setActiveCard(a => (a + 1) % metrics.length), 2000);
+    return () => clearInterval(id);
+  }, []);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    setTilt({
+      x: ((e.clientY - cy) / rect.height) * -10,
+      y: ((e.clientX - cx) / rect.width) * 10,
+    });
+  }, []);
+
+  const handleMouseLeave = () => setTilt({ x: 0, y: 0 });
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative w-full max-w-md mx-auto"
+      style={{
+        perspective: '1200px',
+        transformStyle: 'preserve-3d',
+      }}
+    >
+      {/* Aura de luz atrás */}
+      <div
+        className="absolute -inset-6 rounded-3xl pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at 50% 50%, rgba(108,99,255,0.25) 0%, rgba(255,60,172,0.1) 50%, transparent 70%)',
+          filter: 'blur(30px)',
+        }}
+      />
+
+      <div
+        className="relative rounded-2xl overflow-hidden border border-[rgba(108,99,255,0.25)] animate-float"
+        style={{
+          background: 'rgba(8,8,21,0.95)',
+          boxShadow: '0 40px 100px rgba(0,0,0,0.7), 0 0 50px rgba(108,99,255,0.18)',
+          transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+          transition: 'transform 0.15s ease-out',
+        }}
+      >
+        {/* Scanning line */}
+        <div
+          className="absolute left-0 right-0 h-0.5 pointer-events-none z-20"
+          style={{
+            background: 'linear-gradient(90deg, transparent, rgba(108,99,255,0.6), rgba(255,60,172,0.4), transparent)',
+            animation: 'scanning 4s ease-in-out infinite',
+          }}
+        />
+
+        {/* Top bar */}
+        <div className="flex items-center justify-between px-5 py-3" style={{ borderBottom: '1px solid rgba(108,99,255,0.15)' }}>
+          <div className="flex items-center gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+            <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
           </div>
-          
-          {/* Chat UI Mockup */}
-          <div className="relative animate-float">
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden max-w-md mx-auto border border-gray-100">
-              <div className="bg-intelektus-600 text-white p-4 flex items-center">
-                <Bot className="h-6 w-6 mr-2" />
-                <h3 className="font-medium">IntelekBot</h3>
-              </div>
-              <div className="p-4 bg-gray-50 h-96 overflow-y-auto flex flex-col space-y-4">
-                {/* Bot Message */}
-                <div className="flex items-start">
-                  <div className="w-8 h-8 rounded-full bg-intelektus-100 flex items-center justify-center text-intelektus-600 flex-shrink-0">
-                    <Bot size={18} />
-                  </div>
-                  <div className="ml-2 bg-white p-3 rounded-lg rounded-tl-none shadow-sm max-w-xs">
-                    <p className="text-gray-700">Olá! Bem-vindo(a) à Pizzaria Bella Napoli. Como posso te ajudar hoje?</p>
-                  </div>
-                </div>
-                
-                {/* User Message */}
-                <div className="flex items-start justify-end">
-                  <div className="mr-2 bg-intelektus-600 p-3 rounded-lg rounded-tr-none shadow-sm max-w-xs">
-                    <p className="text-white">Quero fazer um pedido de pizza.</p>
-                  </div>
-                  <div className="w-8 h-8 rounded-full bg-intelektus-200 flex items-center justify-center text-intelektus-600 flex-shrink-0">
-                    <span className="text-sm font-medium">JC</span>
-                  </div>
-                </div>
-                
-                {/* Bot Message */}
-                <div className="flex items-start">
-                  <div className="w-8 h-8 rounded-full bg-intelektus-100 flex items-center justify-center text-intelektus-600 flex-shrink-0">
-                    <Bot size={18} />
-                  </div>
-                  <div className="ml-2 bg-white p-3 rounded-lg rounded-tl-none shadow-sm max-w-xs">
-                    <p className="text-gray-700">Ótimo! Você poderia me informar seu nome, por favor? Assim posso personalizar melhor o atendimento.</p>
-                  </div>
-                </div>
-                
-                {/* User Message */}
-                <div className="flex items-start justify-end">
-                  <div className="mr-2 bg-intelektus-600 p-3 rounded-lg rounded-tr-none shadow-sm max-w-xs">
-                    <p className="text-white">Meu nome é João Carlos.</p>
-                  </div>
-                  <div className="w-8 h-8 rounded-full bg-intelektus-200 flex items-center justify-center text-intelektus-600 flex-shrink-0">
-                    <span className="text-sm font-medium">JC</span>
-                  </div>
-                </div>
-                
-                {/* Bot Message */}
-                <div className="flex items-start">
-                  <div className="w-8 h-8 rounded-full bg-intelektus-100 flex items-center justify-center text-intelektus-600 flex-shrink-0">
-                    <Bot size={18} />
-                  </div>
-                  <div className="ml-2 bg-white p-3 rounded-lg rounded-tl-none shadow-sm max-w-xs">
-                    <p className="text-gray-700">Obrigado, João Carlos! Temos várias opções de pizzas disponíveis hoje. Gostaria de conhecer nossas promoções ou já sabe o que deseja pedir?</p>
-                  </div>
-                </div>
-                
-                {/* Typing indicator */}
-                <div className="flex items-start">
-                  <div className="w-8 h-8 rounded-full bg-intelektus-100 flex items-center justify-center text-intelektus-600 flex-shrink-0">
-                    <Bot size={18} />
-                  </div>
-                  <div className="ml-2 bg-white p-3 rounded-lg rounded-tl-none shadow-sm">
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse delay-150"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse delay-300"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="p-4 border-t border-gray-100 flex items-center">
-                <input
-                  type="text"
-                  placeholder="Digite sua mensagem..."
-                  className="flex-1 border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-intelektus-500"
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full" style={{ background: 'rgba(108,99,255,0.1)', border: '1px solid rgba(108,99,255,0.25)' }}>
+            <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+            <span className="text-xs font-semibold" style={{ color: '#A899FF', fontFamily: 'Syne, sans-serif' }}>
+              Intelektus Dashboard
+            </span>
+          </div>
+          <Zap size={13} style={{ color: '#6C63FF' }} />
+        </div>
+
+        {/* Metric Cards */}
+        <div className="grid grid-cols-2 gap-2 p-4">
+          {metrics.map((m, i) => (
+            <div
+              key={i}
+              className="rounded-xl p-3 transition-all duration-500"
+              style={{
+                background: activeCard === i ? 'rgba(108,99,255,0.14)' : 'rgba(13,13,30,0.8)',
+                border: `1px solid ${activeCard === i ? 'rgba(108,99,255,0.5)' : 'rgba(108,99,255,0.1)'}`,
+                boxShadow: activeCard === i ? '0 0 20px rgba(108,99,255,0.2)' : 'none',
+              }}
+            >
+              <p className="text-xs mb-1" style={{ color: '#4A4A7E', fontFamily: 'DM Sans' }}>{m.label}</p>
+              <p className="font-bold text-base" style={{ color: '#F2F0FF', fontFamily: 'Syne, sans-serif' }}>{m.value}</p>
+              <span className="text-xs font-semibold" style={{ color: m.up ? '#34D399' : '#F87171' }}>
+                ▲ {m.change}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Bar chart */}
+        <div className="px-4 pb-1">
+          <p className="text-xs font-semibold mb-2" style={{ color: '#4A4A7E', letterSpacing: '0.05em', textTransform: 'uppercase', fontFamily: 'DM Sans' }}>
+            Receita 2025
+          </p>
+          <div className="flex items-end gap-1 h-20">
+            {barData.map((h, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                <div
+                  className="w-full rounded-sm transition-all duration-700"
+                  style={{
+                    height: `${h}%`,
+                    background: i === 11
+                      ? 'linear-gradient(to top, #6C63FF, #FF3CAC)'
+                      : i >= 9
+                      ? 'rgba(108,99,255,0.4)'
+                      : 'rgba(108,99,255,0.18)',
+                    boxShadow: i === 11 ? '0 0 12px rgba(255,60,172,0.5)' : 'none',
+                  }}
                 />
-                <button className="ml-2 p-2 rounded-full bg-intelektus-600 text-white">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clipRule="evenodd" />
-                  </svg>
-                </button>
               </div>
-            </div>
-            
-            {/* Visual elements behind the chat */}
-            <div className="absolute -top-4 -right-4 w-16 h-16 bg-yellow-300 rounded-lg rotate-12 z-[-1] animate-pulse-subtle"></div>
-            <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-intelektus-300 rounded-full z-[-1] animate-pulse-subtle"></div>
+            ))}
           </div>
+          <div className="flex gap-1 mt-1">
+            {months.map((m, i) => (
+              <div key={i} className="flex-1 text-center" style={{ fontSize: '7px', color: '#3A3A5C' }}>{m}</div>
+            ))}
+          </div>
+        </div>
+
+        {/* Notification strip */}
+        <div className="mx-4 mb-4 mt-3 flex items-center gap-2 px-3 py-2.5 rounded-xl" style={{ background: 'rgba(13,13,30,0.9)', border: '1px solid rgba(108,99,255,0.15)' }}>
+          <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+          <span className="text-xs" style={{ color: '#7B7A9E' }}>
+            Robô disparou <strong style={{ color: '#A899FF' }}>47 mensagens</strong> · 12 novos leads
+          </span>
+          <Zap size={10} className="ml-auto flex-shrink-0" style={{ color: '#FF3CAC' }} />
+        </div>
+
+        {/* Gradient overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(108,99,255,0.05) 0%, transparent 60%)' }}
+        />
+      </div>
+    </div>
+  );
+};
+
+/* ═══════════════════════════════════════════
+   HERO SECTION PRINCIPAL
+═══════════════════════════════════════════ */
+const HeroSection = () => {
+  const WHATSAPP = 'https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+Gostaria+de+solicitar+um+or%C3%A7amento.&type=phone_number&app_absent=0';
+
+  const scrollToProjects = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const el = document.querySelector('#projects');
+    if (el) window.scrollTo({ top: (el as HTMLElement).offsetTop - 80, behavior: 'smooth' });
+  };
+
+  const socialProof = [
+    { icon: <CheckCircle2 size={14} />, text: '500+ empresas atendidas' },
+    { icon: <Star size={14} />, text: 'Petshops, Restaurantes, Clínicas' },
+    { icon: <MessageSquare size={14} />, text: 'Robôs de atendimento 24/7' },
+  ];
+
+  const floatingChips = [
+    { label: 'Sistema Petshop',     color: '#6C63FF', top: '10%',  left: '-5%',  delay: '0s' },
+    { label: 'Robô WhatsApp',       color: '#FF3CAC', top: '48%',  left: '-8%',  delay: '0.8s' },
+    { label: 'Captura de Leads',    color: '#00D4FF', top: '15%',  right: '-4%', delay: '0.4s' },
+    { label: 'Disparo Marketing',   color: '#A855F7', top: '60%',  right: '-6%', delay: '1.2s' },
+  ];
+
+  return (
+    <section
+      className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden"
+      style={{ background: 'var(--bg-primary)' }}
+    >
+      {/* Canvas de partículas */}
+      <ParticleCanvas />
+
+      {/* Mesh gradient de fundo */}
+      <div className="absolute inset-0 mesh-gradient pointer-events-none" />
+
+      {/* Grid lines */}
+      <div className="absolute inset-0 grid-lines opacity-40 pointer-events-none" />
+
+      {/* Orbs de luz ambiente */}
+      <div
+        className="glow-orb w-[600px] h-[600px]"
+        style={{
+          top: '-10%', left: '-10%',
+          background: 'radial-gradient(circle, rgba(108,99,255,0.2) 0%, transparent 70%)',
+        }}
+      />
+      <div
+        className="glow-orb w-[400px] h-[400px]"
+        style={{
+          bottom: '0%', right: '-5%',
+          background: 'radial-gradient(circle, rgba(255,60,172,0.15) 0%, transparent 70%)',
+        }}
+      />
+
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+          {/* LEFT — Copy */}
+          <div className="max-w-xl">
+            {/* Badge */}
+            <div
+              className="badge-chip mb-7 animate-fade-up"
+              style={{ animationDelay: '0.1s', opacity: 0 }}
+            >
+              <Zap size={12} style={{ color: '#FF3CAC' }} />
+              Software House · Sistemas Sob Medida · IA
+            </div>
+
+            {/* Headline */}
+            <h1
+              className="font-bold mb-6 animate-fade-up"
+              style={{
+                fontFamily: 'Syne, sans-serif',
+                fontSize: 'clamp(2.2rem, 5vw, 3.8rem)',
+                lineHeight: '1.08',
+                letterSpacing: '-0.03em',
+                color: 'var(--text-primary)',
+                animationDelay: '0.2s',
+                opacity: 0,
+              }}
+            >
+              Sistemas{' '}
+              <span className="gradient-text">Inteligentes</span>
+              {' '}para Pequenos Negócios{' '}
+              <span style={{ color: 'rgba(242,240,255,0.4)' }}>que Querem Crescer</span>
+            </h1>
+
+            {/* Subtitle */}
+            <p
+              className="text-lg md:text-xl leading-relaxed mb-9 animate-fade-up"
+              style={{ color: 'var(--text-secondary)', animationDelay: '0.35s', opacity: 0 }}
+            >
+              Petshop, restaurante, pizzaria, anchonete, clínica — criamos o sistema certo para o seu negócio.
+              Com <strong style={{ color: 'var(--text-primary)' }}>automações, robôs de atendimento, captura de leads</strong> e disparos de marketing.
+            </p>
+
+            {/* CTAs */}
+            <div
+              className="flex flex-col sm:flex-row gap-4 mb-10 animate-fade-up"
+              style={{ animationDelay: '0.5s', opacity: 0 }}
+            >
+              <a
+                href={WHATSAPP}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-glow text-white font-bold px-8 py-4 rounded-xl text-base flex items-center justify-center gap-2"
+                style={{ fontFamily: 'Syne, sans-serif' }}
+              >
+                Quero meu sistema
+                <ArrowRight size={18} />
+              </a>
+              <button
+                onClick={scrollToProjects}
+                className="btn-outline-glow font-semibold px-8 py-4 rounded-xl text-base"
+                style={{ fontFamily: 'Syne, sans-serif' }}
+              >
+                Ver projetos
+              </button>
+            </div>
+
+            {/* Social proof */}
+            <div
+              className="flex flex-col sm:flex-row flex-wrap gap-4 animate-fade-up"
+              style={{ animationDelay: '0.65s', opacity: 0 }}
+            >
+              {socialProof.map((item, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <span style={{ color: '#34D399' }}>{item.icon}</span>
+                  <span className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>{item.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* RIGHT — Dashboard 3D */}
+          <div
+            className="relative animate-fade-up hidden md:block"
+            style={{ animationDelay: '0.4s', opacity: 0 }}
+          >
+            {/* Floating chips */}
+            {floatingChips.map((chip, i) => (
+              <div
+                key={i}
+                className="absolute z-20 px-3 py-2 rounded-xl text-xs font-bold animate-pulse-subtle"
+                style={{
+                  top: chip.top,
+                  left: (chip as any).left,
+                  right: (chip as any).right,
+                  background: `rgba(8,8,21,0.9)`,
+                  border: `1px solid ${chip.color}55`,
+                  color: chip.color,
+                  backdropFilter: 'blur(12px)',
+                  boxShadow: `0 0 16px ${chip.color}30`,
+                  animationDelay: chip.delay,
+                  fontFamily: 'Syne, sans-serif',
+                  letterSpacing: '0.02em',
+                }}
+              >
+                <span style={{ marginRight: '6px' }}>●</span>
+                {chip.label}
+              </div>
+            ))}
+
+            <DashboardMockup3D />
+          </div>
+        </div>
+
+        {/* Stats bar */}
+        <div
+          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-up"
+          style={{ animationDelay: '0.8s', opacity: 0 }}
+        >
+          {[
+            { val: '500+',  label: 'Empresas Atendidas' },
+            { val: '7+',    label: 'Anos de Experiência' },
+            { val: '98%',   label: 'Clientes Satisfeitos' },
+            { val: '24/7',  label: 'Suporte Ativo' },
+          ].map((s, i) => (
+            <div
+              key={i}
+              className="text-center py-5 px-4 rounded-2xl"
+              style={{ background: 'rgba(13,13,30,0.7)', border: '1px solid rgba(108,99,255,0.12)' }}
+            >
+              <p
+                className="font-bold gradient-text mb-1"
+                style={{ fontSize: '2rem', fontFamily: 'Syne, sans-serif', letterSpacing: '-0.03em' }}
+              >
+                {s.val}
+              </p>
+              <p className="text-xs font-medium" style={{ color: 'var(--text-muted)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                {s.label}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

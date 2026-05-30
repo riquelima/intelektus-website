@@ -49,58 +49,74 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-white relative">
+    <section id="contato" className="py-28 relative" style={{ background: 'var(--bg-surface)' }}>
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <div className="inline-flex items-center px-3 py-1 rounded-full border border-intelektus-200 bg-intelektus-50/50 text-intelektus-700 text-sm font-medium mb-6">
-                <MessageSquare size={16} className="mr-2" />
-                Entre em contato
+              <div className="badge-chip mb-5 inline-flex">
+                <MessageSquare size={12} style={{ color: '#6C63FF' }} />
+                Fale conosco
               </div>
-              <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">
-                Pronto para revolucionar seu <span className="gradient-text">atendimento</span>?
+              <h2
+                className="font-heading text-3xl md:text-4xl font-bold mb-5"
+                style={{ color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+              >
+                Vamos construir algo{' '}
+                <span className="gradient-text">incrível juntos?</span>
               </h2>
-              <p className="text-gray-600 text-lg mb-8">
-                Preencha o formulário ao lado e nossa equipe entrará em contato para uma demonstração personalizada do IntelekBot para o seu negócio.
+              <p className="text-base mb-8 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                Preencha o formulário e nossa equipe entrará em contato para um diagnóstico gratuito e sem compromisso sobre as necessidades da sua empresa.
               </p>
               
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <div className="w-12 h-12 rounded-full bg-intelektus-100 flex items-center justify-center text-intelektus-600 mr-4">
-                    <Phone className="h-5 w-5" />
+              <div className="space-y-5">
+                <div className="flex items-start gap-4">
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: 'rgba(108,99,255,0.12)', border: '1px solid rgba(108,99,255,0.3)' }}
+                  >
+                    <Phone className="h-4 w-4" style={{ color: '#6C63FF' }} />
                   </div>
                   <div>
-                    <h3 className="font-medium mb-1">Telefone</h3>
-                    <p className="text-gray-600">(71) 99908-8651</p>
+                    <h3 className="text-sm font-semibold mb-0.5" style={{ color: 'var(--text-primary)' }}>Telefone</h3>
+                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>(71) 99908-8651</p>
                   </div>
                 </div>
-                
-                <div className="flex items-start">
-                  <div className="w-12 h-12 rounded-full bg-intelektus-100 flex items-center justify-center text-intelektus-600 mr-4">
-                    <Mail className="h-5 w-5" />
+
+                <div className="flex items-start gap-4">
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: 'rgba(108,99,255,0.12)', border: '1px solid rgba(108,99,255,0.3)' }}
+                  >
+                    <Mail className="h-4 w-4" style={{ color: '#6C63FF' }} />
                   </div>
                   <div>
-                    <h3 className="font-medium mb-1">Email</h3>
-                    <p className="text-gray-600">contato@intelektus.com.br</p>
+                    <h3 className="text-sm font-semibold mb-0.5" style={{ color: 'var(--text-primary)' }}>Email</h3>
+                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>contato@intelektus.com.br</p>
                   </div>
                 </div>
-                
-                <div className="flex items-start">
-                  <div className="w-12 h-12 rounded-full bg-intelektus-100 flex items-center justify-center text-intelektus-600 mr-4">
-                    <MapPin className="h-5 w-5" />
+
+                <div className="flex items-start gap-4">
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: 'rgba(108,99,255,0.12)', border: '1px solid rgba(108,99,255,0.3)' }}
+                  >
+                    <MapPin className="h-4 w-4" style={{ color: '#6C63FF' }} />
                   </div>
                   <div>
-                    <h3 className="font-medium mb-1">Endereço</h3>
-                    <p className="text-gray-600">Avenida Princesa Isabel, 476 - Salvador/BA</p>
+                    <h3 className="text-sm font-semibold mb-0.5" style={{ color: 'var(--text-primary)' }}>Endereço</h3>
+                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Avenida Princesa Isabel, 476 - Salvador/BA</p>
                   </div>
                 </div>
               </div>
               
-              <div className="mt-12 p-6 bg-intelektus-50 rounded-xl border border-intelektus-100">
-                <h3 className="font-heading text-xl font-bold mb-3">Atendimento WhatsApp</h3>
-                <p className="text-gray-600 mb-4">
-                  Prefere uma conversa mais direta? Fale com um de nossos atendentes pelo WhatsApp agora mesmo.
+              <div
+                className="mt-10 p-6 rounded-xl border border-[#1E1E2E]"
+                style={{ background: 'rgba(108,99,255,0.07)' }}
+              >
+                <h3 className="font-heading text-base font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>Prefere o WhatsApp?</h3>
+                <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
+                  Fale diretamente com um especialista agora mesmo.
                 </p>
                 <Button onClick={handleWhatsAppClick} className="bg-green-500 hover:bg-green-600 text-white">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
@@ -112,13 +128,13 @@ const ContactSection = () => {
             </div>
             
             <div>
-              <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
-                <h3 className="font-heading text-2xl font-bold mb-6">Solicite uma demonstração</h3>
+              <div className="card-glass rounded-2xl p-8 border border-[#1E1E2E]">
+                <h3 className="font-heading text-xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>Solicite um diagnóstico gratuito</h3>
                 
                 <form onSubmit={handleSubmit}>
                   <div className="space-y-4">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Nome completo</label>
+                      <label htmlFor="name" className="block text-xs font-semibold mb-1.5" style={{ color: 'var(--text-muted)' }}>Nome completo</label>
                       <Input
                         id="name"
                         name="name"
@@ -132,7 +148,7 @@ const ContactSection = () => {
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <label htmlFor="email" className="block text-xs font-semibold mb-1.5" style={{ color: 'var(--text-muted)' }}>Email</label>
                         <Input
                           id="email"
                           name="email"
@@ -146,7 +162,7 @@ const ContactSection = () => {
                       </div>
                       
                       <div>
-                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+                        <label htmlFor="phone" className="block text-xs font-semibold mb-1.5" style={{ color: 'var(--text-muted)' }}>Telefone / WhatsApp</label>
                         <Input
                           id="phone"
                           name="phone"
@@ -160,7 +176,7 @@ const ContactSection = () => {
                     </div>
                     
                     <div>
-                      <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">Nome da empresa</label>
+                      <label htmlFor="company" className="block text-xs font-semibold mb-1.5" style={{ color: 'var(--text-muted)' }}>Nome da empresa</label>
                       <Input
                         id="company"
                         name="company"
@@ -173,7 +189,7 @@ const ContactSection = () => {
                     </div>
                     
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Como podemos ajudar?</label>
+                      <label htmlFor="message" className="block text-xs font-semibold mb-1.5" style={{ color: 'var(--text-muted)' }}>O que você precisa?</label>
                       <Textarea
                         id="message"
                         name="message"

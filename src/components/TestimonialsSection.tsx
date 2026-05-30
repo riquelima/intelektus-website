@@ -1,134 +1,284 @@
 
-import { useState } from "react";
-import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect, useRef } from 'react';
+import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
 const testimonials = [
   {
-    quote: "O IntelekBot transformou completamente o atendimento da minha pizzaria. Agora nossos clientes conseguem fazer pedidos em qualquer horário, sem filas ou espera. As vendas aumentaram em 35% no primeiro mês!",
-    author: "Roberto Almeida",
-    position: "Proprietário, Pizzaria Bella Napoli",
-    image: "/daniel-oliveira.jpg",
-    rating: 5
+    quote: 'A Intelektus criou um sistema de gestão que transformou completamente nossa operação. Antes era tudo em papel e planilha, agora temos controle total em tempo real. Vale cada centavo.',
+    author: 'Roberto Almeida',
+    position: 'Sócio, Apex Estética Automotiva',
+    initials: 'RA',
+    rating: 5,
+    segment: 'Estética Automotiva',
+    color: '#6C63FF',
   },
   {
-    quote: "Como farmacêutica, estava preocupada se um robô conseguiria lidar com questões delicadas de saúde. O IntelekBot superou todas as expectativas, esclarecendo dúvidas básicas e encaminhando casos mais complexos para nossa equipe. Economizamos tempo e melhoramos o atendimento.",
-    author: "Carla Moreira",
-    position: "Proprietária, Farmácia Saúde & Bem-estar",
-    image: "/camila-santos.jpg",
-    rating: 5
+    quote: 'O sistema de agendamento reduziu 80% das faltas com lembretes automáticos. O robô no WhatsApp atende os clientes 24h e ainda agenda consultas sozinho. Incrível!',
+    author: 'Dra. Carla Moreira',
+    position: 'Diretora, Clínica Saúde & Bem-estar',
+    initials: 'CM',
+    rating: 5,
+    segment: 'Clínica',
+    color: '#A855F7',
   },
   {
-    quote: "Nossa clínica odontológica tinha problemas com faltas e cancelamentos de última hora. Com o IntelekBot, reduzimos em 80% esses problemas graças aos lembretes automáticos e confirmações. O investimento se pagou em apenas 2 meses!",
-    author: "Dr. Paulo Ribeiro",
-    position: "Diretor, Clínica Odontológica Sorriso Perfeito",
-    image: "/fernanda-costa.jpg",
-    rating: 4
+    quote: 'Precisávamos de um CRM personalizado para o nosso processo de vendas. A Intelektus entregou exatamente o que precisávamos, no prazo e com suporte impecável.',
+    author: 'Dr. Paulo Ribeiro',
+    position: 'CEO, Consultoria Integrada',
+    initials: 'PR',
+    rating: 5,
+    segment: 'Consultoria',
+    color: '#10B981',
+  },
+  {
+    quote: 'O sistema de pet shop que desenvolveram para a Sandy mudou tudo. Agendamento online, lembretes automáticos, controle de estoque... zero ligações desnecessárias!',
+    author: 'Sandra Menezes',
+    position: 'Proprietária, Sandy Pet Shop',
+    initials: 'SM',
+    rating: 5,
+    segment: 'Pet Shop',
+    color: '#F59E0B',
   },
 ];
 
 const TestimonialsSection = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [current, setCurrent] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
-  const nextTestimonial = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+  const navigate = (dir: 'next' | 'prev') => {
+    if (animating) return;
+    setAnimating(true);
+    setTimeout(() => {
+      setCurrent(c =>
+        dir === 'next'
+          ? (c + 1) % testimonials.length
+          : (c - 1 + testimonials.length) % testimonials.length
+      );
+      setAnimating(false);
+    }, 200);
   };
 
-  const prevTestimonial = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
-  };
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const reveals = entry.target.querySelectorAll('.reveal');
+            reveals.forEach((el, i) => {
+              setTimeout(() => el.classList.add('visible'), i * 100);
+            });
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-advance
+  useEffect(() => {
+    const id = setInterval(() => navigate('next'), 5000);
+    return () => clearInterval(id);
+  }, [current, animating]);
+
+  const t = testimonials[current];
 
   return (
-    <section id="testimonials" className="py-24 bg-intelektus-50 relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-intelektus-100 rounded-full opacity-50 transform translate-x-1/2 -translate-y-1/2"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-intelektus-100 rounded-full opacity-50 transform -translate-x-1/2 translate-y-1/2"></div>
-      
+    <section
+      id="testimonials"
+      ref={sectionRef}
+      className="py-28 relative overflow-hidden"
+      style={{ background: 'var(--bg-surface)' }}
+    >
+      <div className="section-divider absolute top-0 left-0 right-0" />
+
+      {/* Ambient */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        style={{
+          width: '600px', height: '300px',
+          background: 'radial-gradient(ellipse, rgba(108,99,255,0.07) 0%, transparent 70%)',
+          filter: 'blur(50px)',
+        }}
+      />
+      <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none" />
+
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
-            O que nossos clientes <span className="gradient-text">estão dizendo</span>
+        {/* Header */}
+        <div className="text-center max-w-2xl mx-auto mb-14 reveal">
+          <div className="badge-chip mb-5 mx-auto inline-flex">
+            <Star size={12} style={{ color: '#F59E0B' }} />
+            Depoimentos
+          </div>
+          <h2
+            className="font-bold text-4xl md:text-5xl mb-4"
+            style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+          >
+            O que nossos{' '}
+            <span className="gradient-text">clientes dizem</span>
           </h2>
-          <p className="text-gray-600 text-lg">
-            Descubra como o IntelekBot tem ajudado empresas de diversos segmentos a transformar seu atendimento e aumentar seus resultados.
+          <p className="text-base" style={{ color: 'var(--text-secondary)' }}>
+            Empresas reais com resultados reais.
           </p>
         </div>
-        
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div className="grid md:grid-cols-5">
-              <div className="md:col-span-2 bg-gradient-to-br from-intelektus-500 to-purple-600 text-white p-8 flex flex-col justify-between">
-                <Quote className="h-12 w-12 opacity-50" />
-                
+
+        {/* Testimonial card */}
+        <div className="max-w-3xl mx-auto mb-12 reveal">
+          <div
+            className="rounded-2xl p-8 md:p-10 relative overflow-hidden transition-all duration-500"
+            style={{
+              background: 'rgba(13,13,30,0.85)',
+              backdropFilter: 'blur(24px)',
+              border: `1px solid ${t.color}30`,
+              boxShadow: `0 0 50px ${t.color}12, 0 30px 60px rgba(0,0,0,0.4)`,
+              opacity: animating ? 0.5 : 1,
+              transform: animating ? 'scale(0.99)' : 'scale(1)',
+            }}
+          >
+            {/* Top gradient bar */}
+            <div
+              className="absolute top-0 left-0 right-0 h-0.5"
+              style={{ background: `linear-gradient(to right, ${t.color}, transparent)` }}
+            />
+
+            {/* Segment tag */}
+            <div className="flex items-center justify-between mb-6">
+              <span
+                className="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-lg"
+                style={{ background: `${t.color}15`, color: t.color }}
+              >
+                {t.segment}
+              </span>
+              {/* Stars */}
+              <div className="flex gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    size={14}
+                    fill={i < t.rating ? '#FBBF24' : 'none'}
+                    style={{ color: i < t.rating ? '#FBBF24' : 'var(--text-muted)' }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Quote icon */}
+            <Quote size={32} className="mb-5 opacity-15" style={{ color: t.color }} />
+
+            {/* Quote text */}
+            <p
+              className="text-lg md:text-xl leading-relaxed mb-8"
+              style={{ color: 'var(--text-primary)', fontStyle: 'italic' }}
+            >
+              "{t.quote}"
+            </p>
+
+            {/* Author + nav */}
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-4">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-base flex-shrink-0"
+                  style={{
+                    fontFamily: 'Syne, sans-serif',
+                    background: `${t.color}20`,
+                    color: t.color,
+                    border: `1px solid ${t.color}40`,
+                  }}
+                >
+                  {t.initials}
+                </div>
                 <div>
-                  <div className="flex mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <svg key={i} xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${i < testimonials[currentIndex].rating ? 'text-yellow-300' : 'text-gray-300'}`} viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                  
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white">
-                      <img 
-                        src={testimonials[currentIndex].image} 
-                        alt={testimonials[currentIndex].author}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="ml-4">
-                      <p className="font-bold">{testimonials[currentIndex].author}</p>
-                      <p className="text-sm opacity-75">{testimonials[currentIndex].position}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="md:col-span-3 p-8 flex flex-col justify-between">
-                <p className="text-gray-700 text-lg italic leading-relaxed mb-8">
-                  "{testimonials[currentIndex].quote}"
-                </p>
-                
-                <div className="flex justify-between items-center">
-                  <p className="text-gray-500">
-                    {currentIndex + 1} de {testimonials.length} depoimentos
+                  <p className="font-bold text-sm" style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}>
+                    {t.author}
                   </p>
-                  
-                  <div className="flex space-x-2">
-                    <button 
-                      onClick={prevTestimonial}
-                      className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-intelektus-50 hover:text-intelektus-600 transition-colors"
-                    >
-                      <ChevronLeft className="h-5 w-5" />
-                    </button>
-                    <button 
-                      onClick={nextTestimonial}
-                      className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-intelektus-50 hover:text-intelektus-600 transition-colors"
-                    >
-                      <ChevronRight className="h-5 w-5" />
-                    </button>
-                  </div>
+                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{t.position}</p>
                 </div>
               </div>
+
+              {/* Nav buttons */}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => navigate('prev')}
+                  className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 cursor-pointer"
+                  style={{
+                    color: 'var(--text-muted)',
+                    background: 'rgba(13,13,30,0.8)',
+                    border: '1px solid rgba(108,99,255,0.2)',
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.borderColor = 'rgba(108,99,255,0.6)';
+                    (e.currentTarget as HTMLElement).style.color = '#A899FF';
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.borderColor = 'rgba(108,99,255,0.2)';
+                    (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
+                  }}
+                >
+                  <ChevronLeft size={16} />
+                </button>
+                <button
+                  onClick={() => navigate('next')}
+                  className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 cursor-pointer"
+                  style={{
+                    color: 'var(--text-muted)',
+                    background: 'rgba(13,13,30,0.8)',
+                    border: '1px solid rgba(108,99,255,0.2)',
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.borderColor = 'rgba(108,99,255,0.6)';
+                    (e.currentTarget as HTMLElement).style.color = '#A899FF';
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.borderColor = 'rgba(108,99,255,0.2)';
+                    (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
+                  }}
+                >
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            </div>
+
+            {/* Dots */}
+            <div className="flex gap-2 mt-6">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  className="h-1.5 rounded-full transition-all duration-300 cursor-pointer"
+                  style={{
+                    width: current === i ? '28px' : '6px',
+                    background: current === i
+                      ? `linear-gradient(90deg, ${testimonials[i].color}, ${testimonials[i].color}99)`
+                      : 'rgba(108,99,255,0.2)',
+                  }}
+                />
+              ))}
             </div>
           </div>
         </div>
-        
-        <div className="mt-16 grid md:grid-cols-3 gap-8 text-center">
-          <div className="bg-white p-6 rounded-xl shadow-lg">
-            <div className="text-4xl font-bold text-intelektus-600 mb-2">+500</div>
-            <p className="text-gray-600">Empresas atendidas</p>
-          </div>
-          
-          <div className="bg-white p-6 rounded-xl shadow-lg">
-            <div className="text-4xl font-bold text-intelektus-600 mb-2">+2 milhões</div>
-            <p className="text-gray-600">Interações realizadas</p>
-          </div>
-          
-          <div className="bg-white p-6 rounded-xl shadow-lg">
-            <div className="text-4xl font-bold text-intelektus-600 mb-2">98%</div>
-            <p className="text-gray-600">Taxa de satisfação</p>
-          </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto reveal">
+          {[
+            { value: '500+', label: 'Empresas atendidas' },
+            { value: '2M+',  label: 'Transações processadas' },
+            { value: '98%',  label: 'Taxa de satisfação' },
+          ].map((s, i) => (
+            <div
+              key={i}
+              className="text-center card-glass rounded-2xl py-6 px-4"
+            >
+              <p
+                className="font-bold text-2xl md:text-3xl gradient-text mb-1"
+                style={{ fontFamily: 'Syne, sans-serif', letterSpacing: '-0.03em' }}
+              >
+                {s.value}
+              </p>
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{s.label}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

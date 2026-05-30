@@ -1,109 +1,170 @@
 
 import { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { Menu, X, Brain } from "lucide-react";
+import { Menu, X, Zap } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 20);
+      setScrollY(window.scrollY);
     };
-
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (e, sectionId) => {
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
     setIsOpen(false);
     const section = document.querySelector(sectionId);
     if (section) {
-      window.scrollTo({
-        top: section.offsetTop - 80, // Adjust offset for fixed navbar
-        behavior: 'smooth',
-      });
+      window.scrollTo({ top: (section as HTMLElement).offsetTop - 80, behavior: 'smooth' });
     }
   };
 
+  const navLinks = [
+    { label: 'Soluções',         href: '#solucoes' },
+    { label: 'Projetos',         href: '#projects' },
+    { label: 'Segmentos',        href: '#segments' },
+    { label: 'Como Trabalhamos', href: '#como-trabalhamos' },
+    { label: 'Cases',            href: '#cases' },
+    { label: 'Quem Somos',       href: '#quem-somos' },
+  ];
+
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 shadow-md backdrop-blur-sm py-2' : 'bg-transparent py-4'}`}>
+    <nav
+      className={`fixed w-full z-50 transition-all duration-400`}
+      style={{
+        padding: scrolled ? '8px 0' : '16px 0',
+        background: scrolled
+          ? 'rgba(4, 4, 13, 0.92)'
+          : 'transparent',
+        backdropFilter: scrolled ? 'blur(20px)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(108,99,255,0.15)' : 'none',
+        boxShadow: scrolled ? '0 8px 32px rgba(0,0,0,0.3)' : 'none',
+      }}
+    >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
-          <a href="/" className="flex items-center space-x-2">
-            <Brain size={28} className="text-intelektus-600" />
-            <span className="font-heading font-bold text-xl md:text-2xl text-gray-900">Intelektus</span>
+
+          {/* Logo */}
+          <a href="/" className="flex items-center gap-2.5 group">
+            <div
+              className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+              style={{
+                background: 'linear-gradient(135deg, #6C63FF, #FF3CAC)',
+                boxShadow: '0 0 20px rgba(108,99,255,0.5)',
+              }}
+            >
+              <Zap size={17} className="text-white" />
+            </div>
+            <span
+              className="font-bold text-xl text-white"
+              style={{ fontFamily: 'Syne, sans-serif', letterSpacing: '-0.02em' }}
+            >
+              Intelektus
+            </span>
           </a>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            <a href="#projects" onClick={(e) => scrollToSection(e, '#projects')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
-              Projetos
-            </a>
-            <a href="#features" onClick={(e) => scrollToSection(e, '#features')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
-              Recursos
-            </a>
-            <a href="#segments" onClick={(e) => scrollToSection(e, '#segments')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
-              Segmentos
-            </a>
-            <a href="#how-it-works" onClick={(e) => scrollToSection(e, '#how-it-works')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
-              Como Funciona
-            </a>
-            <a href="#testimonials" onClick={(e) => scrollToSection(e, '#testimonials')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
-              Depoimentos
-            </a>
-            <a href="#quem-somos" onClick={(e) => scrollToSection(e, '#quem-somos')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors">
-              Quem Somos
-            </a>
-            <Button className="gradient-bg hover:opacity-90 transition-opacity" onClick={() => window.open('https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+%EF%BF%BD+Gostaria+de+saber+mais+sobre+os+servi%C3%A7os+oferecidos+pela+Intelektus.&type=phone_number&app_absent=0', '_blank')}>
-              Entre em Contato
-            </Button>
+          <div className="hidden md:flex items-center gap-7">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => scrollToSection(e, link.href)}
+                className="text-sm font-medium transition-all duration-200 relative group/link"
+                style={{ color: 'var(--text-secondary)', fontFamily: 'DM Sans, sans-serif' }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+              >
+                {link.label}
+                {/* Underline animado */}
+                <span
+                  className="absolute -bottom-1 left-0 h-0.5 w-0 group-hover/link:w-full transition-all duration-300 rounded-full"
+                  style={{ background: 'linear-gradient(90deg, #6C63FF, #FF3CAC)' }}
+                />
+              </a>
+            ))}
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          {/* CTA + Mobile toggle */}
+          <div className="flex items-center gap-3">
+            <a
+              href="#contato"
+              onClick={(e) => scrollToSection(e, '#contato')}
+              className="hidden md:inline-flex items-center gap-2 btn-glow text-white text-sm font-bold px-5 py-2.5 rounded-xl"
+              style={{ fontFamily: 'Syne, sans-serif' }}
+            >
+              <Zap size={14} />
+              Solicitar Orçamento
+            </a>
+
+            {/* Mobile toggle */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 hover:text-intelektus-600 focus:outline-none"
+              className="md:hidden p-2.5 rounded-xl transition-all duration-200 cursor-pointer"
+              style={{
+                color: 'var(--text-primary)',
+                background: 'rgba(13,13,30,0.8)',
+                border: '1px solid rgba(108,99,255,0.25)',
+              }}
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden mt-4 pb-4 bg-white rounded-lg shadow-lg animate-fade-in">
-            <div className="flex flex-col space-y-3 p-4">
-              <a href="#projects" onClick={(e) => scrollToSection(e, '#projects')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2">
-                Projetos
-              </a>
-              <a href="#features" onClick={(e) => scrollToSection(e, '#features')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2">
-                Recursos
-              </a>
-              <a href="#segments" onClick={(e) => scrollToSection(e, '#segments')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2">
-                Segmentos
-              </a>
-              <a href="#how-it-works" onClick={(e) => scrollToSection(e, '#how-it-works')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2">
-                Como Funciona
-              </a>
-              <a href="#testimonials" onClick={(e) => scrollToSection(e, '#testimonials')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2">
-                Depoimentos
-              </a>
-              <a href="#quem-somos" onClick={(e) => scrollToSection(e, '#quem-somos')} className="text-gray-700 hover:text-intelektus-600 font-medium transition-colors py-2">
-                Quem Somos
-              </a>
-              <Button className="gradient-bg hover:opacity-90 transition-opacity w-full" onClick={() => window.open('https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+%EF%BF%BD+Gostaria+de+saber+mais+sobre+os+servi%C3%A7os+oferecidos+pela+Intelektus.&type=phone_number&app_absent=0', '_blank')}>
-                Entre em Contato
-              </Button>
+          <div
+            className="md:hidden mt-3 pb-4 rounded-2xl border border-[rgba(108,99,255,0.2)] animate-scale-in"
+            style={{
+              background: 'rgba(4,4,13,0.98)',
+              backdropFilter: 'blur(20px)',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+            }}
+          >
+            {/* Gradient top border */}
+            <div
+              className="h-0.5 rounded-t-2xl"
+              style={{ background: 'linear-gradient(90deg, #6C63FF, #FF3CAC)' }}
+            />
+            <div className="flex flex-col p-4 gap-1 mt-2">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => scrollToSection(e, link.href)}
+                  className="px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200"
+                  style={{ color: 'var(--text-secondary)', fontFamily: 'DM Sans, sans-serif' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = 'var(--text-primary)';
+                    e.currentTarget.style.background = 'rgba(108,99,255,0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = 'var(--text-secondary)';
+                    e.currentTarget.style.background = 'transparent';
+                  }}
+                >
+                  {link.label}
+                </a>
+              ))}
+              <div className="pt-3 mt-1" style={{ borderTop: '1px solid rgba(108,99,255,0.15)' }}>
+                <a
+                  href="#contato"
+                  onClick={(e) => scrollToSection(e, '#contato')}
+                  className="flex items-center justify-center gap-2 btn-glow text-white text-sm font-bold px-5 py-3.5 rounded-xl"
+                  style={{ fontFamily: 'Syne, sans-serif' }}
+                >
+                  <Zap size={14} />
+                  Solicitar Orçamento
+                </a>
+              </div>
             </div>
           </div>
         )}

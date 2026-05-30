@@ -1,82 +1,247 @@
 
-import { Bot, Users, Clock, TrendingUp, Shield, Sparkles } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { useEffect, useRef } from 'react';
+import {
+  Globe, Settings2, Zap, Brain, Link2, BarChart2,
+  Users2, Smartphone, Bot, Megaphone, Mail, Target
+} from 'lucide-react';
 
-const features = [
+const solutions = [
   {
-    icon: <Bot className="h-6 w-6" />,
-    title: "Atendimento Personalizado 24/7",
-    description: "Atenda seus clientes a qualquer momento, sem pausas ou filas de espera, proporcionando respostas precisas e personalizadas."
+    icon: Settings2,
+    title: 'Sistemas Sob Medida',
+    description: 'Software desenvolvido especialmente para a sua operação — do zero ao deploy, com total personalização.',
+    color: '#6C63FF',
+    size: 'lg', // card maior
   },
   {
-    icon: <Users className="h-6 w-6" />,
-    title: "Qualificação de Leads",
-    description: "Capture e qualifique potenciais clientes automaticamente, encaminhando apenas os leads mais promissores para sua equipe de vendas."
+    icon: Bot,
+    title: 'Robôs de Atendimento',
+    description: 'Chatbots com IA que respondem clientes 24/7 pelo WhatsApp, Instagram e site.',
+    color: '#FF3CAC',
+    size: 'lg',
   },
   {
-    icon: <Clock className="h-6 w-6" />,
-    title: "Economia de Tempo",
-    description: "Automatize respostas para perguntas frequentes e processos repetitivos, liberando sua equipe para tarefas de maior valor."
+    icon: Zap,
+    title: 'Automações',
+    description: 'Elimine tarefas repetitivas e ganhe produtividade com fluxos inteligentes.',
+    color: '#F59E0B',
+    size: 'sm',
   },
   {
-    icon: <TrendingUp className="h-6 w-6" />,
-    title: "Aumento nas Conversões",
-    description: "Resposta instantânea às dúvidas dos clientes, reduzindo o tempo de decisão de compra e aumentando as taxas de conversão."
+    icon: Target,
+    title: 'Captura de Leads',
+    description: 'Páginas e funis de captura que convertem visitantes em clientes.',
+    color: '#10B981',
+    size: 'sm',
   },
   {
-    icon: <Shield className="h-6 w-6" />,
-    title: "Segurança e Privacidade",
-    description: "Seus dados e de seus clientes são tratados com os mais altos padrões de segurança, em conformidade com a LGPD."
+    icon: Megaphone,
+    title: 'Disparos de Marketing',
+    description: 'Envio em massa de mensagens personalizadas no WhatsApp e e-mail.',
+    color: '#00D4FF',
+    size: 'sm',
   },
   {
-    icon: <Sparkles className="h-6 w-6" />,
-    title: "Experiência Humanizada",
-    description: "Interações naturais e empáticas que fazem o cliente se sentir valorizado, mesmo quando atendido por uma IA."
-  }
+    icon: Brain,
+    title: 'Inteligência Artificial',
+    description: 'Agentes inteligentes treinados com dados do seu negócio.',
+    color: '#A855F7',
+    size: 'sm',
+  },
+  {
+    icon: BarChart2,
+    title: 'Dashboards',
+    description: 'Visualize métricas e KPIs em tempo real em uma tela só.',
+    color: '#EC4899',
+    size: 'sm',
+  },
+  {
+    icon: Globe,
+    title: 'Sistemas Web',
+    description: 'Plataformas completas para gestão empresarial com interfaces modernas.',
+    color: '#3B82F6',
+    size: 'sm',
+  },
+  {
+    icon: Users2,
+    title: 'CRM Personalizado',
+    description: 'Controle vendas, clientes e pipeline de forma estruturada.',
+    color: '#14B8A6',
+    size: 'sm',
+  },
+  {
+    icon: Smartphone,
+    title: 'Apps Corporativos',
+    description: 'Soluções modernas acessíveis pelo navegador em qualquer dispositivo.',
+    color: '#8B5CF6',
+    size: 'sm',
+  },
+  {
+    icon: Link2,
+    title: 'Integrações',
+    description: 'Conectamos seus sistemas, APIs e ferramentas em uma operação unificada.',
+    color: '#F97316',
+    size: 'sm',
+  },
+  {
+    icon: Mail,
+    title: 'E-mail Marketing',
+    description: 'Campanhas segmentadas que chegam no momento certo para o cliente certo.',
+    color: '#06B6D4',
+    size: 'sm',
+  },
 ];
 
 const FeaturesSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const reveals = entry.target.querySelectorAll('.reveal');
+            reveals.forEach((el, i) => {
+              setTimeout(() => el.classList.add('visible'), i * 80);
+            });
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const bigCards = solutions.filter(s => s.size === 'lg');
+  const smallCards = solutions.filter(s => s.size === 'sm');
+
   return (
-    <section id="features" className="py-24 bg-white relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gray-50 to-white"></div>
+    <section
+      id="solucoes"
+      ref={sectionRef}
+      className="py-28 relative overflow-hidden"
+      style={{ background: 'var(--bg-surface)' }}
+    >
+      <div className="section-divider absolute top-0 left-0 right-0" />
+
+      {/* Background effects */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        style={{
+          width: '700px', height: '500px',
+          background: 'radial-gradient(ellipse, rgba(108,99,255,0.07) 0%, transparent 70%)',
+          filter: 'blur(50px)',
+        }}
+      />
+      <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none" />
+
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center max-w-4xl mx-auto mb-20">
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-gray-900 leading-tight">
-            Benefícios do <span className="gradient-text">IntelekBot</span> para seu negócio
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16 reveal">
+          <div className="badge-chip mb-5 mx-auto inline-flex">
+            <Settings2 size={12} style={{ color: '#FF3CAC' }} />
+            Nossas Soluções
+          </div>
+          <h2
+            className="font-bold text-4xl md:text-5xl mb-5"
+            style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+          >
+            Tudo que seu negócio precisa
+            <span className="gradient-text"> em um só lugar</span>
           </h2>
-          <p className="text-gray-600 text-lg md:text-xl leading-relaxed px-4">
-            Nossos agentes de IA são projetados para atender às necessidades específicas do seu negócio,
-            oferecendo um conjunto completo de recursos para revolucionar seu atendimento ao cliente.
+          <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+            Do levantamento ao suporte — desenvolvemos a solução certa para o seu segmento e momento.
           </p>
         </div>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-          {features.map((feature, index) => (
-            <Card key={index} className="border border-gray-100 hover:shadow-lg transition-shadow duration-300 overflow-hidden group">
-              <CardContent className="p-6">
-                <div className="h-12 w-12 rounded-lg flex items-center justify-center gradient-bg text-white mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {feature.icon}
+
+        {/* BENTO GRID — 2 grandes + 10 pequenos */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+
+          {/* Cards grandes (col-span-2) */}
+          {bigCards.map((sol, i) => {
+            const Icon = sol.icon;
+            return (
+              <div
+                key={i}
+                className="col-span-2 card-glass rounded-2xl p-8 group cursor-default flex flex-col gap-5 reveal relative overflow-hidden"
+                style={{ minHeight: '200px' }}
+              >
+                {/* Glow de fundo no card */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{ background: `radial-gradient(ellipse at 20% 50%, ${sol.color}12 0%, transparent 60%)` }}
+                />
+
+                <div className="flex items-start gap-5">
+                  <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-400 group-hover:scale-110"
+                    style={{
+                      background: `${sol.color}18`,
+                      border: `1px solid ${sol.color}40`,
+                      boxShadow: `0 0 24px ${sol.color}25`,
+                    }}
+                  >
+                    <Icon size={26} style={{ color: sol.color }} />
+                  </div>
+                  <div className="flex-1">
+                    <h3
+                      className="font-bold text-xl mb-2"
+                      style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}
+                    >
+                      {sol.title}
+                    </h3>
+                    <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                      {sol.description}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="font-heading text-xl font-bold mb-2 text-gray-900">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        
-        <div className="text-center">
-          <div className="inline-block p-8 rounded-2xl bg-intelektus-50 border border-intelektus-100 max-w-2xl">
-            <p className="text-intelektus-700 font-medium text-lg md:text-xl mb-6">
-              "Nosso IntelekBot permitiu que atendêssemos 78% mais clientes com a mesma equipe e aumentou nossas vendas em 42%!"
-            </p>
-            <div className="flex items-center justify-center">
-              <div className="w-12 h-12 rounded-full bg-intelektus-200"></div>
-              <div className="ml-4 text-left">
-                <p className="font-medium text-gray-900">Maria Silva</p>
-                <p className="text-sm text-gray-500">Proprietária, Farmácia Saúde Total</p>
+
+                {/* Animated bottom line */}
+                <div
+                  className="h-0.5 rounded-full w-0 group-hover:w-full transition-all duration-700"
+                  style={{ background: `linear-gradient(to right, ${sol.color}, transparent)` }}
+                />
               </div>
-            </div>
-          </div>
+            );
+          })}
+
+          {/* Cards pequenos */}
+          {smallCards.map((sol, i) => {
+            const Icon = sol.icon;
+            return (
+              <div
+                key={i}
+                className="card-holo rounded-2xl p-5 group cursor-default flex flex-col gap-3 reveal"
+                style={{ '--holo-color': sol.color } as any}
+              >
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                  style={{
+                    background: `${sol.color}15`,
+                    border: `1px solid ${sol.color}30`,
+                  }}
+                >
+                  <Icon size={18} style={{ color: sol.color }} />
+                </div>
+                <div>
+                  <h3
+                    className="font-bold text-sm mb-1.5"
+                    style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}
+                  >
+                    {sol.title}
+                  </h3>
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    {sol.description}
+                  </p>
+                </div>
+                <div
+                  className="mt-auto h-0.5 rounded-full w-0 group-hover:w-full transition-all duration-500"
+                  style={{ background: `linear-gradient(to right, ${sol.color}, transparent)` }}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

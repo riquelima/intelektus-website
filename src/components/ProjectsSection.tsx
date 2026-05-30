@@ -70,7 +70,7 @@ const ProjectsSection = () => {
     }
   };
 
-  const filters = ["Todos", "IA", "Automação", "SaaS", "Mobile"];
+  const filters = ["Todos", "Sistemas", "Automação", "IA", "SaaS", "Mobile"];
 
   const plugin = React.useRef(
     Autoplay({
@@ -90,51 +90,73 @@ const ProjectsSection = () => {
   ];
 
   return (
-    <div className="bg-gray-50">
-      <section id="projects-hero" className="pt-24 pb-16 bg-gradient-to-br from-intelektus-50 to-white relative">
-        <div className="container mx-auto px-4 md:px-6 text-center">
-          <div className="inline-flex items-center px-4 py-2 bg-white/80 rounded-full text-sm font-medium text-intelektus-600 mb-8 backdrop-blur-sm border border-intelektus-100">
-            ✨ Portfólio de Projetos Inovadores
+    <div style={{ background: 'var(--bg-surface)' }}>
+      <section id="projects-hero" className="pt-24 pb-16 relative">
+        <div
+          className="absolute inset-0 dot-grid opacity-20 pointer-events-none"
+        />
+        <div className="container mx-auto px-4 md:px-6 text-center relative z-10">
+          <div className="badge-chip mb-6 mx-auto inline-flex">
+            ✦ Portfólio de Sistemas
           </div>
-          <h1 className="font-heading text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            Projetos que
-            <span className="block bg-gradient-to-r from-intelektus-600 to-purple-600 bg-clip-text text-transparent pb-3">
-              Revolucionam Negócios
+          <h1
+            className="font-heading text-4xl md:text-6xl font-bold mb-6"
+            style={{ color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+          >
+            Sistemas que
+            <span className="block gradient-text pb-3">
+              Transformam Empresas
             </span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Explore uma seleção de projetos desenvolvidos com IA e automações de ponta.
+          <p
+            className="text-xl mb-8 max-w-3xl mx-auto leading-relaxed"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            Veja projetos reais que desenvolvemos — sistemas web, automações, plataformas SaaS e soluções com IA.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-            <Button size="lg" className="gradient-bg hover:opacity-90 transition-opacity">
-              <ExternalLink className="mr-2 h-4 w-4" />
-              Explorar Projetos
-            </Button>
-            <Button size="lg" variant="outline" className="border-intelektus-200 text-intelektus-600 hover:bg-intelektus-50">
-              Fale com um Especialista
-            </Button>
+            <a
+              href="https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+Gostaria+de+solicitar+um+or%C3%A7amento.&type=phone_number&app_absent=0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-glow text-white font-semibold px-6 py-3 rounded-xl text-base inline-flex items-center gap-2 justify-center"
+            >
+              <ExternalLink className="h-4 w-4" />
+              Solicitar Orçamento
+            </a>
+            <a
+              href="https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+Quero+falar+com+um+especialista.&type=phone_number&app_absent=0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 rounded-xl text-base font-semibold border inline-flex items-center gap-2 justify-center transition-all duration-200"
+              style={{ borderColor: '#1E1E2E', color: 'var(--text-secondary)', background: 'transparent' }}
+            >
+              Falar com Especialista
+            </a>
           </div>
         </div>
       </section>
 
-      <section className="pt-8 pb-16">
+      <section className="pt-8 pb-16" style={{ background: 'var(--bg-surface)' }}>
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-wrap items-center gap-4 mb-12">
-            <div className="flex items-center gap-2 text-gray-700">
-              <Filter size={20} />
-              <span className="font-medium">Filtrar por categoria:</span>
+            <div className="flex items-center gap-2" style={{ color: 'var(--text-muted)' }}>
+              <Filter size={18} />
+              <span className="text-sm font-medium">Filtrar:</span>
             </div>
             <div className="flex flex-wrap gap-2">
               {filters.map((filter) => (
-                <Button
+                <button
                   key={filter}
-                  variant={selectedFilter === filter ? "default" : "outline"}
-                  size="sm"
                   onClick={() => setSelectedFilter(filter)}
-                  className={selectedFilter === filter ? "gradient-bg" : ""}
+                  className="px-3 py-1.5 rounded-lg text-sm font-medium border transition-all duration-200"
+                  style={selectedFilter === filter
+                    ? { background: 'rgba(108,99,255,0.2)', borderColor: 'rgba(108,99,255,0.5)', color: '#A899FF' }
+                    : { background: 'transparent', borderColor: '#1E1E2E', color: 'var(--text-muted)' }
+                  }
                 >
                   {filter}
-                </Button>
+                </button>
               ))}
             </div>
           </div>
