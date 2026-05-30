@@ -2,6 +2,7 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
+import ParticleCanvas from '@/components/ParticleCanvas';
 import FeaturesSection from '@/components/FeaturesSection';
 import BenefitsSection from '@/components/BenefitsSection';
 import ProjectsSection from '@/components/ProjectsSection';
@@ -17,7 +18,8 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 
 const Index = () => {
   return (
-    <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
+    <div className="min-h-screen relative overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
+      <ParticleCanvas />
       <Navbar />
       <HeroSection />
       {/* Soluções — 8 cards de serviços */}
