@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { ExternalLink, Play, Pause, Volume2, VolumeX, Maximize2, X, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,7 +11,7 @@ const STATIC_PROJECTS = [
     title: "Edy Cão — Banho & Tosa",
     tagline: "Plataforma end-to-end para o mercado pet",
     category: "Sistemas",
-    videoUrl: "https://i.imgur.com/qLigl1N.mp4",
+    videoUrl: "/videos/edy-cao.mp4",
     isVideo: true,
     color: "#6C63FF",
     gradient: "linear-gradient(135deg, #6C63FF, #A855F7)",
@@ -30,7 +29,7 @@ const STATIC_PROJECTS = [
     title: "NeoEase — Soluções em Tecnologia",
     tagline: "Automação Inteligente e Agentes de IA",
     category: "IA",
-    videoUrl: "https://i.imgur.com/zXvZSVP.mp4",
+    videoUrl: "/videos/neoease.mp4",
     isVideo: true,
     color: "#FF3CAC",
     gradient: "linear-gradient(135deg, #FF3CAC, #A855F7)",
@@ -48,7 +47,7 @@ const STATIC_PROJECTS = [
     title: "Money Balance",
     tagline: "Gestão Financeira Inteligente com IA",
     category: "SaaS",
-    videoUrl: "https://i.imgur.com/bmJDTDV.mp4",
+    videoUrl: "/videos/money-balance.mp4",
     isVideo: true,
     color: "#10B981",
     gradient: "linear-gradient(135deg, #10B981, #3B82F6)",
@@ -66,7 +65,7 @@ const STATIC_PROJECTS = [
     title: "Quality Home — Portal Imobiliário",
     tagline: "A Revolução Imobiliária na Palma da Sua Mão",
     category: "Sistemas",
-    videoUrl: "https://i.imgur.com/N0TXwmT.mp4",
+    videoUrl: "/videos/quality-home.mp4",
     isVideo: true,
     color: "#F59E0B",
     gradient: "linear-gradient(135deg, #F59E0B, #EC4899)",
@@ -84,7 +83,7 @@ const STATIC_PROJECTS = [
     title: "Gourmet Go",
     tagline: "A Solução Definitiva em Delivery Mobile",
     category: "Mobile",
-    videoUrl: "https://i.imgur.com/AxRtYLN.mp4",
+    videoUrl: "/videos/gourmet-go.mp4",
     isVideo: true,
     color: "#EF4444",
     gradient: "linear-gradient(135deg, #EF4444, #F97316)",
