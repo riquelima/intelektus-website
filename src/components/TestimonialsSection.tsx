@@ -114,7 +114,7 @@ const TestimonialsSection = () => {
           </div>
           <h2
             className="font-bold text-4xl md:text-5xl mb-4"
-            style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+            style={{ color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
           >
             O que nossos{' '}
             <span className="gradient-text">clientes dizem</span>
@@ -181,7 +181,6 @@ const TestimonialsSection = () => {
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-base flex-shrink-0"
                   style={{
-                    fontFamily: 'Syne, sans-serif',
                     background: `${t.color}20`,
                     color: t.color,
                     border: `1px solid ${t.color}40`,
@@ -190,7 +189,7 @@ const TestimonialsSection = () => {
                   {t.initials}
                 </div>
                 <div>
-                  <p className="font-bold text-sm" style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}>
+                  <p className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>
                     {t.author}
                   </p>
                   <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{t.position}</p>
@@ -272,7 +271,7 @@ const TestimonialsSection = () => {
             >
               <p
                 className="font-bold text-2xl md:text-3xl gradient-text mb-1"
-                style={{ fontFamily: 'Syne, sans-serif', letterSpacing: '-0.03em' }}
+                style={{ letterSpacing: '-0.03em' }}
               >
                 {s.value}
               </p>

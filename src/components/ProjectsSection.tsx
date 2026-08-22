@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { ExternalLink, Play, Pause, Volume2, VolumeX, Maximize2, X, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { createPortal } from "react-dom";
+import { ExternalLink, Play, Pause, Volume2, VolumeX, Maximize2, X, ArrowRight, ChevronLeft, ChevronRight, Sparkles, Smartphone, CheckCircle2, Layers } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 /* ═══════════════════════════════════
@@ -155,7 +156,7 @@ const STATIC_PROJECTS = [
 ];
 
 /* ═══════════════════════════════════
-   PLAYER DE VÍDEO PREMIUM INLINE
+   PLAYER DE VÍDEO SMARTPHONE PREMIUM
 ═══════════════════════════════════ */
 const VideoPlayer = ({
   src,
@@ -172,47 +173,71 @@ const VideoPlayer = ({
   if (isGif) {
     return (
       <div
-        className="relative w-full rounded-[2.5rem] border-[6px] border-[#1E1E2F] overflow-hidden group mx-auto shadow-2xl"
-        style={{ background: "#000", aspectRatio: "9/16", maxWidth: "280px" }}
+        className="relative w-full rounded-[2.2rem] sm:rounded-[2.5rem] border-[5px] sm:border-[6px] border-[#1E1E2F] overflow-hidden group mx-auto shadow-2xl"
+        style={{ background: "#04040D", aspectRatio: "9/16", maxWidth: "290px" }}
       >
+        {/* Dynamic Island / Notch do smartphone */}
+        <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-20 h-4 rounded-full bg-black/80 border border-white/10 z-20 flex items-center justify-center">
+          <div className="w-2 h-2 rounded-full bg-white/20" />
+        </div>
+
         <img
           src={src}
-          alt="Demonstração GIF"
+          alt="Demonstração"
           className="w-full h-full object-cover"
         />
-        {/* Topo: fechar */}
+
+        {/* Topo: fechar se houver */}
         {onClose && (
           <div className="absolute top-3 right-3 z-20">
             <button
               onClick={(e) => { e.stopPropagation(); onClose(); }}
-              className="w-8 h-8 rounded-full flex items-center justify-center transition-all"
-              style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", color: "#fff" }}
+              className="w-8 h-8 rounded-full flex items-center justify-center transition-all bg-black/60 backdrop-blur-md text-white hover:bg-black/80 cursor-pointer"
             >
               <X size={14} />
             </button>
           </div>
         )}
-        {/* Badge flutuante premium indicando que é um GIF animado */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
-          <span className="text-[10px] text-white/70 font-semibold tracking-wider uppercase font-sans">
-            Animado GIF 🔄
+
+        {/* Badge flutuante de looping contínuo */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/15 flex items-center gap-1.5 shadow-lg">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="text-[10px] text-white font-semibold tracking-wider uppercase">
+            Vídeo em Loop
           </span>
         </div>
       </div>
     );
   }
-  const [playing, setPlaying] = useState(false);
+
+  const [playing, setPlaying] = useState(true);
   const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [showControls, setShowControls] = useState(true);
   const hideTimer = useRef<ReturnType<typeof setTimeout>>();
 
+  useEffect(() => {
+    const v = videoRef.current;
+    if (v) {
+      v.play()
+        .then(() => setPlaying(true))
+        .catch(() => {
+          v.muted = true;
+          v.play().then(() => setPlaying(true)).catch(() => {});
+        });
+    }
+  }, [src]);
+
   const togglePlay = () => {
     const v = videoRef.current;
     if (!v) return;
-    if (v.paused) { v.play(); setPlaying(true); }
-    else { v.pause(); setPlaying(false); }
+    if (v.paused) { 
+      v.play().then(() => setPlaying(true)).catch(() => {});
+    } else { 
+      v.pause(); 
+      setPlaying(false); 
+    }
     resetHide();
   };
 
@@ -268,11 +293,16 @@ const VideoPlayer = ({
 
   return (
     <div
-      className="relative w-full rounded-[2.5rem] border-[6px] border-[#1E1E2F] overflow-hidden group mx-auto shadow-2xl"
-      style={{ background: "#000", aspectRatio: "9/16", maxWidth: "280px" }}
+      className="relative w-full rounded-[2.2rem] sm:rounded-[2.5rem] border-[5px] sm:border-[6px] border-[#1E1E2F] overflow-hidden group mx-auto shadow-2xl cursor-pointer"
+      style={{ background: "#04040D", aspectRatio: "9/16", maxWidth: "290px" }}
       onMouseMove={resetHide}
       onClick={togglePlay}
     >
+      {/* Dynamic Island / Notch do smartphone */}
+      <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-20 h-4 rounded-full bg-black/80 border border-white/10 z-20 flex items-center justify-center pointer-events-none">
+        <div className="w-2 h-2 rounded-full bg-white/20" />
+      </div>
+
       <video
         ref={videoRef}
         src={src}
@@ -291,22 +321,20 @@ const VideoPlayer = ({
       >
         {/* Topo: fechar */}
         {onClose && (
-          <div className="flex justify-end p-3">
+          <div className="flex justify-end p-3 pt-4">
             <button
               onClick={(e) => { e.stopPropagation(); onClose(); }}
-              className="w-8 h-8 rounded-full flex items-center justify-center transition-all"
-              style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", color: "#fff" }}
+              className="w-8 h-8 rounded-full flex items-center justify-center transition-all bg-black/60 backdrop-blur-md text-white hover:bg-black/80 cursor-pointer"
             >
               <X size={14} />
             </button>
           </div>
         )}
 
-        {/* Centro: botão play */}
+        {/* Centro: botão play com efeito ripple */}
         <div className="flex-1 flex items-center justify-center">
           {!playing && (
             <div className="relative">
-              {/* Ondas de energia */}
               {[0, 1, 2].map((i) => (
                 <div
                   key={i}
@@ -319,10 +347,10 @@ const VideoPlayer = ({
                 />
               ))}
               <div
-                className="w-16 h-16 rounded-full flex items-center justify-center relative z-10"
+                className="w-16 h-16 rounded-full flex items-center justify-center relative z-10 transition-transform hover:scale-110"
                 style={{
                   background: `linear-gradient(135deg, ${color}, ${color}CC)`,
-                  boxShadow: `0 0 30px ${color}60`,
+                  boxShadow: `0 0 35px ${color}80`,
                 }}
               >
                 <Play size={24} fill="white" className="text-white ml-1" />
@@ -331,17 +359,17 @@ const VideoPlayer = ({
           )}
         </div>
 
-        {/* Fundo: barra de controles */}
+        {/* Fundo: barra de controles com touch target aprimorado */}
         <div
-          className="px-4 pb-4 pt-8 flex flex-col gap-2"
+          className="px-4 pb-4 pt-8 flex flex-col gap-2.5"
           style={{
-            background: "linear-gradient(to top, rgba(0,0,0,0.85), transparent)",
+            background: "linear-gradient(to top, rgba(4,4,13,0.92) 0%, rgba(4,4,13,0.6) 60%, transparent 100%)",
           }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Progress bar */}
           <div
-            className="w-full h-1 rounded-full cursor-pointer group/bar"
+            className="w-full h-1.5 rounded-full cursor-pointer group/bar relative"
             style={{ background: "rgba(255,255,255,0.2)" }}
             onClick={seek}
           >
@@ -355,37 +383,37 @@ const VideoPlayer = ({
               }}
             >
               <div
-                className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full opacity-0 group-hover/bar:opacity-100 transition-opacity"
-                style={{ background: color, transform: "translateY(-50%) scale(1.5)" }}
+                className="absolute right-0 top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full"
+                style={{ background: color, transform: "translateY(-50%)" }}
               />
             </div>
           </div>
 
-          {/* Controles */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          {/* Controles de Play, Áudio e Tela cheia */}
+          <div className="flex items-center justify-between text-white">
+            <div className="flex items-center gap-2">
               <button
                 onClick={togglePlay}
-                className="w-7 h-7 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                style={{ color: "#fff" }}
+                className="w-8 h-8 rounded-full flex items-center justify-center transition-all bg-white/10 hover:bg-white/20 cursor-pointer"
+                title={playing ? "Pausar" : "Reproduzir"}
               >
-                {playing ? <Pause size={14} fill="white" /> : <Play size={14} fill="white" />}
+                {playing ? <Pause size={14} fill="white" /> : <Play size={14} fill="white" className="ml-0.5" />}
               </button>
               <button
                 onClick={toggleMute}
-                className="w-7 h-7 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                style={{ color: "#fff" }}
+                className="w-8 h-8 rounded-full flex items-center justify-center transition-all bg-white/10 hover:bg-white/20 cursor-pointer"
+                title={muted ? "Ativar som" : "Desativar som"}
               >
                 {muted ? <VolumeX size={14} /> : <Volume2 size={14} />}
               </button>
-              <span className="text-xs font-mono" style={{ color: "rgba(255,255,255,0.7)" }}>
+              <span className="text-[11px] font-mono text-gray-300 ml-1">
                 {fmt(progress)} / {fmt(duration)}
               </span>
             </div>
             <button
               onClick={fullscreen}
-              className="w-7 h-7 rounded-full flex items-center justify-center transition-all hover:scale-110"
-              style={{ color: "#fff" }}
+              className="w-8 h-8 rounded-full flex items-center justify-center transition-all bg-white/10 hover:bg-white/20 cursor-pointer"
+              title="Tela cheia"
             >
               <Maximize2 size={13} />
             </button>
@@ -395,7 +423,7 @@ const VideoPlayer = ({
 
       <style>{`
         @keyframes ping-wave {
-          0%   { transform: scale(1); opacity: 0.6; }
+          0%   { transform: scale(1); opacity: 0.7; }
           100% { transform: scale(2.2); opacity: 0; }
         }
       `}</style>
@@ -404,14 +432,16 @@ const VideoPlayer = ({
 };
 
 /* ═══════════════════════════════════
-   CARD DE PROJETO COM VÍDEO THUMB
+   CARD DE PROJETO COM VÍDEO SMARTPHONE ELEGANTE
 ═══════════════════════════════════ */
 const ProjectCard = ({
   project,
   onOpen,
+  isActive,
 }: {
   project: typeof STATIC_PROJECTS[0];
   onOpen: (p: typeof STATIC_PROJECTS[0]) => void;
+  isActive?: boolean;
 }) => {
   const [hovered, setHovered] = useState(false);
   const previewRef = useRef<HTMLVideoElement>(null);
@@ -422,34 +452,33 @@ const ProjectCard = ({
     }
   }, [project.videoUrl]);
 
-  const handleHoverEnter = () => {
-    setHovered(true);
-  };
-  const handleHoverLeave = () => {
-    setHovered(false);
-  };
-
   return (
     <div
-      className="relative rounded-2xl overflow-hidden cursor-pointer group snap-center shrink-0 w-[275px] sm:w-[305px] aspect-[9/16]"
+      className={`relative rounded-[2rem] sm:rounded-[2.4rem] overflow-hidden cursor-pointer group snap-center shrink-0 w-[78vw] max-w-[270px] sm:w-[305px] aspect-[9/16] transition-all duration-500 border-4 sm:border-[5px] ${
+        isActive 
+          ? 'scale-100 border-[#6C63FF]/60 shadow-[0_0_40px_rgba(108,99,255,0.35),0_20px_60px_rgba(0,0,0,0.8)]' 
+          : 'scale-[0.96] border-white/10 opacity-80 hover:opacity-100 hover:scale-[0.98] shadow-2xl'
+      }`}
       style={{
-        border: `1px solid ${hovered ? project.color + "50" : "rgba(108,99,255,0.12)"}`,
-        boxShadow: hovered ? `0 0 40px ${project.color}22, 0 20px 50px rgba(0,0,0,0.5)` : "none",
-        transform: hovered ? "translateY(-6px)" : "translateY(0)",
-        transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
+        background: "#04040D",
       }}
-      onMouseEnter={handleHoverEnter}
-      onMouseLeave={handleHoverLeave}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       onClick={() => onOpen(project)}
     >
-      {/* Container de Vídeo/GIF em 100% da área do card */}
+      {/* Smartphone Dynamic Island / Notch no Topo */}
+      <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-16 sm:w-20 h-3.5 sm:h-4 rounded-full bg-black/85 border border-white/15 z-30 flex items-center justify-between px-2 pointer-events-none shadow-md">
+        <div className="w-1.5 h-1.5 rounded-full bg-white/20" />
+        <div className="w-1.5 h-1.5 rounded-full bg-blue-400/40 animate-pulse" />
+      </div>
+
+      {/* Container do Vídeo/GIF em 100% da tela do smartphone */}
       <div className="absolute inset-0 w-full h-full bg-[#04040D]">
         {project.videoUrl.endsWith(".gif") ? (
           <img
             src={project.videoUrl}
             alt={project.title}
-            className="absolute inset-0 w-full h-full object-cover transition-all duration-700"
-            style={{ transform: hovered ? "scale(1.06)" : "scale(1)" }}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
         ) : (
           <video
@@ -459,83 +488,83 @@ const ProjectCard = ({
             playsInline
             loop
             autoPlay
-            preload="auto"
-            className="absolute inset-0 w-full h-full object-cover transition-all duration-700"
-            style={{ transform: hovered ? "scale(1.06)" : "scale(1)" }}
+            preload="metadata"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
         )}
       </div>
 
       {/* Badge de categoria no topo esquerdo */}
-      <div className="absolute top-3 left-3 z-20">
+      <div className="absolute top-3 left-3 z-30">
         <span
-          className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-lg"
+          className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-xl shadow-lg flex items-center gap-1"
           style={{
-            background: `${project.color}25`,
-            border: `1px solid ${project.color}50`,
+            background: `rgba(8,8,21,0.85)`,
+            border: `1px solid ${project.color}70`,
             color: project.color,
-            backdropFilter: "blur(8px)",
+            backdropFilter: "blur(12px)",
           }}
         >
+          <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: project.color }} />
           {project.category}
         </span>
       </div>
 
-      {/* Conteúdo flutuante na base inferior interna */}
+      {/* Centro: Botão Play Glassmorphism com Onda de Pulso */}
+      <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+        <div 
+          className="w-11 h-11 sm:w-13 sm:h-13 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-2xl backdrop-blur-md"
+          style={{
+            background: 'rgba(8, 8, 21, 0.75)',
+            border: `1.5px solid ${project.color}`,
+            boxShadow: `0 0 25px ${project.color}70`,
+          }}
+        >
+          <Play size={16} className="text-white ml-0.5 sm:hidden" fill="white" />
+          <Play size={20} className="text-white ml-0.5 hidden sm:block" fill="white" />
+        </div>
+      </div>
+
+      {/* Barra Flutuante Inferior Limpa & Moderna */}
       <div
-        className="absolute bottom-0 left-0 right-0 p-5 pt-20 flex flex-col gap-2.5 z-10"
+        className="absolute bottom-0 left-0 right-0 p-3.5 sm:p-4 pt-16 flex flex-col gap-1.5 z-20"
         style={{
-          background: "linear-gradient(to top, rgba(4, 4, 13, 0.98) 0%, rgba(4, 4, 13, 0.8) 55%, rgba(4, 4, 13, 0.3) 80%, transparent 100%)",
+          background: "linear-gradient(to top, rgba(4, 4, 13, 0.98) 0%, rgba(4, 4, 13, 0.8) 55%, transparent 100%)",
         }}
       >
         <div>
-          <h3
-            className="font-bold text-base mb-0.5 line-clamp-1 text-white"
-            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-          >
+          <h3 className="font-bold text-sm sm:text-base text-white truncate leading-tight">
             {project.title}
           </h3>
-          <p className="text-[11px] font-semibold" style={{ color: project.color }}>
-            {project.tagline}
+          <p className="text-[11px] font-medium text-gray-300 truncate" style={{ color: project.color }}>
+            {project.tagline.split('—')[1] || project.tagline}
           </p>
         </div>
 
-        <p className="text-[11px] leading-relaxed line-clamp-2 text-gray-300">
-          {project.description}
-        </p>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mt-1">
-          {project.tags.slice(0, 2).map((tag) => (
-            <span
-              key={tag}
-              className="text-[9px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-300 font-medium"
-            >
-              {tag}
+        {/* Botão de Ação Estilizado */}
+        <div className="pt-1 flex items-center justify-between">
+          <div 
+            className="w-full py-2 px-3 rounded-xl flex items-center justify-between text-xs font-bold transition-all duration-200"
+            style={{
+              background: `linear-gradient(135deg, ${project.color}25, rgba(255,255,255,0.05))`,
+              border: `1px solid ${project.color}45`,
+              color: '#FFFFFF',
+            }}
+          >
+            <span className="flex items-center gap-1.5 text-[11px]">
+              <Sparkles size={11} className="text-yellow-300" />
+              Assistir Demo
             </span>
-          ))}
-          {project.tags.length > 2 && (
-            <span className="text-[9px] font-semibold text-gray-500 self-center">
-              +{project.tags.length - 2}
-            </span>
-          )}
+            <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" style={{ color: project.color }} />
+          </div>
         </div>
-
-        {/* CTA */}
-        <button
-          className="mt-1 flex items-center gap-1 text-[11px] font-semibold transition-all duration-200 group/btn"
-          style={{ color: project.color }}
-        >
-          Ver projeto
-          <ArrowRight size={11} className="group-hover/btn:translate-x-1 transition-transform" />
-        </button>
       </div>
     </div>
   );
 };
 
 /* ═══════════════════════════════════
-   MODAL DO PROJETO
+   MODAL DO PROJETO THEATER MODE
 ═══════════════════════════════════ */
 const ProjectModal = ({
   project,
@@ -554,62 +583,68 @@ const ProjectModal = ({
     };
   }, [onClose]);
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(16px)" }}
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6"
+      style={{ background: "rgba(0,0,0,0.92)", backdropFilter: "blur(20px)" }}
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl animate-scale-in"
+        className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-3xl animate-scale-in flex flex-col no-scrollbar"
         style={{
           background: "rgba(8,8,21,0.98)",
-          border: `1px solid ${project.color}35`,
-          boxShadow: `0 0 80px ${project.color}18, 0 40px 100px rgba(0,0,0,0.7)`,
+          border: `1px solid ${project.color}45`,
+          boxShadow: `0 0 90px ${project.color}25, 0 40px 100px rgba(0,0,0,0.8)`,
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Gradiente linha topo */}
+        {/* Barra superior de gradiente */}
         <div
-          className="h-0.5 rounded-t-2xl"
+          className="h-1 rounded-t-3xl w-full"
           style={{ background: project.gradient }}
         />
 
-        {/* Botão de Fechar Absoluto para o design de 2 colunas */}
-        <div className="absolute top-4 right-4 z-10">
+        {/* Botão de Fechar Grande */}
+        <div className="absolute top-4 right-4 z-30">
           <button
             onClick={onClose}
-            className="w-11 h-11 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center transition-all"
-            style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--text-muted)" }}
+            className="w-10 h-10 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all bg-white/10 hover:bg-white/20 border border-white/15 text-white cursor-pointer shadow-lg"
+            title="Fechar"
           >
-            <X size={16} />
+            <X size={18} />
           </button>
         </div>
 
-        {/* Layout de duas colunas */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6 p-4 sm:p-6">
-          {/* Coluna Esquerda: Player de vídeo em Smartphone Mockup */}
-          <div className="md:col-span-5 flex flex-col items-center justify-center bg-[rgba(13,13,30,0.3)] p-4 rounded-2xl border border-white/5">
-            <div className="w-full max-w-[190px] sm:max-w-[270px]">
+        {/* Conteúdo do Modal em 2 Colunas */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 p-4 sm:p-7 items-start">
+          
+          {/* Coluna Esquerda: Smartphone Mockup Player */}
+          <div className="md:col-span-5 flex flex-col items-center justify-center bg-[rgba(13,13,30,0.4)] p-4 sm:p-5 rounded-2xl border border-white/5 w-full">
+            <div className="w-full max-w-[210px] sm:max-w-[270px]">
               <VideoPlayer src={project.videoUrl} color={project.color} />
             </div>
-            <p className="text-[11px] text-center mt-3" style={{ color: "var(--text-muted)" }}>
-              ✦ Toque no player para controlar o vídeo
+            <p className="text-[11px] text-center mt-3 text-gray-400 font-medium">
+              ✦ Toque na tela para pausar ou controlar o áudio
             </p>
           </div>
 
-          {/* Coluna Direita: Informações */}
+          {/* Coluna Direita: Informações Detalhadas */}
           <div className="md:col-span-7 flex flex-col justify-between space-y-5">
             <div>
-              <span
-                className="text-xs font-bold uppercase tracking-widest px-2.5 py-1 rounded-lg inline-block mb-3"
-                style={{ background: `${project.color}18`, color: project.color }}
-              >
-                {project.category}
-              </span>
+              <div className="flex items-center gap-2 mb-2.5">
+                <span
+                  className="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-xl"
+                  style={{ background: `${project.color}20`, color: project.color, border: `1px solid ${project.color}40` }}
+                >
+                  {project.category}
+                </span>
+                <span className="text-xs text-gray-400 flex items-center gap-1 font-medium">
+                  <Smartphone size={13} /> Sistema Sob Medida
+                </span>
+              </div>
+
               <h2
-                className="font-bold text-2xl md:text-3xl"
-                style={{ fontFamily: "Syne, sans-serif", color: "var(--text-primary)", letterSpacing: "-0.02em" }}
+                className="font-bold text-2xl md:text-3xl text-white tracking-tight"
               >
                 {project.title}
               </h2>
@@ -618,16 +653,16 @@ const ProjectModal = ({
               </p>
             </div>
 
-            <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+            <p className="text-sm leading-relaxed text-gray-300">
               {project.description}
             </p>
 
+            {/* Lista de Recursos Principais */}
             <div>
               <h3
-                className="font-bold text-xs mb-2.5 uppercase tracking-widest"
-                style={{ color: "var(--text-muted)", fontFamily: "Syne, sans-serif" }}
+                className="font-bold text-xs mb-3 uppercase tracking-widest text-gray-400"
               >
-                Principais recursos
+                Principais Funcionalidades Entregues:
               </h3>
               <div className="space-y-2">
                 {project.features.map((f, i) => (
@@ -635,24 +670,22 @@ const ProjectModal = ({
                     key={i}
                     className="flex gap-2.5 p-3 rounded-xl text-xs leading-relaxed"
                     style={{
-                      background: `${project.color}08`,
-                      border: `1px solid ${project.color}18`,
-                      color: "var(--text-secondary)",
+                      background: `${project.color}0A`,
+                      border: `1px solid ${project.color}22`,
+                      color: "#E2E8F0",
                     }}
                   >
-                    {f}
+                    <CheckCircle2 size={15} style={{ color: project.color, flexShrink: 0, marginTop: '2px' }} />
+                    <div>{f}</div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Tags */}
+            {/* Tags e Tecnologias */}
             <div>
-              <h3
-                className="font-bold text-xs mb-2.5 uppercase tracking-widest"
-                style={{ color: "var(--text-muted)", fontFamily: "Syne, sans-serif" }}
-              >
-                Tecnologias
+              <h3 className="font-bold text-xs mb-2.5 uppercase tracking-widest text-gray-400">
+                Tecnologias Utilizadas:
               </h3>
               <div className="flex flex-wrap gap-1.5">
                 {project.tags.map((tag) => (
@@ -660,8 +693,8 @@ const ProjectModal = ({
                     key={tag}
                     className="text-[10px] px-2.5 py-1 rounded-lg font-medium"
                     style={{
-                      background: `${project.color}12`,
-                      border: `1px solid ${project.color}30`,
+                      background: `${project.color}15`,
+                      border: `1px solid ${project.color}35`,
                       color: project.color,
                     }}
                   >
@@ -671,63 +704,84 @@ const ProjectModal = ({
               </div>
             </div>
 
-            {/* CTA */}
-            <a
-              href={`https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+Tenho+interesse+em+um+projeto+similar+ao+${encodeURIComponent(project.title)}.&type=phone_number&app_absent=0`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-glow w-full text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 mt-2"
-              style={{ fontFamily: "Syne, sans-serif" }}
-            >
-              Quero um projeto similar
-              <ArrowRight size={14} />
-            </a>
+            {/* Botão de CTA para WhatsApp */}
+            <div className="pt-2">
+              <a
+                href={`https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1+Henrique%21+Gostei+muito+do+projeto+${encodeURIComponent(project.title)}+no+portf%C3%B3lio+e+quero+desenvolver+algo+similar.&type=phone_number&app_absent=0`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-glow w-full text-white font-bold py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition-transform hover:scale-[1.01] shadow-xl"
+              >
+                <Sparkles size={16} className="text-yellow-300" />
+                Quero um projeto similar para minha empresa
+                <ArrowRight size={15} />
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
 /* ═══════════════════════════════════
-   SECTION PRINCIPAL
+   SECTION PRINCIPAL COM CARROSSEL & CÁPSULA DE CONTROLE
 ═══════════════════════════════════ */
 const ProjectsSection = () => {
   const [selectedFilter, setSelectedFilter] = useState("Todos");
   const [selectedProject, setSelectedProject] = useState<typeof STATIC_PROJECTS[0] | null>(null);
-  const [dbProjects, setDbProjects] = useState<any[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  const scrollLeft = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -320, behavior: "smooth" });
+  const filters = ["Todos", "Sistemas", "Automação", "IA", "SaaS", "Mobile"];
+  const allProjects = STATIC_PROJECTS;
+
+  const filtered = selectedFilter === "Todos"
+    ? allProjects
+    : allProjects.filter((p) => p.category === selectedFilter);
+
+  // Monitorar scroll do carrossel para atualizar o index do card ativo
+  const handleScroll = useCallback(() => {
+    if (!carouselRef.current) return;
+    const el = carouselRef.current;
+    const cards = el.querySelectorAll('.snap-center');
+    if (!cards.length) return;
+    
+    const center = el.scrollLeft + el.clientWidth / 2;
+    let closestIdx = 0;
+    let minDiff = Infinity;
+
+    cards.forEach((card, i) => {
+      const rect = (card as HTMLElement);
+      const cardCenter = rect.offsetLeft + rect.clientWidth / 2;
+      const diff = Math.abs(center - cardCenter);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIdx = i;
+      }
+    });
+
+    setActiveIndex(closestIdx);
+  }, []);
+
+  const scrollToCard = (index: number) => {
+    if (!carouselRef.current) return;
+    const el = carouselRef.current;
+    const cards = el.querySelectorAll('.snap-center');
+    if (cards[index]) {
+      cards[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
+  };
+
+  const scrollLeft = () => {
+    scrollToCard(Math.max(activeIndex - 1, 0));
   };
 
   const scrollRight = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 320, behavior: "smooth" });
-    }
+    scrollToCard(Math.min(activeIndex + 1, filtered.length - 1));
   };
-
-  // Carregar projetos do Supabase
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("projects")
-          .select("*, project_media(file_path, is_cover)")
-          .eq("status", "active")
-          .order("created_at", { ascending: false });
-        if (error) throw error;
-        setDbProjects(data || []);
-      } catch (e) {
-        console.error("Erro ao carregar projetos:", e);
-      }
-    };
-    fetchProjects();
-  }, []);
 
   // Reveal no scroll
   useEffect(() => {
@@ -747,20 +801,12 @@ const ProjectsSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  const filters = ["Todos", "Sistemas", "Automação", "IA", "SaaS", "Mobile"];
-
-  const allProjects = STATIC_PROJECTS; // estáticos primeiro; db pode ser adicionado depois
-
-  const filtered = selectedFilter === "Todos"
-    ? allProjects
-    : allProjects.filter((p) => p.category === selectedFilter);
-
   return (
     <div ref={sectionRef} style={{ background: "var(--bg-surface)" }}>
       {/* Hero da seção */}
       <section
         id="projects"
-        className="pt-16 pb-8 relative overflow-hidden"
+        className="pt-10 sm:pt-16 pb-4 sm:pb-6 relative overflow-hidden"
       >
         <div className="absolute inset-0 mesh-gradient pointer-events-none" />
         <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none" />
@@ -774,126 +820,159 @@ const ProjectsSection = () => {
         />
 
         <div className="container mx-auto px-4 md:px-6 text-center relative z-10">
-          <div className="badge-chip mb-6 mx-auto inline-flex reveal">
-            ✦ Portfólio de Sistemas
+          <div className="badge-chip mb-3 sm:mb-4 mx-auto inline-flex reveal">
+            ✦ Demonstrações Reais em Vídeo
           </div>
-          <h1
-            className="font-bold text-4xl md:text-6xl mb-6 reveal"
+          <h2
+            className="font-bold text-2xl sm:text-4xl md:text-5xl mb-2 sm:mb-3 reveal text-white"
             style={{
-              fontFamily: "Syne, sans-serif",
-              color: "var(--text-primary)",
               letterSpacing: "-0.03em",
             }}
           >
             Sistemas que{" "}
-            <span className="gradient-text block pb-3">Transformam Empresas</span>
-          </h1>
+            <span className="gradient-text">Transformam Empresas</span>
+          </h2>
           <p
-            className="text-lg mb-8 max-w-2xl mx-auto leading-relaxed reveal"
-            style={{ color: "var(--text-secondary)" }}
+            className="text-xs sm:text-base mb-6 max-w-xl mx-auto leading-relaxed reveal text-gray-300"
           >
-            Projetos reais — sistemas web, mobile, automações, plataformas com IA e delivery. 
-            Clique em qualquer card para assistir a demonstração em vídeo.
+            Projetos reais com interface interativa. Deslize para explorar e toque em qualquer card para ver a demonstração completa.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center reveal">
-            <a
-              href="https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+Gostaria+de+solicitar+um+or%C3%A7amento.&type=phone_number&app_absent=0"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-glow text-white font-bold px-7 py-3.5 rounded-xl text-sm inline-flex items-center gap-2 justify-center"
-              style={{ fontFamily: "Syne, sans-serif" }}
-            >
-              <ExternalLink size={15} />
-              Solicitar Orçamento
-            </a>
-            <a
-              href="https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+Quero+falar+com+um+especialista.&type=phone_number&app_absent=0"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-outline-glow font-bold px-7 py-3.5 rounded-xl text-sm inline-flex items-center gap-2 justify-center"
-              style={{ fontFamily: "Syne, sans-serif" }}
-            >
-              Falar com Especialista
-            </a>
+
+          {/* Barra de Filtros Mobile-First e Desktop */}
+          <div className="flex items-center justify-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-1 px-2 max-w-xl mx-auto reveal">
+            {filters.map((f) => {
+              const count = f === "Todos" ? allProjects.length : allProjects.filter(p => p.category === f).length;
+              const isSelected = selectedFilter === f;
+              return (
+                <button
+                  key={f}
+                  onClick={() => {
+                    setSelectedFilter(f);
+                    setActiveIndex(0);
+                    if (carouselRef.current) carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+                  }}
+                  className="px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer flex-shrink-0 flex items-center gap-1.5"
+                  style={
+                    isSelected
+                      ? { 
+                          background: "linear-gradient(135deg, rgba(108,99,255,0.3) 0%, rgba(255,60,172,0.2) 100%)", 
+                          borderColor: "rgba(108,99,255,0.7)", 
+                          color: "#FFFFFF",
+                          boxShadow: "0 0 20px rgba(108,99,255,0.25)"
+                        }
+                      : { 
+                          background: "rgba(13,13,30,0.6)", 
+                          borderColor: "rgba(255,255,255,0.08)", 
+                          color: "var(--text-secondary)" 
+                        }
+                  }
+                >
+                  <span>{f}</span>
+                  <span className="text-[10px] opacity-75 px-1.5 py-0.2 rounded-full bg-white/10">
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Grid de projetos */}
-      <section className="pb-16 relative" style={{ background: "var(--bg-surface)" }}>
-        <div className="container mx-auto px-4 md:px-6">
-          {/* Filtros + Setas de Navegação */}
-          <div className="flex items-center justify-between gap-4 mb-10 reveal">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-widest mr-2" style={{ color: "var(--text-muted)" }}>
-                Filtrar:
-              </span>
-              {filters.map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setSelectedFilter(f)}
-                  className="px-4 py-2.5 sm:px-3.5 sm:py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer min-h-[44px] sm:min-h-0"
-                  style={
-                    selectedFilter === f
-                      ? { background: "rgba(108,99,255,0.18)", borderColor: "rgba(108,99,255,0.55)", color: "#A899FF" }
-                      : { background: "transparent", borderColor: "rgba(108,99,255,0.15)", color: "var(--text-muted)" }
-                  }
-                >
-                  {f}
-                </button>
-              ))}
-            </div>
-
-            {/* Setas de navegação lateral premium */}
-            <div className="hidden sm:flex items-center gap-2.5">
-              <button
-                onClick={scrollLeft}
-                className="w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-white transition-all cursor-pointer"
-                title="Projetos anteriores"
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <button
-                onClick={scrollRight}
-                className="w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-white transition-all cursor-pointer"
-                title="Próximos projetos"
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
-          </div>
-
-          {/* Carrossel Horizontal de Cards 9:16 */}
+      {/* Grid de projetos com Carrossel Coverflow / Smooth Snap */}
+      <section className="pb-12 sm:pb-16 relative" style={{ background: "var(--bg-surface)" }}>
+        <div className="container mx-auto px-2 sm:px-6">
+          
+          {/* Carrossel Horizontal Centralizado */}
           <div
             ref={carouselRef}
-            className="flex flex-row overflow-x-auto gap-6 pb-8 snap-x snap-mandatory scroll-smooth no-scrollbar scrollbar-thin scrollbar-thumb-accent scrollbar-track-transparent"
+            onScroll={handleScroll}
+            className="flex flex-row overflow-x-auto gap-3 sm:gap-6 py-4 sm:py-6 px-4 snap-x snap-mandatory scroll-smooth no-scrollbar items-center"
+            style={{
+              scrollPaddingLeft: 'calc(50vw - 140px)',
+              scrollPaddingRight: 'calc(50vw - 140px)',
+            }}
           >
             {filtered.map((project, i) => (
               <div
                 key={project.id}
                 className="reveal snap-center shrink-0"
-                style={{ animationDelay: `${i * 0.08}s` }}
+                style={{ animationDelay: `${i * 0.05}s` }}
               >
-                <ProjectCard project={project} onOpen={setSelectedProject} />
+                <ProjectCard 
+                  project={project} 
+                  onOpen={setSelectedProject} 
+                  isActive={activeIndex === i}
+                />
               </div>
             ))}
           </div>
 
+          {/* Cápsula de Navegação Cyber Elegante & Unificada */}
+          {filtered.length > 0 && (
+            <div className="max-w-md mx-auto px-4 mt-3 reveal">
+              <div 
+                className="flex items-center justify-between gap-3 p-2 px-3 sm:px-4 rounded-2xl border border-white/10 backdrop-blur-xl shadow-2xl"
+                style={{ background: 'rgba(10, 10, 25, 0.92)' }}
+              >
+                {/* Botão Anterior */}
+                <button
+                  onClick={scrollLeft}
+                  disabled={activeIndex === 0}
+                  className="py-2 px-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs font-semibold text-white flex items-center gap-1 transition-all disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                >
+                  <ChevronLeft size={15} />
+                  <span className="hidden xs:inline sm:inline">Anterior</span>
+                </button>
+
+                {/* Centro: Contador + Dots */}
+                <div className="flex flex-col items-center gap-1">
+                  <span className="text-[11px] font-bold text-gray-200 tracking-wider">
+                    {activeIndex + 1} / {filtered.length} · <strong className="text-[#A899FF]">{filtered[activeIndex]?.title.split('—')[0]}</strong>
+                  </span>
+                  
+                  <div className="flex items-center gap-1">
+                    {filtered.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => scrollToCard(i)}
+                        className="h-1.5 rounded-full transition-all duration-300 cursor-pointer"
+                        style={{
+                          width: activeIndex === i ? "16px" : "5px",
+                          background: activeIndex === i ? "linear-gradient(90deg, #6C63FF, #00D4FF)" : "rgba(255,255,255,0.2)",
+                        }}
+                        title={`Projeto ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Botão Próximo */}
+                <button
+                  onClick={scrollRight}
+                  disabled={activeIndex >= filtered.length - 1}
+                  className="py-2 px-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs font-semibold text-white flex items-center gap-1 transition-all disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                >
+                  <span className="hidden xs:inline sm:inline">Próximo</span>
+                  <ChevronRight size={15} />
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Empty state */}
           {filtered.length === 0 && (
             <div
-              className="text-center py-20 rounded-2xl"
-              style={{ border: "1px solid rgba(108,99,255,0.15)", background: "rgba(13,13,30,0.5)" }}
+              className="text-center py-12 rounded-3xl max-w-md mx-auto border border-white/10 bg-white/5"
             >
-              <p className="text-lg" style={{ color: "var(--text-muted)" }}>
-                Nenhum projeto nessa categoria ainda.
+              <p className="text-sm text-gray-400">
+                Nenhum projeto encontrado nesta categoria no momento.
               </p>
             </div>
           )}
         </div>
       </section>
 
-      {/* Modal */}
+      {/* Modal Interativo de Detalhes */}
       {selectedProject && (
         <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
       )}

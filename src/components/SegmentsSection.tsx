@@ -188,25 +188,25 @@ const SegmentsSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14 reveal">
-          <div className="badge-chip-plasma mb-5 mx-auto inline-flex">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14 reveal">
+          <div className="badge-chip-plasma mb-3 mx-auto inline-flex">
             <Factory size={12} style={{ color: '#FF3CAC' }} />
             Segmentos
           </div>
           <h2
-            className="font-bold text-4xl md:text-5xl mb-5"
-            style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+            className="font-bold text-2xl sm:text-4xl md:text-5xl mb-2.5 sm:mb-4 text-white"
+            style={{ letterSpacing: '-0.03em' }}
           >
             Fazemos para{' '}
             <span className="gradient-text">qualquer tipo de negócio</span>
           </h2>
-          <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+          <p className="text-xs sm:text-base text-gray-300">
             Clique em um segmento para ver o que desenvolvemos especialmente para ele.
           </p>
         </div>
 
         {/* Grid de cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 mb-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5 sm:gap-3 mb-6 sm:mb-10">
           {segments.map((seg, i) => {
             const Icon = seg.icon;
             const isHovered = hoveredIdx === i;
@@ -216,7 +216,7 @@ const SegmentsSection = () => {
                 onClick={() => setActive(i)}
                 onMouseEnter={() => setHoveredIdx(i)}
                 onMouseLeave={() => setHoveredIdx(null)}
-                className="reveal rounded-2xl p-5 text-left flex flex-col gap-3 transition-all duration-300 cursor-pointer relative overflow-hidden group"
+                className="reveal rounded-2xl p-3 sm:p-5 text-left flex flex-col gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative overflow-hidden group"
                 style={{
                   background: isHovered ? `rgba(13,13,30,0.95)` : 'rgba(13,13,30,0.7)',
                   border: `1px solid ${isHovered ? seg.color + '55' : 'rgba(108,99,255,0.12)'}`,
@@ -235,25 +235,25 @@ const SegmentsSection = () => {
                 )}
 
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 relative z-10"
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 relative z-10"
                   style={{
                     background: `${seg.color}18`,
                     border: `1px solid ${seg.color}35`,
                     boxShadow: isHovered ? `0 0 16px ${seg.color}35` : 'none',
                   }}
                 >
-                  <Icon size={18} style={{ color: seg.color }} />
+                  <Icon size={16} className="sm:hidden" style={{ color: seg.color }} />
+                  <Icon size={18} className="hidden sm:block" style={{ color: seg.color }} />
                 </div>
 
                 <div className="relative z-10">
                   <span
-                    className="font-bold text-sm block mb-0.5"
-                    style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}
+                    className="font-bold text-xs sm:text-sm block mb-0.5 text-white truncate"
                   >
                     {seg.title}
                   </span>
                   <span
-                    className="text-xs"
+                    className="text-[10px] sm:text-xs line-clamp-1"
                     style={{ color: isHovered ? seg.color : 'var(--text-muted)' }}
                   >
                     {seg.tagline}
@@ -276,7 +276,7 @@ const SegmentsSection = () => {
           <div className="flex-1 relative z-10">
             <h3
               className="font-bold text-xl mb-1"
-              style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}
+              style={{ color: 'var(--text-primary)' }}
             >
               Não encontrou seu segmento?
             </h3>
@@ -289,7 +289,6 @@ const SegmentsSection = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="btn-glow text-white font-bold px-7 py-3.5 rounded-xl text-sm flex items-center gap-2 whitespace-nowrap flex-shrink-0 relative z-10"
-            style={{ fontFamily: 'Syne, sans-serif' }}
           >
             Falar com especialista
             <ArrowRight size={16} />
@@ -350,7 +349,7 @@ const SegmentsSection = () => {
                   </div>
                   <h2
                     className="font-bold text-2xl mb-4"
-                    style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}
+                    style={{ color: 'var(--text-primary)' }}
                   >
                     {seg.title}
                   </h2>
@@ -365,7 +364,6 @@ const SegmentsSection = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-glow text-white font-bold px-6 py-3 rounded-xl text-sm inline-flex items-center gap-2"
-                    style={{ fontFamily: 'Syne, sans-serif' }}
                   >
                     Quero um sistema para {seg.title}
                     <ArrowRight size={16} />

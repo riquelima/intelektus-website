@@ -216,7 +216,7 @@ const TechStackSection = () => {
           </div>
           <h2
             className="font-bold text-3xl md:text-4xl mb-4"
-            style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+            style={{ color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
           >
             Tecnologias que{' '}
             <span className="gradient-text">dominamos</span>

@@ -27,7 +27,7 @@ const AnimatedStat = ({ value, label, color }: { value: string; label: string; c
   return (
     <div
       ref={ref}
-      className="text-center py-6 px-4 rounded-2xl transition-all duration-700"
+      className="text-center py-4 sm:py-6 px-3 sm:px-4 rounded-2xl transition-all duration-700"
       style={{
         background: 'rgba(13,13,30,0.8)',
         border: `1px solid ${visible ? color + '30' : 'rgba(108,99,255,0.1)'}`,
@@ -37,10 +37,8 @@ const AnimatedStat = ({ value, label, color }: { value: string; label: string; c
       }}
     >
       <p
-        className="font-bold mb-1"
+        className="font-bold mb-1 text-2xl sm:text-4xl"
         style={{
-          fontFamily: 'Syne, sans-serif',
-          fontSize: '2.2rem',
           letterSpacing: '-0.03em',
           background: `linear-gradient(135deg, ${color}, ${color}AA)`,
           WebkitBackgroundClip: 'text',
@@ -50,7 +48,7 @@ const AnimatedStat = ({ value, label, color }: { value: string; label: string; c
       >
         {value}
       </p>
-      <p className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
+      <p className="text-[10px] sm:text-xs font-medium uppercase tracking-wider text-gray-400">
         {label}
       </p>
     </div>
@@ -91,7 +89,7 @@ const AboutSection = () => {
     <section
       id="quem-somos"
       ref={sectionRef}
-      className="py-16 relative overflow-hidden"
+      className="py-10 sm:py-16 relative overflow-hidden"
       style={{ background: 'transparent' }}
     >
       {/* Ambient glow */}
@@ -115,14 +113,14 @@ const AboutSection = () => {
         <div className="max-w-5xl mx-auto">
 
           {/* Header */}
-          <div className="text-center mb-14 reveal">
-            <div className="badge-chip mb-5 mx-auto inline-flex">
+          <div className="text-center mb-8 sm:mb-12 reveal">
+            <div className="badge-chip mb-3 mx-auto inline-flex">
               <Zap size={12} style={{ color: '#6C63FF' }} />
               Quem Somos
             </div>
             <h2
-              className="font-bold text-4xl md:text-5xl mb-5"
-              style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+              className="font-bold text-2xl sm:text-4xl md:text-5xl mb-2.5 sm:mb-4 text-white"
+              style={{ letterSpacing: '-0.03em' }}
             >
               Uma{' '}
               <span className="gradient-text">Software House</span>{' '}
@@ -131,20 +129,20 @@ const AboutSection = () => {
           </div>
 
           {/* Stats animados */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-14">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 mb-8 sm:mb-14">
             {stats.map((s, i) => (
               <AnimatedStat key={i} value={s.value} label={s.label} color={s.color} />
             ))}
           </div>
 
           {/* Content grid */}
-          <div className="grid md:grid-cols-2 gap-6 mb-14">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-14">
 
             {/* Missão */}
-            <div className="card-glass rounded-2xl p-7 flex flex-col gap-5 reveal">
+            <div className="card-glass rounded-2xl p-4 sm:p-7 flex flex-col gap-3.5 sm:gap-5 reveal">
               <h3
                 className="font-bold text-xl"
-                style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}
+                style={{ color: 'var(--text-primary)' }}
               >
                 Nossa missão
               </h3>
@@ -185,7 +183,7 @@ const AboutSection = () => {
 
               <h3
                 className="font-bold text-xl relative z-10"
-                style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}
+                style={{ color: 'var(--text-primary)' }}
               >
                 Quem está por trás
               </h3>
@@ -197,7 +195,6 @@ const AboutSection = () => {
                   <AvatarFallback
                     className="font-bold text-lg"
                     style={{
-                      fontFamily: 'Syne, sans-serif',
                       background: 'rgba(108,99,255,0.2)',
                       color: '#A899FF',
                     }}
@@ -208,7 +205,7 @@ const AboutSection = () => {
                 <div>
                   <p
                     className="font-bold"
-                    style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}
+                    style={{ color: 'var(--text-primary)' }}
                   >
                     Henrique Lima
                   </p>
@@ -236,8 +233,8 @@ const AboutSection = () => {
               <div className="space-y-3 text-sm leading-relaxed relative z-10" style={{ color: 'var(--text-secondary)' }}>
                 <p>
                   +7 anos em tecnologia, qualidade de software e automação.
-                  Passou por empresas como{' '}
-                  <strong style={{ color: 'var(--text-primary)' }}>Netcracker, Uber, Meta e Cognizant</strong>.
+                  Passou por{' '}
+                  <strong style={{ color: 'var(--text-primary)' }}>grandes multinacionais e projetos corporativos de alta escala</strong>.
                 </p>
                 <p>
                   Especialista em transformar processos complexos em soluções simples, inteligentes e escaláveis.
@@ -250,7 +247,7 @@ const AboutSection = () => {
                 {['Engenharia de Software', 'QA & Automação', 'IA Aplicada', 'Sistemas Web'].map((tag) => (
                   <span
                     key={tag}
-                    className="text-xs px-2.5 py-1 rounded-lg"
+                    className="text-xs px-2.5 py-1 rounded-lg font-medium"
                     style={{
                       color: 'var(--text-muted)',
                       background: 'rgba(13,13,30,0.8)',
@@ -262,43 +259,6 @@ const AboutSection = () => {
                 ))}
               </div>
             </div>
-          </div>
-
-          {/* CTA band */}
-          <div
-            className="rounded-2xl p-8 text-center relative overflow-hidden reveal"
-            style={{
-              background: 'rgba(108,99,255,0.06)',
-              border: '1px solid rgba(108,99,255,0.2)',
-            }}
-          >
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{ background: 'radial-gradient(ellipse at center, rgba(108,99,255,0.1) 0%, transparent 60%)' }}
-            />
-            <div
-              className="absolute top-0 left-0 right-0 h-0.5"
-              style={{ background: 'linear-gradient(90deg, transparent, rgba(108,99,255,0.7), rgba(255,60,172,0.5), transparent)' }}
-            />
-            <p
-              className="font-bold text-xl md:text-2xl mb-2 relative z-10"
-              style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}
-            >
-              Tecnologia feita para o seu negócio crescer.
-            </p>
-            <p className="text-sm mb-7 relative z-10" style={{ color: 'var(--text-secondary)' }}>
-              Seja bem-vindo à Intelektus.
-            </p>
-            <a
-              href="https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+Gostaria+de+conversar+sobre+um+projeto+com+a+Intelektus.&type=phone_number&app_absent=0"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative z-10 inline-flex btn-glow text-white font-bold px-7 py-3.5 rounded-xl text-sm items-center gap-2"
-              style={{ fontFamily: 'Syne, sans-serif' }}
-            >
-              Vamos conversar
-              <ExternalLink size={15} />
-            </a>
           </div>
         </div>
       </div>

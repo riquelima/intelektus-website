@@ -146,8 +146,9 @@ export default {
                 'scale-in': 'scale-in 0.3s ease-out forwards',
 			},
             fontFamily: {
-                sans: ['"DM Sans"', 'sans-serif'],
-                heading: ['"Space Grotesk"', 'sans-serif'],
+                sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+                heading: ['"Plus Jakarta Sans"', 'sans-serif'],
+                body: ['"Inter"', '"Plus Jakarta Sans"', 'sans-serif'],
             },
 		}
 	},

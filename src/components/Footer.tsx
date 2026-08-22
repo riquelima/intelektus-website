@@ -51,9 +51,9 @@ const Footer = () => {
       <div className="absolute inset-0 dot-grid opacity-10 pointer-events-none" />
 
       {/* CTA Banner no topo do footer */}
-      <div className="container mx-auto px-4 pt-16 pb-12 relative z-10">
+      <div className="container mx-auto px-4 pt-10 sm:pt-16 pb-8 sm:pb-12 relative z-10">
         <div
-          className="rounded-2xl p-8 md:p-12 mb-14 text-center relative overflow-hidden"
+          className="rounded-2xl p-5 sm:p-10 md:p-12 mb-8 sm:mb-14 text-center relative overflow-hidden"
           style={{
             background: 'rgba(13,13,30,0.8)',
             border: '1px solid rgba(108,99,255,0.2)',
@@ -69,133 +69,93 @@ const Footer = () => {
             style={{ background: 'linear-gradient(90deg, #6C63FF, #A855F7, #FF3CAC)' }}
           />
 
-          <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
-            style={{ background: 'rgba(108,99,255,0.1)', border: '1px solid rgba(108,99,255,0.3)', color: '#A899FF' }}
-          >
-            <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-xs font-semibold" style={{ fontFamily: 'DM Sans' }}>Atendimento disponível agora</span>
-          </div>
-
           <h2
-            className="font-bold text-3xl md:text-4xl mb-4 relative z-10"
-            style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+            className="font-bold text-2xl sm:text-3xl md:text-4xl mb-3 sm:mb-4 relative z-10 text-white"
+            style={{ letterSpacing: '-0.03em' }}
           >
             Pronto para transformar{' '}
             <span className="gradient-text">seu negócio?</span>
           </h2>
-          <p className="text-base mb-8 max-w-xl mx-auto relative z-10" style={{ color: 'var(--text-secondary)' }}>
+          <p className="text-xs sm:text-base mb-6 sm:mb-8 max-w-xl mx-auto relative z-10 text-gray-300">
             Fale com um especialista agora e descubra como um sistema sob medida pode multiplicar seus resultados.
           </p>
           <a
             href="https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+Gostaria+de+solicitar+um+or%C3%A7amento.&type=phone_number&app_absent=0"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-glow text-white font-bold px-9 py-4 rounded-xl text-base inline-flex items-center gap-2 relative z-10"
-            style={{ fontFamily: 'Syne, sans-serif' }}
+            className="btn-glow text-white font-bold px-7 py-3.5 sm:px-9 sm:py-4 rounded-xl text-sm sm:text-base inline-flex items-center gap-2 relative z-10"
           >
             <MessageCircle size={18} />
             Conversar no WhatsApp
           </a>
         </div>
 
-        {/* Grid de links */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        {/* Grid de links: 2 Colunas no Mobile / 4 Colunas no Desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-10 mb-8 sm:mb-12">
 
-          {/* Brand */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center mb-5">
-              <img
-                src="/finalogo.png"
-                alt="Intelektus"
-                className="h-10 w-auto object-contain"
-              />
-            </div>
-            <p className="text-sm leading-relaxed mb-6 max-w-xs" style={{ color: 'var(--text-secondary)' }}>
+          {/* Brand — Ocupa as 2 colunas no Mobile */}
+          <div className="col-span-2 lg:col-span-2">
+            <p className="text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6 max-w-sm text-gray-300">
               Software House especializada em sistemas sob medida, automações, robôs de atendimento e IA
               para pequenos e médios negócios em todo o Brasil.
             </p>
 
             {/* Contatos rápidos */}
-            <div className="space-y-2.5 mb-6">
-              <div className="flex items-center gap-2.5">
+            <div className="space-y-2 mb-4 sm:mb-6 text-xs sm:text-sm">
+              <div className="flex items-center gap-2 text-gray-300">
                 <Phone size={13} style={{ color: '#6C63FF' }} />
-                <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>(71) 99908-8651</span>
+                <span>(71) 99908-8651</span>
               </div>
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2 text-gray-300">
                 <Mail size={13} style={{ color: '#6C63FF' }} />
-                <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>contato@intelektus.com.br</span>
+                <span>henrique.souza.lima@outlook.com</span>
               </div>
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2 text-gray-300">
                 <MapPin size={13} style={{ color: '#6C63FF' }} />
-                <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>Salvador, Bahia — Brasil</span>
+                <span>Salvador, Bahia — Brasil</span>
               </div>
             </div>
 
             {/* Socials */}
-            <div className="flex gap-3">
+            <div className="flex gap-2.5">
               <a
                 href="https://www.instagram.com/intelektus.solucoes"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-250 cursor-pointer"
-                style={{ color: 'var(--text-muted)', background: 'rgba(13,13,30,0.8)', border: '1px solid rgba(108,99,255,0.2)' }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(108,99,255,0.6)';
-                  (e.currentTarget as HTMLElement).style.color = '#A899FF';
-                  (e.currentTarget as HTMLElement).style.boxShadow = '0 0 12px rgba(108,99,255,0.2)';
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(108,99,255,0.2)';
-                  (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
-                  (e.currentTarget as HTMLElement).style.boxShadow = 'none';
-                }}
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center transition-all duration-250 cursor-pointer text-gray-400 hover:text-white"
+                style={{ background: 'rgba(13,13,30,0.8)', border: '1px solid rgba(108,99,255,0.2)' }}
               >
-                <Instagram size={15} />
+                <Instagram size={14} />
               </a>
               <a
                 href="https://www.linkedin.com/in/limahenrique/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-250 cursor-pointer"
-                style={{ color: 'var(--text-muted)', background: 'rgba(13,13,30,0.8)', border: '1px solid rgba(108,99,255,0.2)' }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(108,99,255,0.6)';
-                  (e.currentTarget as HTMLElement).style.color = '#A899FF';
-                  (e.currentTarget as HTMLElement).style.boxShadow = '0 0 12px rgba(108,99,255,0.2)';
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(108,99,255,0.2)';
-                  (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
-                  (e.currentTarget as HTMLElement).style.boxShadow = 'none';
-                }}
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center transition-all duration-250 cursor-pointer text-gray-400 hover:text-white"
+                style={{ background: 'rgba(13,13,30,0.8)', border: '1px solid rgba(108,99,255,0.2)' }}
               >
-                <Linkedin size={15} />
+                <Linkedin size={14} />
               </a>
             </div>
           </div>
 
-          {/* Nav links */}
+          {/* Coluna 1: Navegação */}
           <div>
             <h3
-              className="font-bold text-xs uppercase tracking-widest mb-5"
-              style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-muted)', letterSpacing: '0.1em' }}
+              className="font-bold text-[11px] sm:text-xs uppercase tracking-widest mb-3 sm:mb-5 text-gray-400"
             >
               Navegação
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2 sm:space-y-2.5">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
                     onClick={(e) => scrollTo(e, link.href)}
-                    className="text-sm transition-all duration-200 inline-flex items-center gap-1.5 group/fl cursor-pointer"
-                    style={{ color: 'var(--text-secondary)' }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+                    className="text-xs sm:text-sm transition-all duration-200 inline-flex items-center gap-1 text-gray-300 hover:text-white cursor-pointer"
                   >
                     <span
-                      className="w-1 h-1 rounded-full opacity-0 group-hover/fl:opacity-100 transition-all"
+                      className="w-1 h-1 rounded-full opacity-60 mr-1"
                       style={{ background: '#6C63FF', flexShrink: 0 }}
                     />
                     {link.label}
@@ -205,27 +165,23 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Solutions */}
+          {/* Coluna 2: Soluções */}
           <div>
             <h3
-              className="font-bold text-xs uppercase tracking-widest mb-5"
-              style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-muted)', letterSpacing: '0.1em' }}
+              className="font-bold text-[11px] sm:text-xs uppercase tracking-widest mb-3 sm:mb-5 text-gray-400"
             >
               Soluções
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2 sm:space-y-2.5">
               {solutions.map((s) => (
                 <li key={s}>
                   <a
                     href="#solucoes"
                     onClick={(e) => scrollTo(e, '#solucoes')}
-                    className="text-sm transition-all duration-200 inline-flex items-center gap-1.5 group/fl cursor-pointer"
-                    style={{ color: 'var(--text-secondary)' }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+                    className="text-xs sm:text-sm transition-all duration-200 inline-flex items-center gap-1 text-gray-300 hover:text-white cursor-pointer"
                   >
                     <span
-                      className="w-1 h-1 rounded-full opacity-0 group-hover/fl:opacity-100 transition-all"
+                      className="w-1 h-1 rounded-full opacity-60 mr-1"
                       style={{ background: '#FF3CAC', flexShrink: 0 }}
                     />
                     {s}

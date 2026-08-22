@@ -1,27 +1,32 @@
-
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X, Zap } from 'lucide-react';
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface NavbarProps {
+  isMenuOpen: boolean;
+  setIsMenuOpen: (open: boolean) => void;
+  onNavigate?: (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ isMenuOpen, setIsMenuOpen, onNavigate }) => {
   const [scrolled, setScrolled] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-      setScrollY(window.scrollY);
+      setScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
-    setIsOpen(false);
-    const section = document.querySelector(sectionId);
-    if (section) {
-      window.scrollTo({ top: (section as HTMLElement).offsetTop - 80, behavior: 'smooth' });
+    if (onNavigate) {
+      onNavigate(e, sectionId);
+    } else {
+      const section = document.querySelector(sectionId);
+      if (section) {
+        window.scrollTo({ top: (section as HTMLElement).offsetTop - 80, behavior: 'smooth' });
+      }
     }
   };
 
@@ -35,38 +40,35 @@ const Navbar = () => {
   ];
 
   return (
-    <nav
-      className={`fixed w-full z-50 transition-all duration-400`}
+    <header
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
-        padding: scrolled ? '8px 0' : '16px 0',
+        padding: scrolled ? '10px 0' : '14px 0',
         background: scrolled
-          ? 'rgba(4, 4, 13, 0.92)'
-          : 'transparent',
-        backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(108,99,255,0.15)' : 'none',
-        boxShadow: scrolled ? '0 8px 32px rgba(0,0,0,0.3)' : 'none',
+          ? 'rgba(4, 4, 13, 0.95)'
+          : 'rgba(4, 4, 13, 0.85)',
+        backdropFilter: 'blur(24px)',
+        WebkitBackdropFilter: 'blur(24px)',
+        borderBottom: scrolled ? '1px solid rgba(108,99,255,0.2)' : '1px solid rgba(255,255,255,0.06)',
+        boxShadow: scrolled ? '0 10px 35px rgba(0,0,0,0.6)' : 'none',
       }}
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
 
-          {/* Logo */}
-          <a href="/" className="flex items-center gap-3.5 group select-none">
+          {/* Logo & Brand */}
+          <a href="/" className="flex items-center gap-2.5 sm:gap-3 group select-none cursor-pointer">
             <img
               src="/finalogo.png"
               alt="Intelektus"
-              className="h-9 w-auto object-contain transition-all duration-300 group-hover:scale-105"
+              className="h-8 sm:h-9 w-auto object-contain transition-all duration-300 group-hover:scale-105"
             />
-            {/* Texto animado com efeito digitando e fonte Anta */}
-            <div className="flex items-center border-l border-white/10 pl-2 sm:pl-3.5 h-6 w-[210px] sm:w-[315px] flex-shrink-0">
-              <span
-                className="text-[10px] sm:text-[15px] font-bold tracking-[0.05em] text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/70 animate-typewriter"
-                style={{
-                  fontFamily: "'Anta', sans-serif",
-                }}
-              >
-                Intelektus - Onde as ideias decolam
+            <div className="flex flex-col">
+              <span className="font-bold text-base sm:text-lg tracking-tight text-white">
+                Intelektus
+              </span>
+              <span className="text-[10px] text-gray-400 font-medium hidden sm:block">
+                Onde as ideias decolam
               </span>
             </div>
           </a>
@@ -77,9 +79,9 @@ const Navbar = () => {
               <a
                 key={link.href}
                 href={link.href}
-                onClick={(e) => scrollToSection(e, link.href)}
+                onClick={(e) => handleLinkClick(e, link.href)}
                 className="text-sm font-medium transition-all duration-200 relative group/link"
-                style={{ color: 'var(--text-secondary)', fontFamily: 'DM Sans, sans-serif' }}
+                style={{ color: 'var(--text-secondary)' }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
                 onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
               >
@@ -93,84 +95,35 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA + Mobile toggle */}
+          {/* CTA Desktop + Mobile Hamburger Toggle */}
           <div className="flex items-center gap-3">
             <a
               href="#contato"
-              onClick={(e) => scrollToSection(e, '#contato')}
-              className="hidden md:inline-flex items-center gap-2 btn-glow text-white text-sm font-bold px-5 py-2.5 rounded-xl"
-              style={{ fontFamily: 'Syne, sans-serif' }}
+              onClick={(e) => handleLinkClick(e, '#contato')}
+              className="hidden md:inline-flex items-center gap-2 btn-glow text-white text-sm font-bold px-5 py-2.5 rounded-xl cursor-pointer"
             >
               <Zap size={14} />
               Solicitar Orçamento
             </a>
 
-            {/* Mobile toggle */}
+            {/* Mobile Animated Hamburger Button */}
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2.5 rounded-xl transition-all duration-200 cursor-pointer"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2.5 rounded-xl transition-all duration-300 cursor-pointer shadow-lg active:scale-90 flex items-center justify-center"
               style={{
-                color: 'var(--text-primary)',
-                background: 'rgba(13,13,30,0.8)',
-                border: '1px solid rgba(108,99,255,0.25)',
+                color: '#FFFFFF',
+                background: isMenuOpen ? 'rgba(108,99,255,0.25)' : 'rgba(13,13,30,0.85)',
+                border: isMenuOpen ? '1px solid rgba(108,99,255,0.6)' : '1px solid rgba(108,99,255,0.25)',
+                boxShadow: isMenuOpen ? '0 0 20px rgba(108,99,255,0.4)' : 'none',
               }}
+              aria-label="Abrir menu de navegação"
             >
-              {isOpen ? <X size={20} /> : <Menu size={20} />}
+              {isMenuOpen ? <X size={20} className="text-[#FF3CAC]" /> : <Menu size={20} className="text-white" />}
             </button>
           </div>
         </div>
-
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div
-            className="md:hidden mt-3 pb-4 rounded-2xl border border-[rgba(108,99,255,0.2)] animate-scale-in"
-            style={{
-              background: 'rgba(4,4,13,0.98)',
-              backdropFilter: 'blur(20px)',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-            }}
-          >
-            {/* Gradient top border */}
-            <div
-              className="h-0.5 rounded-t-2xl"
-              style={{ background: 'linear-gradient(90deg, #6C63FF, #FF3CAC)' }}
-            />
-            <div className="flex flex-col p-4 gap-1 mt-2">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => scrollToSection(e, link.href)}
-                  className="px-4 py-3.5 rounded-xl font-medium text-sm transition-all duration-200"
-                  style={{ color: 'var(--text-secondary)', fontFamily: 'DM Sans, sans-serif' }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'var(--text-primary)';
-                    e.currentTarget.style.background = 'rgba(108,99,255,0.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'var(--text-secondary)';
-                    e.currentTarget.style.background = 'transparent';
-                  }}
-                >
-                  {link.label}
-                </a>
-              ))}
-              <div className="pt-3 mt-1" style={{ borderTop: '1px solid rgba(108,99,255,0.15)' }}>
-                <a
-                  href="#contato"
-                  onClick={(e) => scrollToSection(e, '#contato')}
-                  className="flex items-center justify-center gap-2 btn-glow text-white text-sm font-bold px-5 py-3.5 rounded-xl"
-                  style={{ fontFamily: 'Syne, sans-serif' }}
-                >
-                  <Zap size={14} />
-                  Solicitar Orçamento
-                </a>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
-    </nav>
+    </header>
   );
 };
 

@@ -89,7 +89,7 @@ const AnimatedMetric = ({ value, label, color }: { value: string; label: string;
     >
       <p
         className="font-bold text-2xl mb-0.5"
-        style={{ fontFamily: 'Syne, sans-serif', color }}
+        style={{ color }}
       >
         {value}
       </p>
@@ -140,34 +140,34 @@ const CasesSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 reveal">
-          <div className="badge-chip mb-5 mx-auto inline-flex">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14 reveal">
+          <div className="badge-chip mb-3 mx-auto inline-flex">
             <TrendingUp size={12} style={{ color: '#6C63FF' }} />
             Cases de Sucesso
           </div>
           <h2
-            className="font-bold text-4xl md:text-5xl mb-5"
-            style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+            className="font-bold text-2xl sm:text-4xl md:text-5xl mb-2.5 sm:mb-4 text-white"
+            style={{ letterSpacing: '-0.03em' }}
           >
             Resultados que{' '}
             <span className="gradient-text">falam por si só</span>
           </h2>
-          <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+          <p className="text-xs sm:text-base text-gray-300">
             Empresas reais que transformaram sua operação com sistemas da Intelektus.
           </p>
         </div>
 
         {/* Cases grid */}
-        <div className="grid md:grid-cols-2 gap-5 mb-12">
+        <div className="grid md:grid-cols-2 gap-3.5 sm:gap-5 mb-8 sm:mb-12">
           {cases.map((c, i) => (
             <div
               key={i}
-              className="card-glass rounded-2xl flex flex-col gap-5 relative overflow-hidden group reveal cursor-default"
+              className="card-glass rounded-2xl flex flex-col gap-3.5 sm:gap-5 relative overflow-hidden group reveal cursor-default"
               style={{ padding: 0 }}
             >
               {/* Gradient header */}
               <div
-                className="px-7 pt-7 pb-5 relative"
+                className="px-4 sm:px-7 pt-4 sm:pt-7 pb-3 sm:pb-5 relative"
                 style={{
                   background: `linear-gradient(135deg, ${c.color}10 0%, transparent 60%)`,
                   borderBottom: `1px solid rgba(108,99,255,0.1)`,
@@ -179,56 +179,55 @@ const CasesSection = () => {
                   style={{ background: c.gradient }}
                 />
 
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start justify-between gap-3">
                   <div>
                     <span
-                      className="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-lg mb-3 inline-block"
+                      className="text-[10px] sm:text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-lg mb-2 sm:mb-3 inline-block"
                       style={{ background: `${c.color}18`, color: c.color }}
                     >
                       {c.category}
                     </span>
                     <h3
-                      className="font-bold text-xl"
-                      style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}
+                      className="font-bold text-base sm:text-xl text-white"
                     >
                       {c.client}
                     </h3>
-                    <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                    <p className="text-[11px] sm:text-xs mt-0.5 text-gray-400">
                       Segmento: {c.segment}
                     </p>
                   </div>
-                  <Award size={22} style={{ color: c.color, flexShrink: 0, marginTop: '2px', opacity: 0.7 }} />
+                  <Award size={20} className="sm:size-6" style={{ color: c.color, flexShrink: 0, marginTop: '2px', opacity: 0.7 }} />
                 </div>
               </div>
 
               {/* Problem + Solution */}
-              <div className="px-7 flex flex-col gap-3">
+              <div className="px-4 sm:px-7 flex flex-col gap-2.5 sm:gap-3">
                 <div
-                  className="rounded-xl p-4"
+                  className="rounded-xl p-3 sm:p-4"
                   style={{ background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.12)' }}
                 >
-                  <p className="text-xs font-bold mb-1.5 uppercase tracking-wider" style={{ color: '#F87171' }}>
+                  <p className="text-[10px] sm:text-xs font-bold mb-1 uppercase tracking-wider" style={{ color: '#F87171' }}>
                     Desafio
                   </p>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{c.problem}</p>
+                  <p className="text-xs sm:text-sm leading-relaxed text-gray-300">{c.problem}</p>
                 </div>
                 <div
-                  className="rounded-xl p-4"
+                  className="rounded-xl p-3 sm:p-4"
                   style={{ background: `${c.color}08`, border: `1px solid ${c.color}20` }}
                 >
-                  <p className="text-xs font-bold mb-1.5 uppercase tracking-wider" style={{ color: c.color }}>
+                  <p className="text-[10px] sm:text-xs font-bold mb-1 uppercase tracking-wider" style={{ color: c.color }}>
                     Solução
                   </p>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{c.solution}</p>
+                  <p className="text-xs sm:text-sm leading-relaxed text-gray-300">{c.solution}</p>
                 </div>
               </div>
 
               {/* Metrics */}
-              <div className="px-7 pb-7">
-                <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: 'var(--text-muted)' }}>
+              <div className="px-4 sm:px-7 pb-4 sm:pb-7">
+                <p className="text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-2 sm:mb-3 text-gray-400">
                   Resultados obtidos
                 </p>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                   {c.results.map((r, j) => (
                     <AnimatedMetric key={j} value={r.metric} label={r.label} color={c.color} />
                   ))}
@@ -248,7 +247,6 @@ const CasesSection = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="btn-glow text-white font-bold px-9 py-4 rounded-xl text-base inline-flex items-center gap-2"
-            style={{ fontFamily: 'Syne, sans-serif' }}
           >
             Quero um projeto assim
             <ArrowRight size={18} />

@@ -1,54 +1,72 @@
-
-import { useEffect, useRef } from 'react';
-import { TrendingUp, Database, DollarSign, Rocket, PieChart, Trophy, ArrowRight } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { 
+  TrendingUp, 
+  Database, 
+  DollarSign, 
+  Rocket, 
+  PieChart, 
+  Trophy, 
+  ArrowRight, 
+  CheckCircle2, 
+  Sparkles, 
+  XCircle,
+  ShieldCheck
+} from 'lucide-react';
 
 const benefits = [
   {
     icon: TrendingUp,
+    badge: '+80% Eficiência',
     title: 'Mais Produtividade',
-    description: 'Automatize processos repetitivos, reduza o retrabalho e libere sua equipe para o que realmente importa.',
+    description: 'Automatize tarefas repetitivas e libere sua equipe para focar em vendas e atendimento.',
     color: '#6C63FF',
-    size: 'main',
+    gradient: 'linear-gradient(135deg, #6C63FF, #A855F7)',
   },
   {
     icon: Database,
-    title: 'Mais Controle',
-    description: 'Centralize informações dispersas em um único sistema e tenha visibilidade total da sua operação.',
+    badge: 'Visão 360°',
+    title: 'Controle Total',
+    description: 'Centralize dados de clientes, financeiro e estoque em um único painel em tempo real.',
     color: '#A855F7',
-    size: 'main',
+    gradient: 'linear-gradient(135deg, #A855F7, #EC4899)',
   },
   {
     icon: DollarSign,
-    title: 'Menos Custos Operacionais',
-    description: 'Reduza despesas com operações manuais, erros humanos e ferramentas genéricas que não se encaixam no seu negócio.',
+    badge: 'Redução de Custos',
+    title: 'Zero Desperdício',
+    description: 'Elimine erros humanos e pare de pagar mensalidades caras por ferramentas que não atendem sua rotina.',
     color: '#10B981',
-    size: 'small',
+    gradient: 'linear-gradient(135deg, #10B981, #00D4FF)',
   },
   {
     icon: Rocket,
+    badge: 'Sem Limites',
     title: 'Escala com Você',
-    description: 'Seu sistema cresce junto com seu negócio — sem precisar trocar de ferramenta quando você evolui.',
+    description: 'Seu sistema evolui no ritmo da sua empresa sem precisar migrar ou trocar de software no futuro.',
     color: '#F59E0B',
-    size: 'small',
+    gradient: 'linear-gradient(135deg, #F59E0B, #FF3CAC)',
   },
   {
     icon: PieChart,
-    title: 'Decisões Inteligentes',
-    description: 'Dashboards claros transformam dados em decisões estratégicas rápidas.',
+    badge: 'Decisões Rápidas',
+    title: 'Dashboards com IA',
+    description: 'Relatórios claros e automáticos que mostram exatamente onde lucrar mais.',
     color: '#3B82F6',
-    size: 'small',
+    gradient: 'linear-gradient(135deg, #3B82F6, #6C63FF)',
   },
   {
     icon: Trophy,
+    badge: '100% Exclusivo',
     title: 'Vantagem Competitiva',
-    description: 'Tenha uma solução única, construída para sua empresa — não um software genérico adaptado.',
+    description: 'Tenha uma solução com a sua marca e processos — seus concorrentes não terão igual.',
     color: '#EC4899',
-    size: 'small',
+    gradient: 'linear-gradient(135deg, #EC4899, #FF3CAC)',
   },
 ];
 
 const BenefitsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -57,186 +75,176 @@ const BenefitsSection = () => {
           if (entry.isIntersecting) {
             const reveals = entry.target.querySelectorAll('.reveal');
             reveals.forEach((el, i) => {
-              setTimeout(() => el.classList.add('visible'), i * 100);
+              setTimeout(() => el.classList.add('visible'), i * 60);
             });
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.08 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const mainBenefits = benefits.filter(b => b.size === 'main');
-  const smallBenefits = benefits.filter(b => b.size === 'small');
-
   return (
     <section
       id="beneficios"
       ref={sectionRef}
-      className="py-16 relative overflow-hidden"
+      className="py-10 sm:py-16 relative overflow-hidden"
       style={{ background: 'var(--bg-surface)' }}
     >
-      {/* Background */}
+      {/* Background ambient lighting */}
       <div
-        className="absolute top-0 right-0 w-96 h-96 pointer-events-none"
+        className="absolute top-0 right-0 w-80 h-80 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle at top right, rgba(168,85,247,0.1) 0%, transparent 60%)',
+          background: 'radial-gradient(circle at top right, rgba(168,85,247,0.08) 0%, transparent 60%)',
           filter: 'blur(50px)',
         }}
       />
       <div
         className="absolute bottom-0 left-0 w-80 h-80 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle at bottom left, rgba(255,60,172,0.07) 0%, transparent 60%)',
+          background: 'radial-gradient(circle at bottom left, rgba(255,60,172,0.06) 0%, transparent 60%)',
           filter: 'blur(50px)',
         }}
       />
       <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 reveal">
-          <div className="badge-chip mb-5 mx-auto inline-flex">
+        
+        {/* Header Compacto & Impactante */}
+        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 reveal">
+          <div className="badge-chip mb-2.5 mx-auto inline-flex">
             <Trophy size={12} style={{ color: '#6C63FF' }} />
-            Por que investir
+            Vantagens do Sob Medida
           </div>
           <h2
-            className="font-bold text-4xl md:text-5xl mb-5"
-            style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+            className="font-bold text-2xl sm:text-4xl md:text-5xl mb-2 sm:mb-3 text-white"
+            style={{ letterSpacing: '-0.03em' }}
           >
             Por que um sistema{' '}
             <span className="gradient-text">personalizado?</span>
           </h2>
-          <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
-            Empresas com sistemas sob medida crescem mais rápido, erram menos e têm mais controle do que
-            concorrentes usando ferramentas genéricas.
+          <p className="text-xs sm:text-base text-gray-300 leading-relaxed">
+            Esqueça softwares genéricos engessados. Criamos tecnologia que se adapta 100% à sua operação.
           </p>
         </div>
 
-        {/* Layout assimétrico: 2 grandes + 4 pequenos */}
-        <div className="grid md:grid-cols-3 gap-4 mb-12">
-
-          {/* Coluna esquerda — 2 cards grandes */}
-          <div className="flex flex-col gap-4">
-            {mainBenefits.map((b, i) => {
-              const Icon = b.icon;
-              return (
-                <div
-                  key={i}
-                  className="card-glass rounded-2xl p-7 group cursor-default flex flex-col gap-5 reveal relative overflow-hidden"
-                  style={{ flex: 1 }}
-                >
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{ background: `radial-gradient(ellipse at 0% 0%, ${b.color}10 0%, transparent 60%)` }}
-                  />
-                  <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110"
-                    style={{
-                      background: `${b.color}18`,
-                      border: `1px solid ${b.color}40`,
-                      boxShadow: `0 0 24px ${b.color}20`,
-                    }}
-                  >
-                    <Icon size={26} style={{ color: b.color }} />
-                  </div>
-                  <div>
-                    <h3
-                      className="font-bold text-xl mb-3"
-                      style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}
-                    >
-                      {b.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                      {b.description}
-                    </p>
-                  </div>
-                  <div
-                    className="h-0.5 rounded-full w-0 group-hover:w-full transition-all duration-700 mt-auto"
-                    style={{ background: `linear-gradient(to right, ${b.color}, transparent)` }}
-                  />
-                </div>
-              );
-            })}
+        {/* Comparativo Rápido de 1 Linha (Alto Impacto UX no Mobile) */}
+        <div className="max-w-3xl mx-auto mb-6 sm:mb-8 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 reveal">
+          <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-red-500/[0.06] border border-red-500/20 text-gray-300 text-xs">
+            <XCircle size={15} className="text-red-400 flex-shrink-0" />
+            <span><strong>Software Genérico:</strong> Engessado, complexo e com mensalidades infinitas.</span>
           </div>
-
-          {/* Colunas 2 e 3 — 4 cards menores em grid 2x2 */}
-          <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {smallBenefits.map((b, i) => {
-              const Icon = b.icon;
-              return (
-                <div
-                  key={i}
-                  className="card-glass rounded-2xl p-6 group cursor-default flex flex-col gap-4 reveal"
-                >
-                  <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110"
-                    style={{
-                      background: `${b.color}15`,
-                      border: `1px solid ${b.color}30`,
-                    }}
-                  >
-                    <Icon size={22} style={{ color: b.color }} />
-                  </div>
-                  <div>
-                    <h3
-                      className="font-bold text-base mb-2"
-                      style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}
-                    >
-                      {b.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                      {b.description}
-                    </p>
-                  </div>
-                  <div
-                    className="h-0.5 rounded-full w-0 group-hover:w-full transition-all duration-500 mt-auto"
-                    style={{ background: `linear-gradient(to right, ${b.color}, transparent)` }}
-                  />
-                </div>
-              );
-            })}
+          <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-[#6C63FF]/[0.08] border border-[#6C63FF]/30 text-white text-xs">
+            <CheckCircle2 size={15} className="text-emerald-400 flex-shrink-0" />
+            <span><strong>Intelektus Sob Medida:</strong> 100% moldado aos seus processos e sem limites.</span>
           </div>
         </div>
 
-        {/* CTA premium */}
+        {/* Grid Compacto 2 Colunas Mobile / 3 Colunas Desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 mb-6 sm:mb-10">
+          {benefits.map((b, i) => {
+            const Icon = b.icon;
+            const isHovered = hoveredIdx === i;
+            return (
+              <div
+                key={i}
+                onMouseEnter={() => setHoveredIdx(i)}
+                onMouseLeave={() => setHoveredIdx(null)}
+                className="card-glass rounded-2xl p-3 sm:p-5 group cursor-default flex flex-col justify-between reveal relative overflow-hidden transition-all duration-300 hover:border-[#6C63FF]/50"
+              >
+                {/* Glow de hover suave */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{ background: `radial-gradient(ellipse at top left, ${b.color}15 0%, transparent 60%)` }}
+                />
+
+                <div className="relative z-10">
+                  {/* Topo do Card: Ícone + Badge de Impacto */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 sm:mb-3">
+                    <div
+                      className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
+                      style={{
+                        background: `${b.color}18`,
+                        border: `1px solid ${b.color}40`,
+                        boxShadow: isHovered ? `0 0 20px ${b.color}35` : 'none',
+                      }}
+                    >
+                      <Icon size={16} className="sm:hidden" style={{ color: b.color }} />
+                      <Icon size={20} className="hidden sm:block" style={{ color: b.color }} />
+                    </div>
+
+                    <span 
+                      className="self-start sm:self-auto text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-md"
+                      style={{
+                        background: `${b.color}15`,
+                        color: b.color,
+                        border: `1px solid ${b.color}30`,
+                      }}
+                    >
+                      {b.badge}
+                    </span>
+                  </div>
+
+                  {/* Título & Descrição Concisa */}
+                  <h3 className="font-bold text-xs sm:text-base text-white mb-1 leading-snug">
+                    {b.title}
+                  </h3>
+                  <p className="text-[11px] sm:text-xs text-gray-300 leading-relaxed line-clamp-3 sm:line-clamp-none">
+                    {b.description}
+                  </p>
+                </div>
+
+                {/* Linha gradiente decorativa inferior */}
+                <div
+                  className="h-0.5 rounded-full w-0 group-hover:w-full transition-all duration-500 mt-2 sm:mt-3"
+                  style={{ background: `linear-gradient(to right, ${b.color}, transparent)` }}
+                />
+              </div>
+            );
+          })}
+        </div>
+
+        {/* CTA Banner Compacto */}
         <div
-          className="rounded-2xl p-10 text-center relative overflow-hidden reveal"
+          className="rounded-2xl p-4 sm:p-7 text-center relative overflow-hidden reveal max-w-3xl mx-auto"
           style={{
-            background: 'rgba(108,99,255,0.06)',
-            border: '1px solid rgba(108,99,255,0.2)',
+            background: 'rgba(13,13,30,0.85)',
+            border: '1px solid rgba(108,99,255,0.25)',
           }}
         >
           <div
             className="absolute inset-0 pointer-events-none"
-            style={{ background: 'radial-gradient(ellipse at center, rgba(108,99,255,0.1) 0%, transparent 60%)' }}
+            style={{ background: 'radial-gradient(ellipse at center, rgba(108,99,255,0.12) 0%, transparent 60%)' }}
           />
           <div
             className="absolute top-0 left-0 right-0 h-0.5"
-            style={{ background: 'linear-gradient(90deg, transparent, rgba(108,99,255,0.6), rgba(255,60,172,0.5), transparent)' }}
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(108,99,255,0.8), rgba(255,60,172,0.6), transparent)' }}
           />
+
           <h3
-            className="font-bold text-2xl md:text-3xl mb-3 relative z-10"
-            style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}
+            className="font-bold text-lg sm:text-2xl mb-1.5 sm:mb-2 text-white relative z-10"
+            style={{ letterSpacing: '-0.02em' }}
           >
-            Pronto para digitalizar sua operação?
+            Pronto para transformar sua empresa?
           </h3>
-          <p className="mb-8 text-base relative z-10" style={{ color: 'var(--text-secondary)' }}>
-            Diagnóstico gratuito e sem compromisso. Veja o que um sistema sob medida pode fazer pelo seu negócio.
+          <p className="mb-4 sm:mb-6 text-xs sm:text-sm text-gray-300 max-w-lg mx-auto relative z-10 leading-relaxed">
+            Agende um diagnóstico gratuito e descubra a solução ideal para o seu modelo de negócio.
           </p>
+
           <a
             href="https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+Gostaria+de+um+diagn%C3%B3stico+gratuito+para+minha+empresa.&type=phone_number&app_absent=0"
             target="_blank"
             rel="noopener noreferrer"
-            className="relative z-10 inline-flex btn-glow text-white font-bold px-9 py-4 rounded-xl text-base items-center gap-2"
-            style={{ fontFamily: 'Syne, sans-serif' }}
+            className="relative z-10 inline-flex btn-glow text-white font-bold px-6 py-3 sm:px-8 sm:py-3.5 rounded-xl text-xs sm:text-sm items-center gap-2 shadow-xl hover:scale-[1.02] transition-transform cursor-pointer"
           >
+            <Sparkles size={14} className="text-yellow-300" />
             Quero um diagnóstico gratuito
-            <ArrowRight size={18} />
+            <ArrowRight size={14} />
           </a>
         </div>
+
       </div>
     </section>
   );

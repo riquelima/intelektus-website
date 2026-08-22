@@ -105,21 +105,21 @@ const HowItWorksSection = () => {
       />
       <div className="absolute inset-0 grid-lines opacity-20 pointer-events-none" />
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 reveal">
-          <div className="badge-chip mb-5 mx-auto inline-flex">
-            <Code2 size={12} style={{ color: '#6C63FF' }} />
-            Processo
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14 reveal">
+          <div className="badge-chip mb-3 mx-auto inline-flex">
+            <Search size={12} style={{ color: '#6C63FF' }} />
+            Metodologia
           </div>
           <h2
-            className="font-bold text-4xl md:text-5xl mb-5"
-            style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)', letterSpacing: '-0.03em' }}
+            className="font-bold text-2xl sm:text-4xl md:text-5xl mb-2.5 sm:mb-4 text-white"
+            style={{ letterSpacing: '-0.03em' }}
           >
             Como{' '}
             <span className="gradient-text">trabalhamos</span>
           </h2>
-          <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+          <p className="text-xs sm:text-base text-gray-300">
             Um processo estruturado e transparente — do diagnóstico à entrega, com você em cada etapa.
           </p>
         </div>
@@ -129,7 +129,7 @@ const HowItWorksSection = () => {
           <div className="relative">
             {/* Linha vertical animada */}
             <div
-              className="absolute left-5 top-0 bottom-0 w-0.5 md:left-1/2 md:-translate-x-1/2 pointer-events-none"
+              className="absolute left-4 sm:left-5 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-0.5 pointer-events-none"
               style={{ background: 'rgba(108,99,255,0.12)' }}
             >
               <div
@@ -144,7 +144,7 @@ const HowItWorksSection = () => {
               />
             </div>
 
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-4 sm:gap-8">
               {steps.map((step, i) => {
                 const Icon = step.icon;
                 const isLeft = i % 2 === 0;
@@ -153,62 +153,51 @@ const HowItWorksSection = () => {
                 return (
                   <div
                     key={i}
-                    className="relative flex items-center gap-6 md:gap-0"
+                    className="relative flex items-center"
                     style={{
                       opacity: isVisible ? 1 : 0,
-                      transform: isVisible ? 'translateX(0)' : `translateX(${isLeft ? '-30px' : '30px'})`,
-                      transition: 'opacity 0.6s ease, transform 0.6s ease',
-                      flexDirection: 'row',
+                      transform: isVisible ? 'translateX(0)' : `translateX(${isLeft ? '-20px' : '20px'})`,
+                      transition: 'opacity 0.5s ease, transform 0.5s ease',
                     }}
                   >
                     {/* Dot na linha */}
                     <div
-                      className="absolute left-5 md:left-1/2 md:-translate-x-1/2 w-10 h-10 rounded-full flex items-center justify-center z-10 flex-shrink-0"
+                      className="absolute left-4 sm:left-5 md:left-1/2 -translate-x-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center z-10 flex-shrink-0"
                       style={{
                         background: `linear-gradient(135deg, ${step.color}, ${step.color}88)`,
-                        boxShadow: `0 0 20px ${step.color}50`,
+                        boxShadow: `0 0 16px ${step.color}50`,
                         border: `2px solid ${step.color}`,
                       }}
                     >
-                      <span
-                        className="font-bold text-xs text-white"
-                        style={{ fontFamily: 'Syne, sans-serif' }}
-                      >
+                      <span className="font-bold text-[10px] sm:text-xs text-white">
                         {step.number}
                       </span>
                     </div>
 
-                    {/* Card — alternando lado no desktop */}
+                    {/* Card — alternando lado no desktop e margem suave no mobile */}
                     <div
-                      className="ml-16 md:ml-0 md:w-5/12 card-glass rounded-2xl p-6 group cursor-default"
-                      style={{
-                        marginLeft: undefined,
-                        ...(window.innerWidth >= 768
-                          ? isLeft
-                            ? { marginRight: 'auto', paddingRight: '24px' }
-                            : { marginLeft: 'auto', paddingLeft: '24px' }
-                          : { marginLeft: '64px' }
-                        ),
-                      }}
+                      className={`ml-10 sm:ml-14 md:ml-0 md:w-5/12 card-glass rounded-2xl p-4 sm:p-6 group cursor-default transition-all duration-300 ${
+                        isLeft ? 'md:mr-auto md:pr-6' : 'md:ml-auto md:pl-6'
+                      }`}
                     >
-                      <div className="flex items-start gap-4">
+                      <div className="flex items-start gap-3 sm:gap-4">
                         <div
-                          className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110"
+                          className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-105"
                           style={{
                             background: `${step.color}18`,
                             border: `1px solid ${step.color}35`,
                           }}
                         >
-                          <Icon size={18} style={{ color: step.color }} />
+                          <Icon size={16} className="sm:hidden" style={{ color: step.color }} />
+                          <Icon size={18} className="hidden sm:block" style={{ color: step.color }} />
                         </div>
                         <div>
                           <h3
-                            className="font-bold text-base mb-1.5"
-                            style={{ fontFamily: 'Syne, sans-serif', color: 'var(--text-primary)' }}
+                            className="font-bold text-sm sm:text-base mb-1 text-white"
                           >
                             {step.title}
                           </h3>
-                          <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                          <p className="text-xs sm:text-sm leading-relaxed text-gray-300">
                             {step.description}
                           </p>
                         </div>
@@ -221,13 +210,12 @@ const HowItWorksSection = () => {
           </div>
 
           {/* CTA */}
-          <div className="text-center mt-16 reveal">
+          <div className="text-center mt-8 sm:mt-14 reveal">
             <a
               href={WHATSAPP}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 btn-glow text-white font-bold px-8 py-4 rounded-xl text-base"
-              style={{ fontFamily: 'Syne, sans-serif' }}
+              className="inline-flex items-center gap-2 btn-glow text-white font-bold px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl text-sm sm:text-base"
             >
               Iniciar meu projeto agora
               <ArrowRight size={18} />
