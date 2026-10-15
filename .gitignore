@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Impeccable binaries & harness caches
+**/skills/impeccable/scripts/bin/
+.agent/
+.claude/
+.codex/
+.cursor/
+.gemini/
+.hermes/
+.opencode/

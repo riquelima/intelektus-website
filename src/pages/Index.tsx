@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import MobileDrawer from '@/components/MobileDrawer';
 import HeroSection from '@/components/HeroSection';
 import ParticleCanvas from '@/components/ParticleCanvas';
 import FeaturesSection from '@/components/FeaturesSection';
 import BenefitsSection from '@/components/BenefitsSection';
+import RoiSimulator from '@/components/RoiSimulator';
 import ProjectsSection from '@/components/ProjectsSection';
 import CasesSection from '@/components/CasesSection';
 import SegmentsSection from '@/components/SegmentsSection';
@@ -15,15 +16,30 @@ import ContactSection from '@/components/ContactSection';
 import AboutSection from '@/components/AboutSection';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import MobileFloatingHub from '@/components/MobileFloatingHub';
 
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Monitorar progresso da rolagem para a barra superior e efeitos cinéticos
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        const progress = Math.min(Math.max(window.scrollY / totalHeight, 0), 1);
+        setScrollProgress(progress);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
     setIsMenuOpen(false);
     
-    // Pequeno delay para esperar a página voltar ao lugar antes do scroll
     setTimeout(() => {
       const section = document.querySelector(sectionId);
       if (section) {
@@ -34,6 +50,24 @@ const Index = () => {
 
   return (
     <div className="min-h-screen relative overflow-x-hidden bg-[#04040D]">
+      {/* Barra de Progresso Cinética de Rolagem Padrão Mobile (Fixa no topo) */}
+      <div 
+        className="fixed top-0 left-0 right-0 h-[2.5px] z-50 pointer-events-none"
+        style={{ background: 'rgba(255, 255, 255, 0.05)' }}
+      >
+        <div
+          className="h-full relative transition-all duration-75"
+          style={{
+            width: `${scrollProgress * 100}%`,
+            background: 'linear-gradient(90deg, #00F5D4 0%, #6C63FF 60%, #FF3CAC 100%)',
+            boxShadow: '0 0 12px rgba(0, 245, 212, 0.8), 0 0 20px rgba(108, 99, 255, 0.6)',
+          }}
+        >
+          {/* Gotícula brilhante na ponta do indicador */}
+          <span className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#FFFFFF]" />
+        </div>
+      </div>
+
       {/* Particle Canvas de Fundo */}
       <ParticleCanvas />
 
@@ -71,35 +105,63 @@ const Index = () => {
           <div className="absolute inset-0 z-40 bg-black/40 backdrop-blur-[2px] cursor-pointer" />
         )}
 
+        {/* Hero Section com Núcleo 3D WebGL Interativo */}
         <HeroSection />
-        {/* Soluções — 8 cards de serviços */}
-        <FeaturesSection />
+
+        {/* Soluções — Cards de serviços */}
+        <div id="solucoes">
+          <FeaturesSection />
+        </div>
+
         {/* Benefícios — por que investir em sistema personalizado */}
         <BenefitsSection />
-        {/* Portfólio de projetos com integração Supabase */}
+
+        {/* Simulador Interativo de ROI & Viabilidade Técnica (High Conversion) */}
+        <RoiSimulator />
+
+        {/* Portfólio de projetos com integração Supabase e Vídeos */}
         <div id="projects">
           <ProjectsSection />
         </div>
+
         {/* Cases de sucesso com resultados reais */}
-        <CasesSection />
+        <div id="cases">
+          <CasesSection />
+        </div>
+
         {/* Segmentos — 13 tipos de empresas */}
-        <SegmentsSection />
+        <div id="segments">
+          <SegmentsSection />
+        </div>
+
         {/* Como trabalhamos — 6 etapas */}
-        <HowItWorksSection />
+        <div id="como-trabalhamos">
+          <HowItWorksSection />
+        </div>
+
         {/* Stack tecnológica */}
         <TechStackSection />
+
         {/* Depoimentos */}
         <TestimonialsSection />
+
         {/* Contato */}
         <div id="contato">
           <ContactSection />
         </div>
+
         {/* Quem somos */}
-        <AboutSection />
+        <div id="quem-somos">
+          <AboutSection />
+        </div>
+
         <Footer />
       </div>
 
-      {/* Botão Flutuante do WhatsApp Único com Ocultação ao Abrir o Menu */}
+      {/* Hub Flutuante Mobile Ergonômico (Zona do Polegar) */}
+      <MobileFloatingHub hide={isMenuOpen} />
+
+      {/* Botão Flutuante do WhatsApp para Desktop */}
       <WhatsAppButton hide={isMenuOpen} />
     </div>
   );

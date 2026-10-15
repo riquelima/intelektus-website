@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -72,13 +72,13 @@
   body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    letter-spacing: -0.025em;
+    font-family: 'Sora', sans-serif;
+    letter-spacing: -0.03em;
     line-height: 1.2;
   }
 
@@ -106,23 +106,17 @@
 ══════════════════════════════════════ */
 @layer components {
 
-  /* ── Gradient Texts ── */
+  /* ── Accent Texts (Solid high contrast, no clipping tell) ── */
   .gradient-text {
-    background: linear-gradient(135deg, #6C63FF 0%, #9B59FF 50%, #FF3CAC 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    padding-bottom: 0.15em;
-    margin-bottom: -0.15em;
+    color: #A78BFA;
+    text-shadow: 0 0 24px rgba(167, 139, 250, 0.45);
+    font-weight: 800;
   }
 
   .gradient-text-cyan {
-    background: linear-gradient(135deg, #00D4FF 0%, #6C63FF 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    padding-bottom: 0.15em;
-    margin-bottom: -0.15em;
+    color: #00F5D4;
+    text-shadow: 0 0 24px rgba(0, 245, 212, 0.45);
+    font-weight: 800;
   }
 
   /* ── Gradient Backgrounds ── */
@@ -233,10 +227,7 @@
   }
 
   .grid-lines {
-    background-image:
-      linear-gradient(rgba(108, 99, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(108, 99, 255, 0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
+    background: transparent;
   }
 
   .mesh-gradient {
@@ -297,7 +288,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-weight: 800;
     font-size: 1rem;
     color: white;

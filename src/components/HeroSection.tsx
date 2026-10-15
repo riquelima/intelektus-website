@@ -228,10 +228,10 @@ const WhatsAppChatHeroMockup = () => {
                 <Bot size={13} className="text-[#A899FF]" />
               </div>
               <span className="text-[11px] text-[#A899FF]">Intelektus está digitando</span>
-              <div className="flex items-center gap-1 py-1 px-2 rounded-full bg-white/5 border border-white/10">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#6C63FF] animate-bounce" style={{ animationDelay: '0ms' }} />
-                <span className="w-1.5 h-1.5 rounded-full bg-[#9B59FF] animate-bounce" style={{ animationDelay: '150ms' }} />
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00D4FF] animate-bounce" style={{ animationDelay: '300ms' }} />
+              <div className="flex items-center gap-1.5 py-1 px-2.5 rounded-full bg-white/5 border border-white/10">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#6C63FF] animate-pulse" style={{ animationDelay: '0ms' }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#9B59FF] animate-pulse" style={{ animationDelay: '150ms' }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00D4FF] animate-pulse" style={{ animationDelay: '300ms' }} />
               </div>
             </div>
           )}
@@ -325,10 +325,10 @@ const WhatsAppChatHeroMockup = () => {
                 <Bot size={13} className="text-[#A899FF]" />
               </div>
               <span className="text-[11px] text-[#A899FF]">Intelektus está digitando</span>
-              <div className="flex items-center gap-1 py-1 px-2 rounded-full bg-white/5 border border-white/10">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#6C63FF] animate-bounce" style={{ animationDelay: '0ms' }} />
-                <span className="w-1.5 h-1.5 rounded-full bg-[#9B59FF] animate-bounce" style={{ animationDelay: '150ms' }} />
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00D4FF] animate-bounce" style={{ animationDelay: '300ms' }} />
+              <div className="flex items-center gap-1.5 py-1 px-2.5 rounded-full bg-white/5 border border-white/10">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#6C63FF] animate-pulse" style={{ animationDelay: '0ms' }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#9B59FF] animate-pulse" style={{ animationDelay: '150ms' }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00D4FF] animate-pulse" style={{ animationDelay: '300ms' }} />
               </div>
             </div>
           )}
@@ -419,156 +419,144 @@ const WhatsAppChatHeroMockup = () => {
   );
 };
 
+import ThreeHeroCore from '@/components/ThreeHeroCore';
+
 /* ═══════════════════════════════════════════
-   HERO SECTION PRINCIPAL
+   HERO SECTION PRINCIPAL (99% MOBILE-FIRST 3D)
 ═══════════════════════════════════════════ */
 const HeroSection = () => {
-  const WHATSAPP = 'https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1%21+Gostaria+de+solicitar+um+or%C3%A7amento.&type=phone_number&app_absent=0';
+  const WHATSAPP = 'https://api.whatsapp.com/send/?phone=557199088651&text=Ol%C3%A1+Henrique%21+Gostaria+de+solicitar+um+or%C3%A7amento+de+sistema.&type=phone_number&app_absent=0';
 
-  const scrollToProjects = (e: React.MouseEvent) => {
+  const scrollToSection = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
-    const el = document.querySelector('#projects');
+    const el = document.querySelector(id);
     if (el) window.scrollTo({ top: (el as HTMLElement).offsetTop - 80, behavior: 'smooth' });
   };
 
   const socialProof = [
-    { icon: <CheckCircle2 size={14} />, text: '500+ empresas atendidas' },
-    { icon: <Star size={14} />, text: 'Petshops, Restaurantes, Clínicas' },
-    { icon: <MessageSquare size={14} />, text: 'Robôs de atendimento 24/7' },
-  ];
-
-  const floatingChips = [
-    { label: '🤖 Agentes de IA & n8n',    color: '#00D4FF', top: '-4%',  left: '-4%',  delay: '0s' },
-    { label: '⚡ Sistemas Web & SaaS',    color: '#6C63FF', top: '20%',  right: '-6%', delay: '0.4s' },
-    { label: '🛡️ Padrão QA Zero Falhas',  color: '#34D399', bottom: '18%', left: '-8%', delay: '0.8s' },
-    { label: '📈 Foco em ROI & Vendas',   color: '#FF3CAC', bottom: '-2%', right: '-4%', delay: '1.2s' },
+    { icon: <CheckCircle2 size={13} className="text-[#00F5D4]" />, text: 'MVP em 3 a 6 semanas' },
+    { icon: <ShieldCheck size={13} className="text-[#6C63FF]" />, text: 'QA & Padrão Zero Falhas' },
+    { icon: <Zap size={13} className="text-yellow-400" />, text: 'Automação & IA Aplicada' },
+    { icon: <TrendingUp size={13} className="text-[#FF3CAC]" />, text: 'Foco Total em ROI' },
   ];
 
   return (
     <section
-      className="relative min-h-screen flex items-center pt-20 pb-8 sm:pt-28 sm:pb-16 overflow-hidden"
+      className="relative min-h-screen flex items-center pt-24 pb-12 sm:pt-32 sm:pb-20 overflow-hidden"
       style={{ background: 'transparent' }}
     >
-
       {/* Mesh gradient de fundo */}
       <div className="absolute inset-0 mesh-gradient pointer-events-none" />
 
-      {/* Grid lines */}
-      <div className="absolute inset-0 grid-lines opacity-40 pointer-events-none" />
+      {/* Grid lines sutis */}
+      <div className="absolute inset-0 grid-lines opacity-30 pointer-events-none" />
 
       {/* Orbs de luz ambiente */}
       <div
-        className="glow-orb w-[600px] h-[600px]"
+        className="glow-orb w-[340px] sm:w-[600px] h-[340px] sm:h-[600px] pointer-events-none"
         style={{
           top: '-10%', left: '-10%',
-          background: 'radial-gradient(circle, rgba(108,99,255,0.2) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(108,99,255,0.22) 0%, transparent 70%)',
         }}
       />
       <div
-        className="glow-orb w-[400px] h-[400px]"
+        className="glow-orb w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] pointer-events-none"
         style={{
-          bottom: '0%', right: '-5%',
-          background: 'radial-gradient(circle, rgba(255,60,172,0.15) 0%, transparent 70%)',
+          bottom: '5%', right: '-5%',
+          background: 'radial-gradient(circle, rgba(0,245,212,0.12) 0%, transparent 70%)',
         }}
       />
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
-          {/* LEFT — Copy */}
-          <div className="max-w-xl">
-            {/* Headline */}
+          {/* COLUNA ESQUERDA — COPY & CALL TO ACTIONS (7 cols on desktop) */}
+          <div className="lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start">
+            
+            {/* Live Availability Badge */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#00F5D4] bg-[#00F5D4]/10 border border-[#00F5D4]/25 backdrop-blur-md mb-4 shadow-[0_0_20px_rgba(0,245,212,0.15)] animate-fade-in">
+              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-ping" />
+              <span>Disponível para novos projetos &middot; Q4 2026</span>
+            </div>
+
+            {/* Headline Principal Otimizada para Leitura no Mobile */}
             <h1
-              className="font-bold mb-3 sm:mb-6 animate-fade-up text-3xl sm:text-5xl lg:text-6xl"
-              style={{
-                lineHeight: '1.18',
-                letterSpacing: '-0.03em',
-                color: 'var(--text-primary)',
-                animationDelay: '0.2s',
-                opacity: 0,
-              }}
+              className="font-extrabold mb-3 sm:mb-5 text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.12] text-white"
             >
               Sistemas{' '}
-              <span className="gradient-text">Personalizados</span>
-              {' '}que Transformam e{' '}
-              <span style={{ color: 'rgba(242,240,255,0.4)' }}>Aceleram sua Empresa</span>
+              <span className="gradient-text">Sob Medida</span>
+              {' '}& Apps com{' '}
+              <span className="gradient-text-cyan">Padrão de Elite</span>
             </h1>
 
-            {/* Subtitle */}
+            {/* Subtítulo Claro focado em ROI e Resolução de Dor */}
             <p
-              className="text-sm sm:text-lg leading-relaxed mb-6 sm:mb-9 animate-fade-up font-normal text-gray-300"
-              style={{ animationDelay: '0.35s', opacity: 0 }}
+              className="text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8 font-normal text-gray-300 max-w-xl"
             >
-              Chega de planilhas complexas ou programas genéricos que não resolvem seus gargalos. Desenvolvemos aplicativos de agendamento, robôs de WhatsApp e painéis de gestão sob medida para o seu petshop, lanchonete, clínica ou negócio local.
+              Chega de planilhas complexas ou programas genéricos que travam seu crescimento. Desenvolvemos aplicativos móveis, plataformas web e agentes de IA sob medida para automatizar sua operação e multiplicar seus lucros.
             </p>
 
-            {/* CTAs */}
+            {/* CTAs de Alta Conversão com Feedback Tátil */}
             <div
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-10 animate-fade-up"
-              style={{ animationDelay: '0.5s', opacity: 0 }}
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8 w-full sm:w-auto"
             >
               <a
                 href={WHATSAPP}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-glow text-white font-bold px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl text-sm sm:text-base flex items-center justify-center gap-2"
+                className="btn-glow text-white font-bold px-7 py-4 rounded-2xl text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-[0_0_35px_rgba(108,99,255,0.45)] active:scale-[0.97] transition-all cursor-pointer"
               >
-                Quero meu sistema
+                <Zap size={18} className="fill-yellow-300 text-yellow-300" />
+                Iniciar Diagnóstico no WhatsApp
                 <ArrowRight size={18} />
               </a>
+
               <button
-                onClick={scrollToProjects}
-                className="btn-outline-glow font-semibold px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl text-sm sm:text-base cursor-pointer"
+                onClick={(e) => scrollToSection(e, '#simulador-roi')}
+                className="px-6 py-4 rounded-2xl text-sm sm:text-base font-bold text-[#00F5D4] bg-[#00F5D4]/10 border border-[#00F5D4]/30 hover:bg-[#00F5D4]/20 active:scale-[0.97] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg"
               >
-                Ver projetos
+                <Sparkles size={16} />
+                Simular Viabilidade & ROI
               </button>
             </div>
 
-            {/* Social proof */}
+            {/* 4 Micro-Gatilhos de Confiança e Prova Técnica */}
             <div
-              className="flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-4 animate-fade-up"
-              style={{ animationDelay: '0.65s', opacity: 0 }}
+              className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2.5 sm:gap-4 w-full sm:w-auto justify-center lg:justify-start"
             >
               {socialProof.map((item, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <span style={{ color: '#34D399' }}>{item.icon}</span>
-                  <span className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>{item.text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* RIGHT — WhatsApp Conversation Mockup */}
-          <div
-            className="relative animate-fade-up w-full"
-            style={{ animationDelay: '0.4s', opacity: 0 }}
-          >
-            {/* Floating chips visíveis em telas grandes */}
-            <div className="hidden lg:block">
-              {floatingChips.map((chip, i) => (
-                <div
-                  key={i}
-                  className="absolute z-30 px-3.5 py-2 rounded-xl text-xs font-bold animate-pulse-subtle shadow-xl backdrop-blur-md"
-                  style={{
-                    top: chip.top,
-                    bottom: (chip as any).bottom,
-                    left: (chip as any).left,
-                    right: (chip as any).right,
-                    background: `rgba(8,8,21,0.92)`,
-                    border: `1px solid ${chip.color}60`,
-                    color: '#FFFFFF',
-                    boxShadow: `0 0 20px ${chip.color}35`,
-                    animationDelay: chip.delay,
-                  }}
+                <div 
+                  key={i} 
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/5 text-xs text-gray-300 font-medium"
                 >
-                  <span style={{ color: chip.color, marginRight: '6px' }}>●</span>
-                  {chip.label}
+                  <span>{item.icon}</span>
+                  <span className="truncate">{item.text}</span>
                 </div>
               ))}
             </div>
 
-            <WhatsAppChatHeroMockup />
+            {/* 3D Core no Mobile (visível abaixo dos botões na versão mobile) */}
+            <div className="w-full lg:hidden mt-6 mb-2">
+              <ThreeHeroCore />
+            </div>
+
           </div>
+
+          {/* COLUNA DIREITA — 3D EXPERIÊNCIA WEBGL & WHATSAPP MOCKUP (5 cols on desktop) */}
+          <div className="lg:col-span-5 flex flex-col items-center gap-6 w-full">
+            
+            {/* Núcleo 3D Interativo no Desktop */}
+            <div className="hidden lg:block w-full">
+              <ThreeHeroCore />
+            </div>
+
+            {/* WhatsApp Live Conversation Mockup Interativo */}
+            <div className="w-full">
+              <WhatsAppChatHeroMockup />
+            </div>
+
+          </div>
+
         </div>
       </div>
     </section>
@@ -576,3 +564,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
