@@ -218,6 +218,7 @@ interface TinderCardProps {
   onSwipe: (direction: 'left' | 'right') => void;
   isFront: boolean;
   stackOffset: number; // 0 para o card ativo, 1 para o segundo, 2 para o terceiro
+  exitDirection: 'left' | 'right';
 }
 
 const TinderCard: React.FC<TinderCardProps> = ({
@@ -227,15 +228,16 @@ const TinderCard: React.FC<TinderCardProps> = ({
   onSwipe,
   isFront,
   stackOffset,
+  exitDirection,
 }) => {
   const x = useMotionValue(0);
-  const rotate = useTransform(x, [-260, 0, 260], [-16, 0, 16]);
-  const likeOpacity = useTransform(x, [30, 120], [0, 1]);
-  const nopeOpacity = useTransform(x, [-30, -120], [0, 1]);
+  const rotate = useTransform(x, [-240, 0, 240], [-18, 0, 18]);
+  const likeOpacity = useTransform(x, [25, 100], [0, 1]);
+  const nopeOpacity = useTransform(x, [-25, -100], [0, 1]);
 
   const handleDragEnd = (_e: any, info: PanInfo) => {
-    const threshold = 90;
-    const velocityThreshold = 400;
+    const threshold = 65;
+    const velocityThreshold = 220;
 
     if (info.offset.x > threshold || info.velocity.x > velocityThreshold) {
       onSwipe('right');
@@ -264,20 +266,41 @@ const TinderCard: React.FC<TinderCardProps> = ({
         cursor: isFront ? 'grab' : 'default',
         transformOrigin: 'bottom center',
       }}
-      animate={{
-        scale,
-        y: translateY,
-        opacity,
-        filter: `blur(${blur})`,
+      variants={{
+        enter: {
+          scale: 0.88,
+          y: 28,
+          opacity: 0,
+        },
+        animate: {
+          scale,
+          y: translateY,
+          opacity,
+          filter: `blur(${blur})`,
+          transition: {
+            type: 'spring',
+            stiffness: 340,
+            damping: 26,
+          },
+        },
+        exit: (customDirection: 'left' | 'right') => ({
+          x: customDirection === 'right' ? 500 : -500,
+          rotate: customDirection === 'right' ? 24 : -24,
+          opacity: 0,
+          scale: 0.88,
+          transition: {
+            duration: 0.32,
+            ease: [0.32, 0.72, 0, 1],
+          },
+        }),
       }}
-      transition={{
-        type: 'spring',
-        stiffness: 320,
-        damping: 26,
-      }}
+      custom={exitDirection}
+      initial={stackOffset === 2 ? 'enter' : false}
+      animate="animate"
+      exit="exit"
       drag={isFront ? 'x' : false}
       dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={0.7}
+      dragElastic={0.85}
       onDragEnd={isFront ? handleDragEnd : undefined}
       whileTap={isFront ? { cursor: 'grabbing' } : undefined}
     >
@@ -438,24 +461,14 @@ const TinderCard: React.FC<TinderCardProps> = ({
 
 export const FeaturesSection: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [history, setHistory] = useState<number[]>([]);
   const [exitDirection, setExitDirection] = useState<'left' | 'right'>('right');
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Swipe function
+  // Swipe function via gesto do dedo/mouse ou teclado
   const handleSwipe = useCallback((direction: 'left' | 'right') => {
     setExitDirection(direction);
-    setHistory((prev) => [...prev, currentIndex]);
     setCurrentIndex((prev) => (prev + 1) % solutions.length);
-  }, [currentIndex]);
-
-  // Rewind / Desfazer
-  const handleRewind = () => {
-    if (history.length === 0) return;
-    const last = history[history.length - 1];
-    setHistory((prev) => prev.slice(0, -1));
-    setCurrentIndex(last);
-  };
+  }, []);
 
   // Atalhos de teclado no desktop
   useEffect(() => {
@@ -485,11 +498,6 @@ export const FeaturesSection: React.FC = () => {
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
-
-  const currentSolution = solutions[currentIndex];
-  const WHATSAPP_ACTIVE_URL = `https://api.whatsapp.com/send/?phone=557199088651&text=${encodeURIComponent(
-    currentSolution.whatsappText
-  )}&type=phone_number&app_absent=0`;
 
   // Próximos 3 cards a renderizar na pilha
   const visibleCards = [
@@ -539,13 +547,13 @@ export const FeaturesSection: React.FC = () => {
           </p>
         </div>
 
-        {/* CONTAINER DO CARD STACK TINDER */}
-        <div className="relative w-full max-w-[420px] mx-auto min-h-[520px] sm:min-h-[540px] flex items-center justify-center mb-8">
+        {/* CONTAINER DO CARD STACK TINDER (SOMENTE ARRASTO COM O DEDO) */}
+        <div className="relative w-full max-w-[420px] mx-auto min-h-[520px] sm:min-h-[540px] flex items-center justify-center">
           <AnimatePresence mode="popLayout" custom={exitDirection}>
             {visibleCards
               .slice()
               .reverse()
-              .map(({ item, offset, key }, i) => {
+              .map(({ item, offset, key }) => {
                 const isFront = offset === 0;
                 return (
                   <TinderCard
@@ -556,94 +564,11 @@ export const FeaturesSection: React.FC = () => {
                     onSwipe={handleSwipe}
                     isFront={isFront}
                     stackOffset={offset}
+                    exitDirection={exitDirection}
                   />
                 );
               })}
           </AnimatePresence>
-        </div>
-
-        {/* BARRA DE CONTROLE TINDER ERGONÔMICA */}
-        <div className="flex flex-col items-center gap-4 reveal">
-          <div
-            className="flex items-center justify-center gap-3 sm:gap-4 p-2.5 rounded-full border border-white/10 backdrop-blur-xl shadow-[0_10px_35px_rgba(0,0,0,0.8)]"
-            style={{ background: 'rgba(10, 10, 24, 0.85)' }}
-          >
-            {/* BOTÃO 1: REWIND / DESFAZER */}
-            <button
-              onClick={handleRewind}
-              disabled={history.length === 0}
-              title="Voltar ao card anterior"
-              className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-200 active:scale-90 ${
-                history.length > 0
-                  ? 'bg-amber-500/15 text-amber-400 border border-amber-500/40 hover:bg-amber-500/25 cursor-pointer shadow-[0_0_15px_rgba(245,158,11,0.25)]'
-                  : 'bg-white/5 text-gray-600 border border-white/5 cursor-not-allowed'
-              }`}
-            >
-              <MaterialIcon name="replay" size={20} />
-            </button>
-
-            {/* BOTÃO 2: PULAR / PASSAR (SWIPE ESQUERDA) */}
-            <button
-              onClick={() => handleSwipe('left')}
-              title="Passar para a próxima solução"
-              className="w-13 h-13 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-rose-500/15 text-rose-400 border border-rose-500/40 hover:bg-rose-500/25 active:scale-90 transition-all cursor-pointer shadow-[0_0_20px_rgba(244,63,94,0.25)]"
-            >
-              <MaterialIcon name="close" size={24} weight={600} />
-            </button>
-
-            {/* BOTÃO 3: CTA WHATSAPP DIRETO PARA A SOLUÇÃO ATIVA */}
-            <a
-              href={WHATSAPP_ACTIVE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Falar sobre esta solução no WhatsApp"
-              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center bg-gradient-to-tr from-[#25D366] to-[#00F5D4] text-[#04040D] shadow-[0_0_25px_rgba(0,245,212,0.45)] hover:scale-105 active:scale-95 transition-transform cursor-pointer border border-white/30"
-            >
-              <MaterialIcon name="chat" size={26} fill className="text-black" />
-            </a>
-
-            {/* BOTÃO 4: GOSTEI / PRÓXIMO (SWIPE DIREITA) */}
-            <button
-              onClick={() => handleSwipe('right')}
-              title="Próxima solução"
-              className="w-13 h-13 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-[#6C63FF]/20 text-[#6C63FF] border border-[#6C63FF]/50 hover:bg-[#6C63FF]/30 active:scale-90 transition-all cursor-pointer shadow-[0_0_20px_rgba(108,99,255,0.3)]"
-            >
-              <MaterialIcon name="arrow_forward" size={24} weight={600} />
-            </button>
-          </div>
-
-          {/* INDICADORES DE PROGRESSO (DOTS / BARRINHAS DE CADA SOLUÇÃO) */}
-          <div className="flex items-center gap-1.5 flex-wrap justify-center max-w-xs sm:max-w-md pt-2">
-            {solutions.map((s, idx) => {
-              const isActive = idx === currentIndex;
-              return (
-                <button
-                  key={s.id}
-                  onClick={() => {
-                    setHistory((prev) => [...prev, currentIndex]);
-                    setCurrentIndex(idx);
-                  }}
-                  title={s.title}
-                  className="transition-all duration-300 rounded-full cursor-pointer"
-                  style={{
-                    width: isActive ? '24px' : '6px',
-                    height: '6px',
-                    background: isActive ? s.color : 'rgba(255,255,255,0.15)',
-                    boxShadow: isActive ? `0 0 10px ${s.color}` : 'none',
-                  }}
-                />
-              );
-            })}
-          </div>
-
-          {/* MINI BADGE INFORMATIVO */}
-          <p className="text-[11px] text-gray-400 mt-1">
-            Solução <span className="text-white font-bold">{currentIndex + 1}</span> de{' '}
-            <span className="text-white font-bold">{solutions.length}</span> —{' '}
-            <span style={{ color: currentSolution.color }} className="font-semibold">
-              {currentSolution.title}
-            </span>
-          </p>
         </div>
       </div>
     </section>

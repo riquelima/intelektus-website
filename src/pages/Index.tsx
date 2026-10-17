@@ -5,7 +5,6 @@ import HeroSection from '@/components/HeroSection';
 import ParticleCanvas from '@/components/ParticleCanvas';
 import FeaturesSection from '@/components/FeaturesSection';
 import BenefitsSection from '@/components/BenefitsSection';
-import RoiSimulator from '@/components/RoiSimulator';
 import ProjectsSection from '@/components/ProjectsSection';
 import CasesSection from '@/components/CasesSection';
 import SegmentsSection from '@/components/SegmentsSection';
@@ -115,9 +114,6 @@ const Index = () => {
 
         {/* Benefícios — por que investir em sistema personalizado */}
         <BenefitsSection />
-
-        {/* Simulador Interativo de ROI & Viabilidade Técnica (High Conversion) */}
-        <RoiSimulator />
 
         {/* Portfólio de projetos com integração Supabase e Vídeos */}
         <div id="projects">
