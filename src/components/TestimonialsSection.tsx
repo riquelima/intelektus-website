@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
-import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import MaterialIcon from '@/components/ui/MaterialIcon';
 
 const testimonials = [
   {
@@ -108,9 +108,9 @@ const TestimonialsSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-14 reveal">
-          <div className="badge-chip mb-5 mx-auto inline-flex">
-            <Star size={12} style={{ color: '#F59E0B' }} />
-            Depoimentos
+          <div className="badge-chip mb-5 mx-auto inline-flex items-center gap-1.5">
+            <MaterialIcon name="star" size={13} color="#F59E0B" fill />
+            <span>Depoimentos</span>
           </div>
           <h2
             className="font-bold text-4xl md:text-5xl mb-4"
@@ -154,18 +154,19 @@ const TestimonialsSection = () => {
               {/* Stars */}
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
-                  <Star
+                  <MaterialIcon
                     key={i}
-                    size={14}
-                    fill={i < t.rating ? '#FBBF24' : 'none'}
-                    style={{ color: i < t.rating ? '#FBBF24' : 'var(--text-muted)' }}
+                    name="star"
+                    size={15}
+                    fill={i < t.rating}
+                    color={i < t.rating ? '#FBBF24' : '#3A3A5C'}
                   />
                 ))}
               </div>
             </div>
 
             {/* Quote icon */}
-            <Quote size={32} className="mb-5 opacity-15" style={{ color: t.color }} />
+            <MaterialIcon name="format_quote" size={36} color={t.color} className="mb-4 opacity-20" />
 
             {/* Quote text */}
             <p
@@ -215,7 +216,7 @@ const TestimonialsSection = () => {
                     (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
                   }}
                 >
-                  <ChevronLeft size={16} />
+                  <MaterialIcon name="chevron_left" size={18} />
                 </button>
                 <button
                   onClick={() => navigate('next')}
@@ -234,7 +235,7 @@ const TestimonialsSection = () => {
                     (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
                   }}
                 >
-                  <ChevronRight size={16} />
+                  <MaterialIcon name="chevron_right" size={18} />
                 </button>
               </div>
             </div>

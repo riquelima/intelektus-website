@@ -1,45 +1,45 @@
 
 import { useEffect, useRef, useState } from 'react';
-import { Search, Map, Code2, TestTube2, Server, Headphones, ArrowRight } from 'lucide-react';
+import MaterialIcon from '@/components/ui/MaterialIcon';
 
 const steps = [
   {
-    icon: Search,
+    icon: 'search',
     number: '01',
     title: 'Diagnóstico',
     description: 'Entendemos seu negócio, mapeamos desafios e identificamos as maiores oportunidades de melhoria.',
     color: '#6C63FF',
   },
   {
-    icon: Map,
+    icon: 'map',
     number: '02',
     title: 'Planejamento',
     description: 'Documentamos processos, definimos escopo, arquitetura e cronograma detalhado do projeto.',
     color: '#A855F7',
   },
   {
-    icon: Code2,
+    icon: 'code',
     number: '03',
     title: 'Desenvolvimento',
     description: 'Criamos sua solução com tecnologias modernas, código limpo e entregas em sprints contínuos.',
     color: '#3B82F6',
   },
   {
-    icon: TestTube2,
+    icon: 'science',
     number: '04',
     title: 'Testes Rigorosos',
     description: 'Validamos cada funcionalidade com testes rigorosos para garantir estabilidade e qualidade.',
     color: '#10B981',
   },
   {
-    icon: Server,
+    icon: 'dns',
     number: '05',
     title: 'Implantação',
     description: 'Colocamos o sistema em produção com segurança, monitoramento e treinamento da sua equipe.',
     color: '#F59E0B',
   },
   {
-    icon: Headphones,
+    icon: 'support_agent',
     number: '06',
     title: 'Suporte Contínuo',
     description: 'Evoluímos a solução junto com sua empresa — novas funcionalidades, melhorias e suporte dedicado.',
@@ -108,9 +108,9 @@ const HowItWorksSection = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14 reveal">
-          <div className="badge-chip mb-3 mx-auto inline-flex">
-            <Search size={12} style={{ color: '#6C63FF' }} />
-            Metodologia
+          <div className="badge-chip mb-3 mx-auto inline-flex items-center gap-1.5">
+            <MaterialIcon name="search" size={13} color="#6C63FF" />
+            <span>Metodologia</span>
           </div>
           <h2
             className="font-bold text-2xl sm:text-4xl md:text-5xl mb-2.5 sm:mb-4 text-white"
@@ -146,7 +146,6 @@ const HowItWorksSection = () => {
 
             <div className="flex flex-col gap-4 sm:gap-8">
               {steps.map((step, i) => {
-                const Icon = step.icon;
                 const isLeft = i % 2 === 0;
                 const isVisible = visibleSteps.has(i);
 
@@ -188,8 +187,7 @@ const HowItWorksSection = () => {
                             border: `1px solid ${step.color}35`,
                           }}
                         >
-                          <Icon size={16} className="sm:hidden" style={{ color: step.color }} />
-                          <Icon size={18} className="hidden sm:block" style={{ color: step.color }} />
+                          <MaterialIcon name={step.icon} size={18} color={step.color} />
                         </div>
                         <div>
                           <h3
@@ -218,7 +216,7 @@ const HowItWorksSection = () => {
               className="inline-flex items-center gap-2 btn-glow text-white font-bold px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl text-sm sm:text-base"
             >
               Iniciar meu projeto agora
-              <ArrowRight size={18} />
+              <MaterialIcon name="arrow_forward" size={18} />
             </a>
           </div>
         </div>

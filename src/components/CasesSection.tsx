@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from 'react';
-import { CheckCircle2, TrendingUp, ArrowRight, Award } from 'lucide-react';
+import MaterialIcon from '@/components/ui/MaterialIcon';
 
 const cases = [
   {
@@ -141,9 +141,9 @@ const CasesSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14 reveal">
-          <div className="badge-chip mb-3 mx-auto inline-flex">
-            <TrendingUp size={12} style={{ color: '#6C63FF' }} />
-            Cases de Sucesso
+          <div className="badge-chip mb-3 mx-auto inline-flex items-center gap-1.5">
+            <MaterialIcon name="trending_up" size={14} color="#6C63FF" />
+            <span>Cases de Sucesso</span>
           </div>
           <h2
             className="font-bold text-2xl sm:text-4xl md:text-5xl mb-2.5 sm:mb-4 text-white"
@@ -196,7 +196,7 @@ const CasesSection = () => {
                       Segmento: {c.segment}
                     </p>
                   </div>
-                  <Award size={20} className="sm:size-6" style={{ color: c.color, flexShrink: 0, marginTop: '2px', opacity: 0.7 }} />
+                  <MaterialIcon name="workspace_premium" size={24} color={c.color} style={{ flexShrink: 0, marginTop: '2px', opacity: 0.8 }} />
                 </div>
               </div>
 
@@ -249,7 +249,7 @@ const CasesSection = () => {
             className="btn-glow text-white font-bold px-9 py-4 rounded-xl text-base inline-flex items-center gap-2"
           >
             Quero um projeto assim
-            <ArrowRight size={18} />
+            <MaterialIcon name="arrow_forward" size={18} />
           </a>
         </div>
       </div>

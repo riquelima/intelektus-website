@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Zap } from 'lucide-react';
+import MaterialIcon from '@/components/ui/MaterialIcon';
 
 interface NavbarProps {
   isMenuOpen: boolean;
@@ -102,7 +102,7 @@ const Navbar: React.FC<NavbarProps> = ({ isMenuOpen, setIsMenuOpen, onNavigate }
               onClick={(e) => handleLinkClick(e, '#contato')}
               className="hidden md:inline-flex items-center gap-2 btn-glow text-white text-sm font-bold px-5 py-2.5 rounded-xl cursor-pointer"
             >
-              <Zap size={14} />
+              <MaterialIcon name="bolt" size={16} fill />
               Solicitar Orçamento
             </a>
 
@@ -118,7 +118,11 @@ const Navbar: React.FC<NavbarProps> = ({ isMenuOpen, setIsMenuOpen, onNavigate }
               }}
               aria-label="Abrir menu de navegação"
             >
-              {isMenuOpen ? <X size={20} className="text-[#FF3CAC]" /> : <Menu size={20} className="text-white" />}
+              {isMenuOpen ? (
+                <MaterialIcon name="close" size={22} className="text-[#FF3CAC]" />
+              ) : (
+                <MaterialIcon name="menu" size={22} className="text-white" />
+              )}
             </button>
           </div>
         </div>

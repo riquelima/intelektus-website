@@ -1,6 +1,6 @@
 
 import { useEffect, useRef } from 'react';
-import { Code2, Zap } from 'lucide-react';
+import MaterialIcon from '@/components/ui/MaterialIcon';
 
 // Stacks extraídas diretamente de https://www.henriquelima.social/ — Skills & Tools
 const techCategories = [
@@ -210,9 +210,9 @@ const TechStackSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-14 reveal">
-          <div className="badge-chip mb-5 mx-auto inline-flex">
-            <Code2 size={12} style={{ color: '#6C63FF' }} />
-            Stack Tecnológica
+          <div className="badge-chip mb-5 mx-auto inline-flex items-center gap-1.5">
+            <MaterialIcon name="code" size={14} color="#6C63FF" />
+            <span>Stack Tecnológica</span>
           </div>
           <h2
             className="font-bold text-3xl md:text-4xl mb-4"
@@ -263,7 +263,7 @@ const TechStackSection = () => {
 
         {/* Note */}
         <div className="flex items-center justify-center gap-2 mt-8 reveal">
-          <Zap size={12} style={{ color: '#6C63FF' }} />
+          <MaterialIcon name="bolt" size={14} color="#6C63FF" />
           <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
             + Outras tecnologias conforme a necessidade do projeto
           </p>

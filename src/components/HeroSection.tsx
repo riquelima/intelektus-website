@@ -1,26 +1,6 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { 
-  ArrowRight, 
-  CheckCircle2, 
-  Zap, 
-  Star, 
-  MessageSquare, 
-  CheckCheck, 
-  Bot, 
-  Phone, 
-  Video, 
-  Send, 
-  RotateCcw, 
-  Sparkles,
-  Paperclip,
-  Smile,
-  Mic,
-  ShieldCheck,
-  Cpu,
-  Layers,
-  TrendingUp
-} from 'lucide-react';
+import MaterialIcon from '@/components/ui/MaterialIcon';
 
 /* ═══════════════════════════════════════════
    WHATSAPP CONVERSATION MOCKUP ANIMADO HERO
@@ -162,7 +142,7 @@ const WhatsAppChatHeroMockup = () => {
               title="Reiniciar animação"
               className="p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors cursor-pointer text-gray-400"
             >
-              <RotateCcw size={15} />
+              <MaterialIcon name="replay" size={16} />
             </button>
             <a 
               href={WHATSAPP_URL}
@@ -170,7 +150,7 @@ const WhatsAppChatHeroMockup = () => {
               rel="noopener noreferrer"
               className="p-2 rounded-lg hover:bg-white/10 hover:text-[#00D4FF] transition-colors"
             >
-              <Phone size={15} />
+              <MaterialIcon name="phone" size={16} />
             </a>
             <a 
               href={WHATSAPP_URL}
@@ -178,7 +158,7 @@ const WhatsAppChatHeroMockup = () => {
               rel="noopener noreferrer"
               className="p-2 rounded-lg hover:bg-white/10 hover:text-[#6C63FF] transition-colors"
             >
-              <Video size={16} />
+              <MaterialIcon name="videocam" size={17} />
             </a>
           </div>
         </div>
@@ -215,7 +195,7 @@ const WhatsAppChatHeroMockup = () => {
                 </p>
                 <div className="flex items-center justify-end gap-1 mt-1.5 text-[10px] text-gray-400">
                   <span>10:42</span>
-                  <CheckCheck size={14} className="text-[#00D4FF]" />
+                  <MaterialIcon name="done_all" size={14} className="text-[#00D4FF]" />
                 </div>
               </div>
             </div>
@@ -225,7 +205,7 @@ const WhatsAppChatHeroMockup = () => {
           {step === 2 && (
             <div className="flex items-center gap-2 text-xs text-gray-400 animate-fade-in pl-1">
               <div className="w-6 h-6 rounded-full bg-[#6C63FF]/20 border border-[#6C63FF]/40 flex items-center justify-center">
-                <Bot size={13} className="text-[#A899FF]" />
+                <MaterialIcon name="smart_toy" size={13} className="text-[#A899FF]" />
               </div>
               <span className="text-[11px] text-[#A899FF]">Intelektus está digitando</span>
               <div className="flex items-center gap-1.5 py-1 px-2.5 rounded-full bg-white/5 border border-white/10">
@@ -312,7 +292,7 @@ const WhatsAppChatHeroMockup = () => {
                 </p>
                 <div className="flex items-center justify-end gap-1 mt-1 text-[10px] text-gray-400">
                   <span>10:44</span>
-                  <CheckCheck size={14} className="text-[#00D4FF]" />
+                  <MaterialIcon name="done_all" size={14} className="text-[#00D4FF]" />
                 </div>
               </div>
             </div>
@@ -322,7 +302,7 @@ const WhatsAppChatHeroMockup = () => {
           {step === 5 && (
             <div className="flex items-center gap-2 text-xs text-gray-400 animate-fade-in pl-1">
               <div className="w-6 h-6 rounded-full bg-[#6C63FF]/20 border border-[#6C63FF]/40 flex items-center justify-center">
-                <Bot size={13} className="text-[#A899FF]" />
+                <MaterialIcon name="smart_toy" size={13} className="text-[#A899FF]" />
               </div>
               <span className="text-[11px] text-[#A899FF]">Intelektus está digitando</span>
               <div className="flex items-center gap-1.5 py-1 px-2.5 rounded-full bg-white/5 border border-white/10">
@@ -362,10 +342,10 @@ const WhatsAppChatHeroMockup = () => {
                     className="btn-glow text-white font-bold py-2 px-3.5 rounded-xl text-xs flex items-center justify-between gap-2 transition-transform hover:scale-[1.02]"
                   >
                     <span className="flex items-center gap-1.5">
-                      <Sparkles size={13} className="text-yellow-300" />
+                      <MaterialIcon name="auto_awesome" size={13} className="text-yellow-300" />
                       Conversar no WhatsApp Oficial
                     </span>
-                    <ArrowRight size={13} />
+                    <MaterialIcon name="arrow_forward" size={13} />
                   </a>
 
                   <button
@@ -373,7 +353,7 @@ const WhatsAppChatHeroMockup = () => {
                     className="py-2 px-3.5 rounded-xl text-xs font-semibold text-gray-300 bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-between gap-2 transition-colors cursor-pointer"
                   >
                     <span>Ver Projetos em Vídeo</span>
-                    <ArrowRight size={13} className="text-[#6C63FF]" />
+                    <MaterialIcon name="arrow_forward" size={13} className="text-[#6C63FF]" />
                   </button>
                 </div>
 
@@ -391,10 +371,10 @@ const WhatsAppChatHeroMockup = () => {
         >
           <div className="flex items-center gap-1 text-gray-400">
             <button className="p-1.5 hover:text-white transition-colors cursor-pointer">
-              <Smile size={18} />
+              <MaterialIcon name="mood" size={18} />
             </button>
             <button className="p-1.5 hover:text-white transition-colors cursor-pointer">
-              <Paperclip size={18} />
+              <MaterialIcon name="attach_file" size={18} />
             </button>
           </div>
 
@@ -402,7 +382,7 @@ const WhatsAppChatHeroMockup = () => {
             <span className="text-xs text-gray-400 select-none">
               {step >= 6 ? "Digite sua mensagem..." : "Conversa automatizada em tempo real..."}
             </span>
-            <Mic size={15} className="text-gray-500" />
+            <MaterialIcon name="mic" size={15} className="text-gray-500" />
           </div>
 
           <a 
@@ -411,7 +391,7 @@ const WhatsAppChatHeroMockup = () => {
             rel="noopener noreferrer"
             className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#6C63FF] to-[#00D4FF] flex items-center justify-center text-white shadow-lg transition-transform hover:scale-105 flex-shrink-0"
           >
-            <Send size={15} className="ml-0.5" />
+            <MaterialIcon name="send" size={15} className="ml-0.5" />
           </a>
         </div>
       </div>
@@ -420,6 +400,7 @@ const WhatsAppChatHeroMockup = () => {
 };
 
 import ThreeHeroCore from '@/components/ThreeHeroCore';
+import MobileSegmentsOrbit from '@/components/MobileSegmentsOrbit';
 
 /* ═══════════════════════════════════════════
    HERO SECTION PRINCIPAL (99% MOBILE-FIRST 3D)
@@ -434,10 +415,10 @@ const HeroSection = () => {
   };
 
   const socialProof = [
-    { icon: <CheckCircle2 size={13} className="text-[#00F5D4]" />, text: 'MVP em 3 a 6 semanas' },
-    { icon: <ShieldCheck size={13} className="text-[#6C63FF]" />, text: 'QA & Padrão Zero Falhas' },
-    { icon: <Zap size={13} className="text-yellow-400" />, text: 'Automação & IA Aplicada' },
-    { icon: <TrendingUp size={13} className="text-[#FF3CAC]" />, text: 'Foco Total em ROI' },
+    { icon: <MaterialIcon name="check_circle" size={13} className="text-[#00F5D4]" />, text: 'MVP em 3 a 6 semanas' },
+    { icon: <MaterialIcon name="verified_user" size={13} className="text-[#6C63FF]" />, text: 'QA & Padrão Zero Falhas' },
+    { icon: <MaterialIcon name="bolt" size={13} className="text-yellow-400" />, text: 'Automação & IA Aplicada' },
+    { icon: <MaterialIcon name="trending_up" size={13} className="text-[#FF3CAC]" />, text: 'Foco Total em ROI' },
   ];
 
   return (
@@ -473,12 +454,6 @@ const HeroSection = () => {
           {/* COLUNA ESQUERDA — COPY & CALL TO ACTIONS (7 cols on desktop) */}
           <div className="lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start">
             
-            {/* Live Availability Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#00F5D4] bg-[#00F5D4]/10 border border-[#00F5D4]/25 backdrop-blur-md mb-4 shadow-[0_0_20px_rgba(0,245,212,0.15)] animate-fade-in">
-              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-ping" />
-              <span>Disponível para novos projetos &middot; Q4 2026</span>
-            </div>
-
             {/* Headline Principal Otimizada para Leitura no Mobile */}
             <h1
               className="font-extrabold mb-3 sm:mb-5 text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.12] text-white"
@@ -493,7 +468,7 @@ const HeroSection = () => {
             <p
               className="text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8 font-normal text-gray-300 max-w-xl"
             >
-              Chega de planilhas complexas ou programas genéricos que travam seu crescimento. Desenvolvemos aplicativos móveis, plataformas web e agentes de IA sob medida para automatizar sua operação e multiplicar seus lucros.
+              Desenvolvemos aplicativos móveis, plataformas web e agentes de IA sob medida para automatizar sua operação e multiplicar seus lucros.
             </p>
 
             {/* CTAs de Alta Conversão com Feedback Tátil */}
@@ -506,18 +481,10 @@ const HeroSection = () => {
                 rel="noopener noreferrer"
                 className="btn-glow text-white font-bold px-7 py-4 rounded-2xl text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-[0_0_35px_rgba(108,99,255,0.45)] active:scale-[0.97] transition-all cursor-pointer"
               >
-                <Zap size={18} className="fill-yellow-300 text-yellow-300" />
+                <MaterialIcon name="bolt" size={18} fill className="text-yellow-300" />
                 Iniciar Diagnóstico no WhatsApp
-                <ArrowRight size={18} />
+                <MaterialIcon name="arrow_forward" size={18} />
               </a>
-
-              <button
-                onClick={(e) => scrollToSection(e, '#simulador-roi')}
-                className="px-6 py-4 rounded-2xl text-sm sm:text-base font-bold text-[#00F5D4] bg-[#00F5D4]/10 border border-[#00F5D4]/30 hover:bg-[#00F5D4]/20 active:scale-[0.97] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg"
-              >
-                <Sparkles size={16} />
-                Simular Viabilidade & ROI
-              </button>
             </div>
 
             {/* 4 Micro-Gatilhos de Confiança e Prova Técnica */}
@@ -537,7 +504,7 @@ const HeroSection = () => {
 
             {/* 3D Core no Mobile (visível abaixo dos botões na versão mobile) */}
             <div className="w-full lg:hidden mt-6 mb-2">
-              <ThreeHeroCore />
+              <MobileSegmentsOrbit />
             </div>
 
           </div>

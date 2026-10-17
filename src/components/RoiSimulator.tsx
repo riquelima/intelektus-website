@@ -1,24 +1,11 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
-import { 
-  Calculator, 
-  Sparkles, 
-  Clock, 
-  TrendingUp, 
-  CheckCircle2, 
-  ArrowRight, 
-  Smartphone, 
-  Layers, 
-  Bot, 
-  Cpu,
-  ShieldCheck,
-  Zap
-} from 'lucide-react';
+import MaterialIcon from '@/components/ui/MaterialIcon';
 
 interface SystemOption {
   id: string;
   label: string;
-  icon: React.ElementType;
+  icon: string;
   multiplier: number;
   avgWeeks: string;
   badge: string;
@@ -28,7 +15,7 @@ const systemOptions: SystemOption[] = [
   {
     id: 'web-erp',
     label: 'Sistema Web / ERP Sob Medida',
-    icon: Layers,
+    icon: 'layers',
     multiplier: 1.0,
     avgWeeks: '3 a 6 semanas',
     badge: 'Mais pedido',
@@ -36,7 +23,7 @@ const systemOptions: SystemOption[] = [
   {
     id: 'mobile-app',
     label: 'App Mobile (iOS & Android)',
-    icon: Smartphone,
+    icon: 'smartphone',
     multiplier: 1.15,
     avgWeeks: '4 a 8 semanas',
     badge: 'Alta Conversão',
@@ -44,7 +31,7 @@ const systemOptions: SystemOption[] = [
   {
     id: 'ai-automation',
     label: 'Agentes de IA & Automação n8n',
-    icon: Bot,
+    icon: 'smart_toy',
     multiplier: 0.85,
     avgWeeks: '2 a 4 semanas',
     badge: 'ROI Imediato',
@@ -52,7 +39,7 @@ const systemOptions: SystemOption[] = [
   {
     id: 'saas-platform',
     label: 'Plataforma SaaS Comercial',
-    icon: Cpu,
+    icon: 'memory',
     multiplier: 1.3,
     avgWeeks: '6 a 10 semanas',
     badge: 'Escalabilidade',
@@ -122,11 +109,6 @@ Gostaria de agendar um diagnóstico técnico gratuito e entender os próximos pa
       <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-4xl">
         {/* Header da Seção */}
         <div className="text-center mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#00F5D4] bg-[#00F5D4]/10 border border-[#00F5D4]/25 backdrop-blur-md mb-4 shadow-[0_0_20px_rgba(0,245,212,0.15)]">
-            <Calculator size={13} className="text-[#00F5D4]" />
-            Simulador Interativo Mobile
-          </div>
-
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
             Descubra o Retorno Real do seu{' '}
             <span className="gradient-text-cyan">Software Sob Medida</span>
@@ -173,7 +155,7 @@ Gostaria de agendar um diagnóstico técnico gratuito e entender os próximos pa
                             : 'bg-white/5 text-gray-400'
                         }`}
                       >
-                        <Icon size={18} />
+                        <MaterialIcon name={opt.icon} size={18} />
                       </div>
                       <div>
                         <div className="text-xs sm:text-sm font-bold text-white leading-snug">
@@ -264,7 +246,7 @@ Gostaria de agendar um diagnóstico técnico gratuito e entender os próximos pa
               {/* Horas Recuperadas */}
               <div className="p-3 sm:p-4 rounded-xl bg-white/[0.04] border border-white/5">
                 <div className="flex items-center justify-center gap-1 text-[#00F5D4] mb-1">
-                  <Clock size={14} />
+                  <MaterialIcon name="schedule" size={14} />
                   <span className="text-[10px] font-bold uppercase tracking-wider hidden sm:inline">Tempo</span>
                 </div>
                 <div className="text-lg sm:text-2xl font-black text-white font-mono leading-none">
@@ -278,7 +260,7 @@ Gostaria de agendar um diagnóstico técnico gratuito e entender os próximos pa
               {/* Economia Anual */}
               <div className="p-3 sm:p-4 rounded-xl bg-[#6C63FF]/15 border border-[#6C63FF]/30">
                 <div className="flex items-center justify-center gap-1 text-[#9B59FF] mb-1">
-                  <TrendingUp size={14} />
+                  <MaterialIcon name="trending_up" size={14} />
                   <span className="text-[10px] font-bold uppercase tracking-wider hidden sm:inline">Economia</span>
                 </div>
                 <div className="text-base sm:text-2xl font-black text-[#00F5D4] font-mono leading-none">
@@ -292,7 +274,7 @@ Gostaria de agendar um diagnóstico técnico gratuito e entender os próximos pa
               {/* Payback & MVP */}
               <div className="p-3 sm:p-4 rounded-xl bg-white/[0.04] border border-white/5">
                 <div className="flex items-center justify-center gap-1 text-[#FF3CAC] mb-1">
-                  <Sparkles size={14} />
+                  <MaterialIcon name="auto_awesome" size={14} />
                   <span className="text-[10px] font-bold uppercase tracking-wider hidden sm:inline">Retorno</span>
                 </div>
                 <div className="text-lg sm:text-2xl font-black text-white font-mono leading-none">
@@ -308,7 +290,7 @@ Gostaria de agendar um diagnóstico técnico gratuito e entender os próximos pa
           {/* 4. Botão de Conversão Direta no WhatsApp com Dados Preenchidos */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-xs text-gray-400 text-center sm:text-left">
-              <ShieldCheck size={16} className="text-[#00F5D4] shrink-0" />
+              <MaterialIcon name="verified_user" size={16} className="text-[#00F5D4] shrink-0" />
               <span>Diagnóstico técnico gratuito &middot; Sem compromisso contratual</span>
             </div>
 
@@ -316,9 +298,9 @@ Gostaria de agendar um diagnóstico técnico gratuito e entender os próximos pa
               onClick={handleSendToWhatsApp}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl font-extrabold text-sm text-[#04040D] bg-gradient-to-r from-[#00F5D4] to-[#6C63FF] hover:brightness-110 active:scale-[0.97] transition-all duration-200 shadow-[0_0_30px_rgba(0,245,212,0.35)] cursor-pointer"
             >
-              <Zap size={16} className="fill-current" />
+              <MaterialIcon name="bolt" size={16} fill />
               Enviar Simulação no WhatsApp
-              <ArrowRight size={16} />
+              <MaterialIcon name="arrow_forward" size={16} />
             </button>
           </div>
         </div>

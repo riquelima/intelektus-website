@@ -1,5 +1,6 @@
 
-import { Zap, Instagram, Linkedin, User, MessageCircle, Mail, Phone, MapPin } from 'lucide-react';
+import { Instagram, Linkedin } from 'lucide-react';
+import MaterialIcon from '@/components/ui/MaterialIcon';
 import { Button } from '@/components/ui/button';
 
 const navLinks = [
@@ -85,7 +86,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             className="btn-glow text-white font-bold px-7 py-3.5 sm:px-9 sm:py-4 rounded-xl text-sm sm:text-base inline-flex items-center gap-2 relative z-10"
           >
-            <MessageCircle size={18} />
+            <MaterialIcon name="chat" size={18} fill />
             Conversar no WhatsApp
           </a>
         </div>
@@ -103,15 +104,15 @@ const Footer = () => {
             {/* Contatos rápidos */}
             <div className="space-y-2 mb-4 sm:mb-6 text-xs sm:text-sm">
               <div className="flex items-center gap-2 text-gray-300">
-                <Phone size={13} style={{ color: '#6C63FF' }} />
+                <MaterialIcon name="phone" size={14} color="#6C63FF" />
                 <span>(71) 99908-8651</span>
               </div>
               <div className="flex items-center gap-2 text-gray-300">
-                <Mail size={13} style={{ color: '#6C63FF' }} />
+                <MaterialIcon name="mail" size={14} color="#6C63FF" />
                 <span>henrique.souza.lima@outlook.com</span>
               </div>
               <div className="flex items-center gap-2 text-gray-300">
-                <MapPin size={13} style={{ color: '#6C63FF' }} />
+                <MaterialIcon name="location_on" size={14} color="#6C63FF" />
                 <span>Salvador, Bahia — Brasil</span>
               </div>
             </div>
@@ -212,7 +213,7 @@ const Footer = () => {
               title="Login Administrativo"
               onClick={() => window.location.href = '/login'}
             >
-              <User size={13} />
+              <MaterialIcon name="person" size={15} />
             </Button>
           </div>
         </div>

@@ -1,15 +1,10 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Dog, Stethoscope, Briefcase, Utensils, ShoppingCart,
-  Building2, Truck, Wrench, Car, Dumbbell,
-  LineChart, ShoppingBag, Factory, X, ArrowRight,
-  Pizza, Coffee, Scissors, Camera
-} from 'lucide-react';
+import MaterialIcon from '@/components/ui/MaterialIcon';
 
 const segments = [
   {
-    icon: Dog,
+    icon: 'pets',
     title: 'Pet Shops',
     tagline: 'Agendamento + Histórico de Pets',
     example: 'Sistema completo de agendamento de banho e tosa, controle de estoque, histórico de pets, lembretes automáticos e atendimento via WhatsApp.',
@@ -17,7 +12,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #6C63FF, #A855F7)',
   },
   {
-    icon: Pizza,
+    icon: 'local_pizza',
     title: 'Pizzarias',
     tagline: 'Pedidos Online + Delivery',
     example: 'Sistema de pedidos online, gestão de deliveries, cardápio digital com QR Code, integração com apps de entrega e controle de caixa.',
@@ -25,7 +20,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #F59E0B, #EF4444)',
   },
   {
-    icon: Utensils,
+    icon: 'restaurant',
     title: 'Restaurantes',
     tagline: 'Mesas + Cardápio Digital',
     example: 'Pedidos online, controle de mesas, cardápio digital, integração com delivery, controle financeiro e relatórios de vendas.',
@@ -33,7 +28,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #F97316, #F59E0B)',
   },
   {
-    icon: Coffee,
+    icon: 'local_cafe',
     title: 'Lanchonetes',
     tagline: 'PDV + Gestão Rápida',
     example: 'PDV simplificado para balcão, controle de fichas, cardápio digital, caixa integrado e relatórios diários automatizados.',
@@ -41,7 +36,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #14B8A6, #06B6D4)',
   },
   {
-    icon: Stethoscope,
+    icon: 'medical_services',
     title: 'Clínicas',
     tagline: 'Prontuário + Agendamento',
     example: 'Prontuário digital, agendamento online, lembretes automáticos, gestão financeira e portal do paciente.',
@@ -49,7 +44,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #A855F7, #6C63FF)',
   },
   {
-    icon: Scissors,
+    icon: 'content_cut',
     title: 'Salões de Beleza',
     tagline: 'Agenda Online + Fidelidade',
     example: 'Agendamento online, controle de serviços, histórico de clientes, programa de fidelidade e confirmação automática.',
@@ -57,7 +52,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #EC4899, #FF3CAC)',
   },
   {
-    icon: Car,
+    icon: 'directions_car',
     title: 'Estética Automotiva',
     tagline: 'Agenda + Histórico de Veículos',
     example: 'Agendamento, controle de serviços, fotos antes/depois, histórico do veículo e cobrança automatizada.',
@@ -65,7 +60,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #3B82F6, #6C63FF)',
   },
   {
-    icon: Wrench,
+    icon: 'build',
     title: 'Oficinas',
     tagline: 'Ordem de Serviço Digital',
     example: 'Ordem de serviço digital, controle de peças, histórico do veículo, orçamentos e cobrança integrada.',
@@ -73,7 +68,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #8B5CF6, #A855F7)',
   },
   {
-    icon: Dumbbell,
+    icon: 'fitness_center',
     title: 'Academias',
     tagline: 'Mensalidades + Treinos',
     example: 'Controle de mensalidades, frequência, treinos personalizados, app do aluno e notificações de renovação.',
@@ -81,7 +76,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #EF4444, #F97316)',
   },
   {
-    icon: Briefcase,
+    icon: 'work',
     title: 'Escritórios',
     tagline: 'CRM + Processos',
     example: 'CRM, controle de processos, automação de documentos, relatórios gerenciais e portal do cliente.',
@@ -89,7 +84,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #10B981, #14B8A6)',
   },
   {
-    icon: ShoppingCart,
+    icon: 'shopping_cart',
     title: 'Supermercados',
     tagline: 'Estoque + Relatórios',
     example: 'Gestão de estoque, etiquetas, controle de validade, PDV e relatórios de giro.',
@@ -97,7 +92,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #06B6D4, #3B82F6)',
   },
   {
-    icon: Building2,
+    icon: 'domain',
     title: 'Imobiliárias',
     tagline: 'CRM + Contratos',
     example: 'CRM de imóveis, controle de contratos, comissões, funil de vendas digital e portal de imóveis.',
@@ -105,7 +100,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #F59E0B, #10B981)',
   },
   {
-    icon: Camera,
+    icon: 'photo_camera',
     title: 'Fotógrafos / Estúdios',
     tagline: 'Agenda + Entrega de Arquivos',
     example: 'Agendamento de sessões, contrato digital, galeria de entrega online e cobrança automatizada.',
@@ -113,7 +108,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #A855F7, #EC4899)',
   },
   {
-    icon: Truck,
+    icon: 'local_shipping',
     title: 'Transportadoras',
     tagline: 'Frota + Rastreamento',
     example: 'Rastreamento de cargas, gestão de frota, CTes digitais e controle financeiro.',
@@ -121,7 +116,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #6C63FF, #3B82F6)',
   },
   {
-    icon: ShoppingBag,
+    icon: 'shopping_bag',
     title: 'E-commerce',
     tagline: 'Loja Própria + Logística',
     example: 'Plataforma de loja própria, gestão de pedidos, integração logística e painel de controle.',
@@ -129,7 +124,7 @@ const segments = [
     gradient: 'linear-gradient(135deg, #FF3CAC, #A855F7)',
   },
   {
-    icon: Factory,
+    icon: 'precision_manufacturing',
     title: 'Indústrias',
     tagline: 'Produção + Qualidade',
     example: 'Controle de produção, gestão de insumos, rastreabilidade e relatórios de qualidade.',
@@ -189,9 +184,9 @@ const SegmentsSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14 reveal">
-          <div className="badge-chip-plasma mb-3 mx-auto inline-flex">
-            <Factory size={12} style={{ color: '#FF3CAC' }} />
-            Segmentos
+          <div className="badge-chip-plasma mb-3 mx-auto inline-flex items-center gap-1.5">
+            <MaterialIcon name="domain" size={13} color="#FF3CAC" />
+            <span>Segmentos</span>
           </div>
           <h2
             className="font-bold text-2xl sm:text-4xl md:text-5xl mb-2.5 sm:mb-4 text-white"
@@ -208,7 +203,6 @@ const SegmentsSection = () => {
         {/* Grid de cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5 sm:gap-3 mb-6 sm:mb-10">
           {segments.map((seg, i) => {
-            const Icon = seg.icon;
             const isHovered = hoveredIdx === i;
             return (
               <button
@@ -242,8 +236,7 @@ const SegmentsSection = () => {
                     boxShadow: isHovered ? `0 0 16px ${seg.color}35` : 'none',
                   }}
                 >
-                  <Icon size={16} className="sm:hidden" style={{ color: seg.color }} />
-                  <Icon size={18} className="hidden sm:block" style={{ color: seg.color }} />
+                  <MaterialIcon name={seg.icon} size={18} color={seg.color} />
                 </div>
 
                 <div className="relative z-10">
@@ -291,7 +284,7 @@ const SegmentsSection = () => {
             className="btn-glow text-white font-bold px-7 py-3.5 rounded-xl text-sm flex items-center gap-2 whitespace-nowrap flex-shrink-0 relative z-10"
           >
             Falar com especialista
-            <ArrowRight size={16} />
+            <MaterialIcon name="arrow_forward" size={16} />
           </a>
         </div>
       </div>
@@ -323,12 +316,11 @@ const SegmentsSection = () => {
               style={{ color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)' }}
               onClick={() => setActive(null)}
             >
-              <X size={16} />
+              <MaterialIcon name="close" size={16} />
             </button>
 
             {(() => {
               const seg = segments[active];
-              const Icon = seg.icon;
               return (
                 <>
                   <div
@@ -339,7 +331,7 @@ const SegmentsSection = () => {
                       boxShadow: `0 0 30px ${seg.color}25`,
                     }}
                   >
-                    <Icon size={28} style={{ color: seg.color }} />
+                    <MaterialIcon name={seg.icon} size={28} color={seg.color} />
                   </div>
                   <div
                     className="text-xs font-bold uppercase tracking-widest mb-2"
@@ -366,7 +358,7 @@ const SegmentsSection = () => {
                     className="btn-glow text-white font-bold px-6 py-3 rounded-xl text-sm inline-flex items-center gap-2"
                   >
                     Quero um sistema para {seg.title}
-                    <ArrowRight size={16} />
+                    <MaterialIcon name="arrow_forward" size={16} />
                   </a>
                 </>
               );

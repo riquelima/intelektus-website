@@ -1,6 +1,7 @@
 
 import { useEffect, useRef, useState } from 'react';
-import { Zap, User, ExternalLink, Linkedin } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
+import MaterialIcon from '@/components/ui/MaterialIcon';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 const stats = [
@@ -114,9 +115,9 @@ const AboutSection = () => {
 
           {/* Header */}
           <div className="text-center mb-8 sm:mb-12 reveal">
-            <div className="badge-chip mb-3 mx-auto inline-flex">
-              <Zap size={12} style={{ color: '#6C63FF' }} />
-              Quem Somos
+            <div className="badge-chip mb-3 mx-auto inline-flex items-center gap-1.5">
+              <MaterialIcon name="info" size={13} color="#6C63FF" />
+              <span>Quem Somos</span>
             </div>
             <h2
               className="font-bold text-2xl sm:text-4xl md:text-5xl mb-2.5 sm:mb-4 text-white"

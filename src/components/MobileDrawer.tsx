@@ -1,20 +1,6 @@
 import React, { useEffect } from 'react';
-import { 
-  X, 
-  Layers, 
-  Sparkles, 
-  Building2, 
-  GitFork, 
-  TrendingUp, 
-  User, 
-  MessageSquare, 
-  ArrowRight, 
-  Phone, 
-  Mail, 
-  Instagram, 
-  Linkedin,
-  Zap
-} from 'lucide-react';
+import { Instagram, Linkedin } from 'lucide-react';
+import MaterialIcon from '@/components/ui/MaterialIcon';
 
 interface MobileDrawerProps {
   isOpen: boolean;
@@ -23,13 +9,13 @@ interface MobileDrawerProps {
 }
 
 const menuItems = [
-  { label: 'Soluções',         href: '#solucoes',        icon: Layers,        num: '01', color: '#6C63FF' },
-  { label: 'Projetos',         href: '#projects',        icon: Sparkles,      num: '02', color: '#00D4FF' },
-  { label: 'Segmentos',        href: '#segments',        icon: Building2,     num: '03', color: '#A855F7' },
-  { label: 'Como Trabalhamos', href: '#como-trabalhamos',icon: GitFork,       num: '04', color: '#FF3CAC' },
-  { label: 'Cases de Sucesso', href: '#cases',           icon: TrendingUp,    num: '05', color: '#10B981' },
-  { label: 'Quem Somos',       href: '#quem-somos',      icon: User,          num: '06', color: '#F59E0B' },
-  { label: 'Contato',          href: '#contato',         icon: MessageSquare, num: '07', color: '#EC4899' },
+  { label: 'Soluções',         href: '#solucoes',        icon: 'layers',       num: '01', color: '#6C63FF' },
+  { label: 'Projetos',         href: '#projects',        icon: 'auto_awesome', num: '02', color: '#00D4FF' },
+  { label: 'Segmentos',        href: '#segments',        icon: 'domain',       num: '03', color: '#A855F7' },
+  { label: 'Como Trabalhamos', href: '#como-trabalhamos',icon: 'account_tree', num: '04', color: '#FF3CAC' },
+  { label: 'Cases de Sucesso', href: '#cases',           icon: 'trending_up',  num: '05', color: '#10B981' },
+  { label: 'Quem Somos',       href: '#quem-somos',      icon: 'person',       num: '06', color: '#F59E0B' },
+  { label: 'Contato',          href: '#contato',         icon: 'chat',         num: '07', color: '#EC4899' },
 ];
 
 const MobileDrawer: React.FC<MobileDrawerProps> = ({ isOpen, onClose, onNavigate }) => {
@@ -100,14 +86,13 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({ isOpen, onClose, onNavigate
               className="w-9 h-9 rounded-xl flex items-center justify-center transition-all bg-white/10 hover:bg-white/20 border border-white/15 text-white cursor-pointer active:scale-95 shadow-md"
               aria-label="Fechar menu"
             >
-              <X size={18} />
+              <MaterialIcon name="close" size={18} />
             </button>
           </div>
 
           {/* Links de Navegação com Staggering */}
           <nav className="flex flex-col gap-1.5 mt-4">
             {menuItems.map((item, idx) => {
-              const Icon = item.icon;
               return (
                 <a
                   key={item.href}
@@ -131,7 +116,7 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({ isOpen, onClose, onNavigate
                         border: `1px solid ${item.color}35`,
                       }}
                     >
-                      <Icon size={14} style={{ color: item.color }} />
+                      <MaterialIcon name={item.icon} size={15} color={item.color} />
                     </div>
                     <span className="text-xs font-semibold text-gray-200 group-hover:text-white transition-colors">
                       {item.label}
@@ -158,15 +143,15 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({ isOpen, onClose, onNavigate
             rel="noopener noreferrer"
             className="btn-glow text-white font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-xl active:scale-[0.98] transition-transform"
           >
-            <Zap size={14} className="text-yellow-300 fill-yellow-300" />
+            <MaterialIcon name="bolt" size={15} className="text-yellow-300" fill />
             Solicitar Orçamento
-            <ArrowRight size={13} />
+            <MaterialIcon name="arrow_forward" size={14} />
           </a>
 
           {/* Mini Contatos */}
           <div className="flex items-center justify-between text-[11px] text-gray-400 px-1 pt-1">
             <span className="flex items-center gap-1.5">
-              <Phone size={11} className="text-[#6C63FF]" /> (71) 99908-8651
+              <MaterialIcon name="phone" size={13} color="#6C63FF" /> (71) 99908-8651
             </span>
             
             <div className="flex items-center gap-2">

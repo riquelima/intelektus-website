@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { MessageSquare, Phone, Mail, MapPin, Send } from "lucide-react";
+import MaterialIcon from "@/components/ui/MaterialIcon";
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -54,8 +54,8 @@ const ContactSection = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 sm:gap-12">
             <div>
-              <div className="badge-chip mb-3 sm:mb-5 inline-flex">
-                <MessageSquare size={12} style={{ color: '#6C63FF' }} />
+              <div className="badge-chip mb-3 sm:mb-5 inline-flex items-center gap-1.5">
+                <MaterialIcon name="chat" size={13} className="text-[#6C63FF]" />
                 Fale conosco
               </div>
               <h2
@@ -75,7 +75,7 @@ const ContactSection = () => {
                     className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                     style={{ background: 'rgba(108,99,255,0.12)', border: '1px solid rgba(108,99,255,0.3)' }}
                   >
-                    <Phone className="h-4 w-4" style={{ color: '#6C63FF' }} />
+                    <MaterialIcon name="phone" size={16} className="text-[#6C63FF]" />
                   </div>
                   <div>
                     <h3 className="text-xs sm:text-sm font-semibold mb-0.5 text-white">Telefone</h3>
@@ -88,7 +88,7 @@ const ContactSection = () => {
                     className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                     style={{ background: 'rgba(108,99,255,0.12)', border: '1px solid rgba(108,99,255,0.3)' }}
                   >
-                    <Mail className="h-4 w-4" style={{ color: '#6C63FF' }} />
+                    <MaterialIcon name="mail" size={16} className="text-[#6C63FF]" />
                   </div>
                   <div>
                     <h3 className="text-xs sm:text-sm font-semibold mb-0.5 text-white">Email</h3>
@@ -203,7 +203,7 @@ const ContactSection = () => {
                         </span>
                       ) : (
                         <span className="flex items-center">
-                          <Send className="mr-2 h-5 w-5" />
+                          <MaterialIcon name="send" size={18} className="mr-2" />
                           Enviar mensagem
                         </span>
                       )}

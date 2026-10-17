@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
-import { Paperclip, Send, Brain } from 'lucide-react';
+import MaterialIcon from '@/components/ui/MaterialIcon';
 
 interface Message {
   text: string;
@@ -67,14 +67,16 @@ const WhatsAppChat = ({ isOpen, onClose }: WhatsAppChatProps) => {
       <div className="flex justify-between items-center p-3 bg-slate-800 text-white rounded-t-lg">
         <div className='flex items-center gap-3'>
           <div className="w-10 h-10 rounded-full bg-white p-1 flex items-center justify-center">
-            <Brain className="w-8 h-8 text-intelektus-600" />
+            <MaterialIcon name="psychology" size={24} className="text-intelektus-600" />
           </div>
           <div>
             <h3 className="font-bold">Intelektus</h3>
             <p className='text-xs'>Online</p>
           </div>
         </div>
-        <button onClick={onClose} className="font-bold text-xl hover:opacity-80 transition-opacity">&times;</button>
+        <button onClick={onClose} className="p-1 hover:opacity-80 transition-opacity">
+          <MaterialIcon name="close" size={20} />
+        </button>
       </div>
 
       {/* Messages Area */}
@@ -101,7 +103,7 @@ const WhatsAppChat = ({ isOpen, onClose }: WhatsAppChatProps) => {
       {/* Input Area */}
       <div className="p-2 bg-slate-100 flex items-center gap-2 border-t border-slate-200">
          <Button variant="ghost" size="icon" className="text-gray-500 hover:bg-slate-200">
-            <Paperclip className="w-5 h-5" />
+            <MaterialIcon name="attach_file" size={20} />
           </Button>
         <Input
           type="text"
@@ -112,7 +114,7 @@ const WhatsAppChat = ({ isOpen, onClose }: WhatsAppChatProps) => {
           className="flex-1 rounded-full border-slate-300 focus:ring-2 focus:ring-slate-600 bg-white"
         />
         <Button onClick={handleSendMessage} className="bg-slate-700 hover:bg-slate-600 rounded-full w-10 h-10 p-2">
-          <Send className="w-5 h-5 text-white" />
+          <MaterialIcon name="send" size={18} className="text-white" />
         </Button>
       </div>
     </div>

@@ -1,21 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { 
-  TrendingUp, 
-  Database, 
-  DollarSign, 
-  Rocket, 
-  PieChart, 
-  Trophy, 
-  ArrowRight, 
-  CheckCircle2, 
-  Sparkles, 
-  XCircle,
-  ShieldCheck
-} from 'lucide-react';
+import MaterialIcon from '@/components/ui/MaterialIcon';
 
 const benefits = [
   {
-    icon: TrendingUp,
+    icon: 'trending_up',
     badge: '+80% Eficiência',
     title: 'Mais Produtividade',
     description: 'Automatize tarefas repetitivas e libere sua equipe para focar em vendas e atendimento.',
@@ -23,7 +11,7 @@ const benefits = [
     gradient: 'linear-gradient(135deg, #6C63FF, #A855F7)',
   },
   {
-    icon: Database,
+    icon: 'database',
     badge: 'Visão 360°',
     title: 'Controle Total',
     description: 'Centralize dados de clientes, financeiro e estoque em um único painel em tempo real.',
@@ -31,7 +19,7 @@ const benefits = [
     gradient: 'linear-gradient(135deg, #A855F7, #EC4899)',
   },
   {
-    icon: DollarSign,
+    icon: 'attach_money',
     badge: 'Redução de Custos',
     title: 'Zero Desperdício',
     description: 'Elimine erros humanos e pare de pagar mensalidades caras por ferramentas que não atendem sua rotina.',
@@ -39,7 +27,7 @@ const benefits = [
     gradient: 'linear-gradient(135deg, #10B981, #00D4FF)',
   },
   {
-    icon: Rocket,
+    icon: 'rocket_launch',
     badge: 'Sem Limites',
     title: 'Escala com Você',
     description: 'Seu sistema evolui no ritmo da sua empresa sem precisar migrar ou trocar de software no futuro.',
@@ -47,7 +35,7 @@ const benefits = [
     gradient: 'linear-gradient(135deg, #F59E0B, #FF3CAC)',
   },
   {
-    icon: PieChart,
+    icon: 'pie_chart',
     badge: 'Decisões Rápidas',
     title: 'Dashboards com IA',
     description: 'Relatórios claros e automáticos que mostram exatamente onde lucrar mais.',
@@ -55,7 +43,7 @@ const benefits = [
     gradient: 'linear-gradient(135deg, #3B82F6, #6C63FF)',
   },
   {
-    icon: Trophy,
+    icon: 'emoji_events',
     badge: '100% Exclusivo',
     title: 'Vantagem Competitiva',
     description: 'Tenha uma solução com a sua marca e processos — seus concorrentes não terão igual.',
@@ -114,9 +102,9 @@ const BenefitsSection = () => {
         
         {/* Header Compacto & Impactante */}
         <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 reveal">
-          <div className="badge-chip mb-2.5 mx-auto inline-flex">
-            <Trophy size={12} style={{ color: '#6C63FF' }} />
-            Vantagens do Sob Medida
+          <div className="badge-chip mb-2.5 mx-auto inline-flex items-center gap-1.5">
+            <MaterialIcon name="emoji_events" size={13} color="#6C63FF" />
+            <span>Vantagens do Sob Medida</span>
           </div>
           <h2
             className="font-bold text-2xl sm:text-4xl md:text-5xl mb-2 sm:mb-3 text-white"
@@ -133,11 +121,11 @@ const BenefitsSection = () => {
         {/* Comparativo Rápido de 1 Linha (Alto Impacto UX no Mobile) */}
         <div className="max-w-3xl mx-auto mb-6 sm:mb-8 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 reveal">
           <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-red-500/[0.06] border border-red-500/20 text-gray-300 text-xs">
-            <XCircle size={15} className="text-red-400 flex-shrink-0" />
+            <MaterialIcon name="cancel" size={16} className="text-red-400 flex-shrink-0" />
             <span><strong>Software Genérico:</strong> Engessado, complexo e com mensalidades infinitas.</span>
           </div>
           <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-[#6C63FF]/[0.08] border border-[#6C63FF]/30 text-white text-xs">
-            <CheckCircle2 size={15} className="text-emerald-400 flex-shrink-0" />
+            <MaterialIcon name="check_circle" size={16} className="text-emerald-400 flex-shrink-0" />
             <span><strong>Intelektus Sob Medida:</strong> 100% moldado aos seus processos e sem limites.</span>
           </div>
         </div>
@@ -145,7 +133,6 @@ const BenefitsSection = () => {
         {/* Grid Compacto 2 Colunas Mobile / 3 Colunas Desktop */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 mb-6 sm:mb-10">
           {benefits.map((b, i) => {
-            const Icon = b.icon;
             const isHovered = hoveredIdx === i;
             return (
               <div
@@ -171,8 +158,7 @@ const BenefitsSection = () => {
                         boxShadow: isHovered ? `0 0 20px ${b.color}35` : 'none',
                       }}
                     >
-                      <Icon size={16} className="sm:hidden" style={{ color: b.color }} />
-                      <Icon size={20} className="hidden sm:block" style={{ color: b.color }} />
+                      <MaterialIcon name={b.icon} size={18} color={b.color} />
                     </div>
 
                     <span 
@@ -239,9 +225,9 @@ const BenefitsSection = () => {
             rel="noopener noreferrer"
             className="relative z-10 inline-flex btn-glow text-white font-bold px-6 py-3 sm:px-8 sm:py-3.5 rounded-xl text-xs sm:text-sm items-center gap-2 shadow-xl hover:scale-[1.02] transition-transform cursor-pointer"
           >
-            <Sparkles size={14} className="text-yellow-300" />
+            <MaterialIcon name="auto_awesome" size={16} className="text-yellow-300" />
             Quero um diagnóstico gratuito
-            <ArrowRight size={14} />
+            <MaterialIcon name="arrow_forward" size={16} />
           </a>
         </div>
 
